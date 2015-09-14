@@ -1359,7 +1359,6 @@ class Trait:
         self.skills = []
 
         # Optional keys. Again. Really ANET?
-        # See Skill Object TODO / NOTE
         try:
             self.facts = traitJSON['facts']
         except KeyError:
