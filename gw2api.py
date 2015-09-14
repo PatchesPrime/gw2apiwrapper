@@ -61,16 +61,14 @@ def isMaterial(itemID):
     for it, it returns a tuple: (True, Category)
     """
 
-    # TODO: this needs a heavy rework. It's very ugly.
-    # At the very least, clean up the names.
-    matURL = "https://api.guildwars2.com/v2/materials/"
-    jsonData = urllib.request.urlopen(matURL)
-    matType = json.loads(jsonData.read().decode("UTF-8"))
-    for x in matType:
-        matJSON = urllib.request.urlopen(matURL + str(x))
-        endResult = json.loads(matJSON.read().decode("UTF-8"))
-        if itemID in endResult["items"]:
-            return(True, endResult["name"])
+    # Get initial URL and request it.
+    matURL = "https://api.guildwars2.com/v2/materials?ids=all"
+    matCategories = getJson(matURL)
+
+    # Use the information.
+    for category in matCategories:
+        if itemID in category["items"]:
+            return(True, category["name"])
 
     # Return a negative result as the default.
     return(False, None)
