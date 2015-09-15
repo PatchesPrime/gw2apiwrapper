@@ -636,9 +636,9 @@ class AccountAPI:
             # Build a list broken into 200.
             # This isn't nesscary as of 09/08/2015
             # Never hurts to be prepared though.
-            safeList = [matchID[x:x + 200] for x in range(0, len(matchID), 200)]
+            safeIDs = [matchID[x:x + 200] for x in range(0, len(matchID), 200)]
 
-            for safe in safeList:
+            for safe in safeIDs:
                 # Build the list.
                 cleanStr = ",".join(str(x) for x in safe)
 
@@ -762,6 +762,7 @@ class GlobalAPI:
 
             # Return said objects.
             return(objects)
+
         elif type(itemID) is int:
             jsonData = self.getJson("items/{}".format(itemID))
 
