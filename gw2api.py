@@ -9,8 +9,6 @@ class PermissionError(Exception):
 class FlagParameterError(Exception):
     pass
 
-class ArenaNetInconsistencyError(Exception):
-    pass
 
 # Seperate functions from classes via file?
 def getJson(url, header = None):
@@ -652,7 +650,7 @@ class AccountAPI:
 
         # Raise an issue. What did you even give us?!
         else:
-            raise ArenaNetInconsistencyError("getMatchResults invalid param")
+            raise TypeError("getMatchResults invalid param")
 
     def getPVPStats(self):
         """
@@ -1340,7 +1338,7 @@ class Specialization:
                 self.majors.append(Trait(trait))
                 # I like the name of my exception. I think I'll keep it.
             else:
-                raise ArenaNetInconsistencyError("Weird trait type! Bailing")
+                raise TypeError("Weird trait type! Bailing")
 
 class Trait:
     """
