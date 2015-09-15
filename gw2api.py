@@ -9,6 +9,8 @@ class PermissionError(Exception):
 class FlagParameterError(Exception):
     pass
 
+class BadIDError(Exception):
+    pass
 
 # Seperate functions from classes via file?
 def getJson(url, header = None):
@@ -16,15 +18,34 @@ def getJson(url, header = None):
     Got tired of writing this over and over.
     What functions are for, right?
     """
-    if header is not None:
-        request = urllib.request.Request(url, None, header)
-        with urllib.request.urlopen(request) as response:
-            jsonData = json.loads(response.read().decode("UTF-8"))
-            return(jsonData)
-    else:
-        # This one doesn't need a header.
-        with urllib.request.urlopen(url) as response:
-            return(json.loads(response.read().decode("UTF-8")))
+    try:
+        if header is not None:
+            request = urllib.request.Request(url, None, header)
+            with urllib.request.urlopen(request) as response:
+                jsonData = json.loads(response.read().decode("UTF-8"))
+                return(jsonData)
+        else:
+            # This one doesn't need a header.
+            with urllib.request.urlopen(url) as response:
+                return(json.loads(response.read().decode("UTF-8")))
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            # 404 NOT FOUND is useful, but it helps to point them
+            # in the right direction.
+            error = "HTTPError! Likely bad ID: {} {}".format(e.code, e.msg)
+
+            # Dangerous magic!
+            raise BadIDError(error) from None
+
+        elif e.code == 403:
+            # 403: Forbidden is invalid authentication.
+            error = "HTTPError! Likely bad APIKEY: {} {}".format(e.code, e.msg)
+
+            # MORE DANGEROUS MAGIC
+            raise PermissionError(error) from None
+
+        else:
+            raise(e)
 
 def getBuild():
     """
