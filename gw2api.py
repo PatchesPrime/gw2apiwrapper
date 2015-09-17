@@ -69,28 +69,51 @@ def getAssets():
 
 def isMaterial(itemID):
     """
-    Takes an integer that corresponds to an items ID
-    attribute and checks if it is a Material, as strictly
-    defined by the game.
+    Takes an item ID (int or list), and checks the materials
+    sections of the Guild Wars 2 bank via API.
 
-    In other words, if there is no slot in the materials
-    tab of your bank for it, this returns false.
+    If given an INT, it will return one of two values:
 
-    If there IS a slot in the materials tab of your bank
-    for it, it returns a tuple: (True, Category)
+    (False, None)  - ID is not a material.
+    (True, String) - ID is material. String is category.
+
+    If given a LIST, it will return one of two values:
+
+    None - No items in LIST are materials.
+    SET  - A set containing the IDs that matched a material.
+
+    eg.
+        if 129721 in isMaterial([19721, 224295]):
+            print("True, 112971 is a material")
+
     """
-
     # Get initial URL and request it.
     matURL = "https://api.guildwars2.com/v2/materials?ids=all"
     matCategories = getJson(matURL)
 
-    # Use the information.
-    for category in matCategories:
-        if itemID in category["items"]:
-            return(True, category["name"])
+    if type(itemID) is int:
+        # Use the information.
+        for category in matCategories:
+            if itemID in category["items"]:
+                return(True, category["name"])
 
-    # Return a negative result as the default.
-    return(False, None)
+        # Return a negative result as the default.
+        return(False, None)
+
+    if type(itemID) is list:
+        # We'll need a temporary list if we don't
+        # want one of the world ugliest list comprehension.
+        matIDs = []
+
+        # Add the IDs to the list.
+        for category in matCategories:
+            matIDs.extend(category['items'])
+
+
+        # Return the IDs that ARE materials.
+        return(set(matIDs).intersection(itemID))
+
+
 
 def recipeSearch(in_or_out, itemID):
     """
