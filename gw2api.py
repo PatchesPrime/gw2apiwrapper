@@ -74,8 +74,8 @@ def isMaterial(itemID):
 
     If given an INT, it will return one of two values:
 
-    (False, None)  - ID is not a material.
-    (True, String) - ID is material. String is category.
+    False - ID is not a material.
+    True  - ID is material. String is category.
 
     If given a LIST, it will return one of two values:
 
@@ -95,10 +95,10 @@ def isMaterial(itemID):
         # Use the information.
         for category in matCategories:
             if itemID in category["items"]:
-                return(True, category["name"])
+                return(True)
 
         # Return a negative result as the default.
-        return(False, None)
+        return(False)
 
     if type(itemID) is list:
         # We'll need a temporary list if we don't
