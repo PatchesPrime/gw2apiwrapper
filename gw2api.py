@@ -134,7 +134,7 @@ def recipeSearch(in_or_out, itemID):
     # Should be good enough to verify it's one of the inputs
     # We want.
     if in_or_out not in urls.keys():
-        raise FlagParameterError('First argument must be 'input' or 'output'')
+        raise FlagParameterError('First argument must be "input" or "output"')
 
     # Lets build the URL here. You know, for PEP8s sake.
     cleanURL = urls[in_or_out] + '{}'.format(itemID)
@@ -951,8 +951,8 @@ class GW2TP:
         '''
         # Dictionary to hold URLs for the API. Which we use will depend on
         # gold_or_gems
-        urls = { 'coin': self.url + 'exchange/coins?quantity=',
-                 'gems': self.url + 'exchange/gems?quantity=' }
+        urls = {'coin': self.url + 'exchange/coins?quantity=',
+                'gems': self.url + 'exchange/gems?quantity='}
 
         # Check if they gave proper input.
         if coin_or_gems in urls.keys():
@@ -966,7 +966,7 @@ class GW2TP:
             return(jsonData)
         else:
             # Tell them what they did wrong.
-            raise FlagParameterError('First arg must be 'coins' or 'gems'')
+            raise FlagParameterError('First arg must be "coins" or "gems"')
 
 class Map:
     '''
