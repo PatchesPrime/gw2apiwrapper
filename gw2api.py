@@ -182,7 +182,7 @@ class AccountAPI:
         Initalize various bits of account information.
         '''
         self.api_key = api_key
-        self.header  = { 'Authorization: ' : 'Bearer ' + self.api_key }
+        self.header  = {'Authorization: ' : 'Bearer ' + self.api_key}
         self.url     = 'https://api.guildwars2.com/v2/'
 
         data = getJson(self.url + 'tokeninfo', self.header)
@@ -370,8 +370,8 @@ class AccountAPI:
             self.sold = None
 
         # Return the information...for use immediately?
-        return({ 'sold': self.sold, 'bought': self.bought,
-                 'selling': self.selling, 'buying': self.buying})
+        return({'sold': self.sold, 'bought': self.bought,
+                'selling': self.selling, 'buying': self.buying})
 
     def getCharacterList(self):
         '''
@@ -581,7 +581,7 @@ class AccountAPI:
                                     traits.append(obj)
 
                     # Build the dictionary..
-                    build[area].append({ 'line': spec, 'traits': traits})
+                    build[area].append({'line': spec, 'traits': traits})
 
             # WHAT DO WE WANT?
             return(build)
@@ -630,7 +630,7 @@ class AccountAPI:
                                 traits.append(obj)
 
                 # Append it to our end List.
-                build.append({ 'line': spec, 'traits': traits })
+                build.append({'line': spec, 'traits': traits})
 
             # BUILDS
             return(build)
