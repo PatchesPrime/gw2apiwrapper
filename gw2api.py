@@ -77,7 +77,7 @@ def isMaterial(itemID):
     False - ID is not a material.
     True  - ID is material. String is category.
 
-    If given a LIST, it will return one of two values:
+    If given a LIST/SET, it will return one of two values:
 
     None - No items in LIST are materials.
     SET  - A set containing the IDs that matched a material.
@@ -100,7 +100,8 @@ def isMaterial(itemID):
         # Return a negative result as the default.
         return(False)
 
-    if type(itemID) is list:
+
+    if type(itemID) is list or type(itemID) is set:
         # We'll need a temporary list if we don't
         # want one of the world ugliest list comprehension.
         matIDs = []
