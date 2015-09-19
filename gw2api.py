@@ -758,7 +758,7 @@ class GlobalAPI:
             cleanList = ','.join(str(x) for x in skinID)
 
             # Build the URL.
-            cleanURL = urllib.parse.quote('skins?ids={}'.format(cleanList))
+            cleanURL = 'skins?ids={}'.format(cleanList)
 
             data = self.getJson(cleanURL)
 
@@ -828,7 +828,7 @@ class GlobalAPI:
             cleanList = ','.join(str(x) for x in dyeID)
 
             # Build the URL.
-            cleanURL = urllib.parse.quote('dyes?ids={}'.format(cleanList))
+            cleanURL = 'dyes?ids={}'.format(cleanList)
 
             data = self.getJson(cleanURL)
 
@@ -862,7 +862,7 @@ class GlobalAPI:
             cleanList = ','.join(str(x) for x in recipeID)
 
             # Build the URL.
-            cleanURL = urllib.parse.quote('recipes?ids={}'.format(cleanList))
+            cleanURL = 'recipes?ids={}'.format(cleanList)
 
             data = self.getJson(cleanURL)
 
