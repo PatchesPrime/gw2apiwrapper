@@ -1463,5 +1463,25 @@ class PVPMatch:
         self.profession = pvpJSON['profession']
         self.scores     = pvpJSON['scores']
 
+class WVWObjective:
+    '''
+    Builds an object based off the JSON returned by the
+    Guild Wars 2 official wvw/objectives API.
+    '''
+    def __init__(self, wvwJSON):
+        self.id        = wvwJSON['id']
+        self.name      = wvwJSON['name']
+        self.type      = wvwJSON['type']
+        self.map_id    = wvwJSON['map_id']
+        self.map_type  = wvwJSON['map_type']
+        self.sector_id = wvwJSON['sector_id']
+        self.coord     = wvwJSON['coord']
+
+        try:
+            self.marker = wvwJSON['marker']
+        except KeyError:
+            # Optional, so default it if missing.
+            self.marker = None
+
 if __name__ == '__main__':
     pass
