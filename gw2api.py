@@ -880,11 +880,58 @@ class GlobalAPI:
             # Return the Object.
             return(Recipe(jsonData))
 
+    def getWVWObjective(self, wvwID = None, objects = None):
+        '''
+        Query the Guild Wars 2 wvw/objectives API and build
+        object(s) based off the returned JSON.
 
-# I don't actually like this object.
-# It seems so simple that it doesn't need to be
-# an object, but rather could do with being loose
-# functions. Anyone got suggestions? :<
+        See WVWObjective class for more documentation.
+
+        Returns WVWObjective object(s).
+        '''
+        # If they don't specifically ask for ID(s) give
+        # them all of them.
+        if wvwID is None:
+            if objects is None:
+                objects = []
+
+            # Default case: get all of them.
+            wvwJSON = self.getJson('wvw/objectives?ids=all')
+
+            # Generate objects.
+            for item in wvwJSON:
+                objects.append(WVWObjective(item))
+
+            # Return them all.
+            return(objects)
+
+        if type(wvwID) is list:
+            if objects is None:
+                objects = []
+
+            # Build clean string to append to URL.
+            cleanList = ','.join(str(x) for x in wvwID)
+
+            # Build the URL.
+            cleanURL = 'wvw/objectives?ids={}'.format(cleanList)
+
+            data = self.getJson(cleanURL)
+
+            # Generate the objects.
+            for name in data:
+                objects.append(WVWObjective(name))
+
+            # Return said objects.
+            return(objects)
+
+        elif type(wvwID) is str:
+            jsonData = self.getJson('wvw/objectives/{}'.format(wvwID))
+
+            # Return the Object.
+            return(WVWObjective(jsonData))
+
+# I do not like this object.
+# I'm open to improvement suggestions.
 class GW2TP:
     def __init__(self):
         '''
