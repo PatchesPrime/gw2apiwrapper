@@ -489,6 +489,7 @@ class AccountAPI:
         # I split the skinIDs into 200 element chunks.
         # The API only supports 200 IDs at once.
         # Personally I blame terrorism.
+
         safeList = [skinIDs[x:x + 200] for x in range(0, len(skinIDs), 200)]
 
         # The construction of the skin attribute.
@@ -750,8 +751,34 @@ class GlobalAPI:
 
         Returns Skin object(s).
         '''
+        # If they pass None for skin ID get them all.
+        # Note: this can take a bit.
+        if skinID is None:
+            if objects is None:
+                objects = []
+
+            # Default case: get all of them.
+            skinIDs = self.getJson('skins')
+
+            # Useful line is useful.
+            safeList = [skinIDs[x:x + 200] for x in range(0, len(skinIDs), 200)]
+
+            # Generate objects.
+            for safe in safeList:
+                # Clean them up into a proper string.
+                cleanStr = ','.join(str(x) for x in safe)
+
+                # Build a pretty URL.
+                cleanURL = self.url + 'skins?ids={}'.format(cleanStr)
+
+                for skin in getJson(cleanURL):
+                    objects.append(Skin(skin))
+
+            # Return them all.
+            return(objects)
+
         # Remove the need for a factory.
-        if type(skinID) is list:
+        elif type(skinID) is list:
             if objects is None:
                 objects = []
 
@@ -776,7 +803,7 @@ class GlobalAPI:
             # Return the objecct.
             return(Skin(jsonData))
         else:
-            raise TypeError('getSkin() requires a str or list.')
+            raise TypeError('getSkin() requires a str, list or None')
 
     def getItem(self, itemID, objects = None):
         '''
@@ -787,7 +814,33 @@ class GlobalAPI:
 
         Returns Item object(s).
         '''
-        if type(itemID) is list:
+        # Note: this can take a bit.
+        # Like...5 minutes..User beware.
+        if itemID is None:
+            if objects is None:
+                objects = []
+
+            # Default case: get all of them.
+            itemIDs = self.getJson('items')
+
+            # Useful line is useful.
+            safeList = [itemIDs[x:x + 200] for x in range(0, len(itemIDs), 200)]
+
+            # Generate objects.
+            for safe in safeList:
+                # Clean them up into a proper string.
+                cleanStr = ','.join(str(x) for x in safe)
+
+                # Build a pretty URL.
+                cleanURL = self.url + 'items?ids={}'.format(cleanStr)
+
+                for item in getJson(cleanURL):
+                    objects.append(Item(item))
+
+            # Return them all.
+            return(objects)
+
+        elif type(itemID) is list:
             if objects is None:
                 objects = []
 
@@ -821,7 +874,32 @@ class GlobalAPI:
 
         Returns Dye object(s).
         '''
-        if type(dyeID) is list:
+        # Note: this can take a bit.
+        if dyeID is None:
+            if objects is None:
+                objects = []
+
+            # Default case: get all of them.
+            dyeIDs = self.getJson('colors')
+
+            # Useful line is useful.
+            safeList = [dyeIDs[x:x + 200] for x in range(0, len(dyeIDs), 200)]
+
+            # Generate objects.
+            for safe in safeList:
+                # Clean them up into a proper string.
+                cleanStr = ','.join(str(x) for x in safe)
+
+                # Build a pretty URL.
+                cleanURL = self.url + 'colors?ids={}'.format(cleanStr)
+
+                for dye in getJson(cleanURL):
+                    objects.append(Dye(dye))
+
+            # Return them all.
+            return(objects)
+
+        elif type(dyeID) is list:
             if objects is None:
                 objects = []
 
@@ -855,7 +933,32 @@ class GlobalAPI:
 
         Returns Recipe object(s).
         '''
-        if type(recipeID) is list:
+        # Note: this can take a bit.
+        if recipeID is None:
+            if objects is None:
+                objects = []
+
+            # Default case: get all of them.
+            recipeIDs = self.getJson('recipes')
+
+            # Useful line is useful.
+            safeList = [recipeIDs[x:x + 200] for x in range(0, len(recipeIDs), 200)]
+
+            # Generate objects.
+            for safe in safeList:
+                # Clean them up into a proper string.
+                cleanStr = ','.join(str(x) for x in safe)
+
+                # Build a pretty URL.
+                cleanURL = self.url + 'recipes?ids={}'.format(cleanStr)
+
+                for recipe in getJson(cleanURL):
+                    objects.append(Recipe(recipe))
+
+            # Return them all.
+            return(objects)
+
+        elif type(recipeID) is list:
             if objects is None:
                 objects = []
 
@@ -880,7 +983,7 @@ class GlobalAPI:
             # Return the Object.
             return(Recipe(jsonData))
 
-    def getWVWObjective(self, wvwID = None, objects = None):
+    def getWVWObjective(self, wvwID, objects = None):
         '''
         Query the Guild Wars 2 wvw/objectives API and build
         object(s) based off the returned JSON.
