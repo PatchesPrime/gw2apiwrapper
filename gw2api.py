@@ -803,9 +803,9 @@ class GlobalAPI:
                 # Return them all.
                 return(objects)
             else:
-                raise BadIDError("getSkin recieved an invalid str!")
+                raise BadIDError('getSkin recieved an invalid str!')
         else:
-            raise BadIDError("getSkin requires an int, list or str!")
+            raise BadIDError('getSkin requires an int, list or str!')
 
 
     def getItem(self, itemID, objects = None):
@@ -869,9 +869,9 @@ class GlobalAPI:
                 # Return them all.
                 return(objects)
             else:
-                raise BadIDError("getItem recieved an invalid str!")
+                raise BadIDError('getItem recieved an invalid str!')
         else:
-            raise BadIDError("getItem requires an int, list or str!")
+            raise BadIDError('getItem requires an int, list or str!')
 
     def getDye(self, dyeID, objects = None):
         '''
