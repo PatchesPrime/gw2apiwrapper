@@ -1049,6 +1049,7 @@ class GlobalAPI:
                 # Return the Object.
                 return(WVWObjective(jsonData))
 
+
 # I do not like this object.
 # I'm open to improvement suggestions.
 class GW2TP:
@@ -1648,6 +1649,64 @@ class WVWObjective:
         except KeyError:
             # Optional, so default it if missing.
             self.marker = None
+
+class WVWMap:
+    '''
+    Class designed to turn WVWMatch 'maps' attributes
+    into objects for easier use.
+    '''
+    def __init__(self, mapJSON):
+        self.id      = mapJSON['id']
+        self.type    = mapJSON['type']
+        self.scores  = mapJSON['scores']
+        self.bonuses = mapJSON['bonuses']
+        self.kills   = mapJSON['kills']
+        self.deaths  = mapJSON['deaths']
+
+        # list of dictionaries.
+        self.objectives = mapJSON['objectives']
+
+        # The structure of self.objectives elements:
+        # {
+        #     "id": "94-32",    # SAME IN WVWObjective
+        #     "type": "Keep",   # SAME IN WVWObjective
+        #     "owner": "Red",
+        #     "last_flipped": "2015-10-08T06:23:30Z",
+        #     "claimed_by": null,
+        #     "claimed_at": null
+        # },
+
+        # I was (am) torn on how to handle self.objectives
+        # Should I append an object from wvw/objectives to the
+        # dict? It'd be slow. What about tailor the WVWObjective
+        # object to be able to handle this extra data? It'd be fast
+        # but incomplete. It'd be missing map_id, map_type, sector_id,
+        # and coord...
+        # Should I just leave it as is and let users decide?
+
+class WVWMatch:
+    '''
+    Builds an object based off the JSON returned by the
+    Guild Wars 2 official wvw/matches API.
+    '''
+    def __init__(self, wvwJSON):
+        self.id    = wvwJSON['id']
+        self.start = wvwJSON['start_time']
+        self.end   = wvwJSON['end_time']
+
+        # dictionaries
+        self.scores = wvwJSON['scores']
+        self.worlds = wvwJSON['worlds']
+        self.deaths = wvwJSON['deaths']
+        self.kills = wvwJSON['kills']
+
+        # Prime maps list.
+        self.maps = []
+
+        # Build the objects. No additional requests
+        # so it's fast.
+        for data in wvwJSON['maps']:
+            self.maps.append(WVWMap(data))
 
 if __name__ == '__main__':
     pass
