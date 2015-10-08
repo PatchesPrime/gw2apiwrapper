@@ -637,40 +637,34 @@ class AccountAPI:
             # BUILDS
             return(build)
 
-
-    def getMatchResults(self, matchID = None):
+    def getMatchResults(self, matchID):
         '''
         Get the results for a match(s) from the
         Guild Wars 2 API.
 
-        If no ID is supplied, it fetches all games it can.
+        To get all matches, pass "all"
 
         Returns PVPMatch Object(s).
         '''
         self.checkPermission('pvp')
 
-        # Default case.
-        if matchID is None:
-            # Get all the game IDs.
-            gameIDs = self.getJson('pvp/games')
+        if type(matchID) is str:
+            if matchID == 'all':
+                # Build the ID string.
+                gameSTR = 'pvp/games?ids=all'
 
-            # Build the ID string.
-            gameSTR = 'pvp/games?ids={}'.format(','.join(gameIDs))
+                # Make the objects.
+                matches = [PVPMatch(x) for x in self.getJson(gameSTR)]
 
-            # Make the objects.
-            matches = [PVPMatch(x) for x in self.getJson(gameSTR)]
+                return(matches)
+            else:
+                # Build the URL
+                gameSTR = 'pvp/games?id={}'.format(matchID)
 
-            return(matches)
+                # Use the url.
+                match = PVPMatch(self.getJson(gameSTR))
 
-        # Only one ID
-        elif type(matchID) is str:
-            # Build the URL
-            gameSTR = 'pvp/games?id={}'.format(matchID)
-
-            # Use the url.
-            match = PVPMatch(self.getJson(gameSTR))
-
-            return(match)
+                return(match)
 
         # A list of IDs.
         elif type(matchID) is list:
@@ -751,7 +745,6 @@ class GlobalAPI:
 
         Returns Skin object(s).
         '''
-        # If they pass None for skin ID get them all.
         # Note: this can take a bit.
         if type(skinID) is list:
             if objects is None:
@@ -1048,6 +1041,53 @@ class GlobalAPI:
 
                 # Return the Object.
                 return(WVWObjective(jsonData))
+
+    def getWVWMatches(self, matchID, objects = None):
+        '''
+        Build and return WVWMatch objects for all
+        currently in progress WVW Matches.
+
+        See WVWMatch documentation.
+        '''
+        if type(matchID) is list:
+            if objects is None:
+                objects = []
+
+            # Build clean string to append to URL.
+            cleanList = ','.join(str(x) for x in matchID)
+
+            # Build the URL.
+            cleanURL = 'wvw/matches?ids={}'.format(cleanList)
+
+            data = self.getJson(cleanURL)
+
+            # Generate the objects.
+            for name in data:
+                objects.append(WVWMatch(name))
+
+            # Return said objects.
+            return(objects)
+
+        elif type(matchID) is str:
+            if matchID == 'all':
+                if objects is None:
+                    objects = []
+
+                # Default case: get all of them.
+                wvwJSON = self.getJson('wvw/matches?ids=all')
+
+                # Generate objects.
+                for item in wvwJSON:
+                    objects.append(WVWMatch(item))
+
+                # Return them all.
+                return(objects)
+
+            else:
+                jsonData = self.getJson('wvw/matches/{}'.format(matchID))
+
+                # Return the Object.
+                return(WVWMatch(jsonData))
 
 
 # I do not like this object.
@@ -1660,6 +1700,8 @@ class WVWMap:
         self.type    = mapJSON['type']
         self.scores  = mapJSON['scores']
         self.bonuses = mapJSON['bonuses']
+
+        # Note: this is currently bugged for EU
         self.kills   = mapJSON['kills']
         self.deaths  = mapJSON['deaths']
 
@@ -1675,14 +1717,6 @@ class WVWMap:
         #     "claimed_by": null,
         #     "claimed_at": null
         # },
-
-        # I was (am) torn on how to handle self.objectives
-        # Should I append an object from wvw/objectives to the
-        # dict? It'd be slow. What about tailor the WVWObjective
-        # object to be able to handle this extra data? It'd be fast
-        # but incomplete. It'd be missing map_id, map_type, sector_id,
-        # and coord...
-        # Should I just leave it as is and let users decide?
 
 class WVWMatch:
     '''
