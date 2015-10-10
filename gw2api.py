@@ -1119,7 +1119,7 @@ class GW2TP:
         # Removed the need for factory.
         if type(itemID) is list:
             cleanList = ','.join(str(x) for x in itemID)
-            cleanURL = 'listings?ids={}'.format(cleanList)
+            cleanURL  = 'listings?ids={}'.format(cleanList)
         else:
             cleanURL = 'listings/{}'.format(itemID)
 
@@ -1138,7 +1138,7 @@ class GW2TP:
         # Removed the need for factory.
         if type(itemID) is list:
             cleanList = ','.join(str(x) for x in itemID)
-            cleanURL = 'prices?ids={}'.format(cleanList)
+            cleanURL  = 'prices?ids={}'.format(cleanList)
         else:
             cleanURL = 'prices/{}'.format(itemID)
 
@@ -1329,10 +1329,10 @@ class Item:
         # This whole section is just to tear the JSON down into python object
         # attributes.
         if self.type == 'Armor':
-            self.slot          = itemJSON['details']['type']
-            self.weight        = itemJSON['details']['weight_class']
-            self.defense       = itemJSON['details']['defense']
-            self.infusions     = itemJSON['details']['infusion_slots']
+            self.slot      = itemJSON['details']['type']
+            self.weight    = itemJSON['details']['weight_class']
+            self.defense   = itemJSON['details']['defense']
+            self.infusions = itemJSON['details']['infusion_slots']
 
             try:
                 self.infix_upgrade = itemJSON['details']['infix_upgrade']
@@ -1348,7 +1348,7 @@ class Item:
                 self.rune = None
 
             # Seriously: what?
-            self.what     = itemJSON['details']['secondary_suffix_item_id']
+            self.what = itemJSON['details']['secondary_suffix_item_id']
 
         if self.type == 'Back':
             self.infusions = itemJSON['details']['infusion_slots']
@@ -1422,8 +1422,8 @@ class Item:
             self.charges     = itemJSON['details']['charges']
 
         if self.type == 'Trinket':
-            self.trinket       = itemJSON['details']['type']
-            self.infusions     = itemJSON['details']['infusion_slots']
+            self.trinket   = itemJSON['details']['type']
+            self.infusions = itemJSON['details']['infusion_slots']
 
             try:
                 self.infix_upgrade = itemJSON['details']['infix_upgrade']
@@ -1441,10 +1441,10 @@ class Item:
             self.what = itemJSON['details']['secondary_suffix_item_id']
 
         if self.type == 'UpgradeComponent':
-            self.upgrade       = itemJSON['details']['type']
-            self.socketable    = itemJSON['details']['flags']
-            self.infusion      = itemJSON['details']['infusion_upgrade_flags']
-            self.suffix        = itemJSON['details']['suffix']
+            self.upgrade    = itemJSON['details']['type']
+            self.socketable = itemJSON['details']['flags']
+            self.infusion   = itemJSON['details']['infusion_upgrade_flags']
+            self.suffix     = itemJSON['details']['suffix']
 
             try:
                 self.infix_upgrade = itemJSON['details']['infix_upgrade']
@@ -1732,7 +1732,7 @@ class WVWMatch:
         self.scores = wvwJSON['scores']
         self.worlds = wvwJSON['worlds']
         self.deaths = wvwJSON['deaths']
-        self.kills = wvwJSON['kills']
+        self.kills  = wvwJSON['kills']
 
         # Prime maps list.
         self.maps = []
