@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import urllib.parse
 import urllib.request
 import json
