@@ -8,7 +8,7 @@ Being dissatisfied with the current implementations of the Guild Wars 2 API writ
 It will eventually (as it's released) implement all of the GW2 v2 API.
 
 Example:
-```
+``` python
 import gw2api
 
 # Get an account based object. Requires API Key.
@@ -29,5 +29,5 @@ itemObjects = workHorse.getItem(bankIDs)
 # Get the names of all items in bank.
 for item in itemObjects:
   print(item.name)
-  
+
 ```
