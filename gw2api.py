@@ -999,6 +999,8 @@ class GlobalAPI:
         Query the Guild Wars 2 wvw/objectives API and build
         object(s) based off the returned JSON.
 
+        Accepts lists, strings, and WVWMaps.
+
         See WVWObjective class for more documentation.
 
         Returns WVWObjective object(s).
@@ -1052,7 +1054,7 @@ class GlobalAPI:
             idList = [x['id'] for x in wvwID.objectives]
 
             # Build the URL string.
-            cleanList = ",".join(idList)
+            cleanList = ','.join(idList)
 
             # Get the JSON.
             wvwJSON = self.getJson('wvw/objectives?ids={}'.format(cleanList))
