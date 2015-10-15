@@ -1043,6 +1043,39 @@ class GlobalAPI:
                 # Return the Object.
                 return(WVWObjective(jsonData))
 
+        # I hate this.
+        elif type(wvwID) is WVWMap:
+            if objects is None:
+                objects = []
+
+            # We will have to do a couple requests.
+            idList = [x['id'] for x in wvwID.objectives]
+
+            # Build the URL string.
+            cleanList = ",".join(idList)
+
+            # Get the JSON.
+            wvwJSON = self.getJson('wvw/objectives?ids={}'.format(cleanList))
+
+            for item in wvwJSON:
+                for current in wvwID.objectives:
+                    if item['id'] == current['id']:
+                        # Make the object.
+                        new = WVWObjective(item)
+
+                        # Assign the WVWMap specfic values.
+                        new.owner        = current['owner']
+                        new.last_flipped = current['last_flipped']
+                        new.claimed_at   = current['claimed_at']
+                        new.claimed_by   = current['claimed_by']
+
+                        # Append to our object list.
+                        objects.append(new)
+
+            # Return our "modified" WVWObjectives
+            return(objects)
+
+
     def getWVWMatches(self, matchID, objects = None):
         '''
         Build and return WVWMatch objects for all
