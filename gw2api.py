@@ -1691,6 +1691,14 @@ class WVWObjective:
             # Optional, so default it if missing.
             self.marker = None
 
+        # Optional stuff that is only assigned when
+        # processing a WVWMap object via getWVWObjective()
+        # I couldn't think of a better way..
+        self.owner        = None
+        self.last_flipped = None
+        self.claimed_by   = None
+        self.claimed_at   = None
+
 class WVWMap:
     '''
     Class designed to turn WVWMatch 'maps' attributes
