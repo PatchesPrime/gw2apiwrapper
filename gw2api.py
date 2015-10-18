@@ -419,12 +419,34 @@ class AccountAPI:
 
             # Return said objects.
             return(objects)
-        elif type(name) is str:
-            # Get the data.
-            jsonData = self.getJson('characters/' + urllib.parse.quote(name))
 
-            # Return the object that used the data.
-            return Character(jsonData)
+        elif type(name) is str:
+            if name == 'all':
+                if objects is None:
+                    objects = []
+
+                # 'line is >79 characters' yadda yadda
+                characters = []
+
+                # There now it's multi-line.
+                for toon in self.getCharacterList():
+                    characters.append(urllib.parse.quote(toon))
+
+                # Build string.
+                cleanList = ",".join(characters)
+                cleanURL = 'characters?ids={}'.format(cleanList)
+
+                # Get and use the data.
+                jsonData = self.getJson(cleanURL)
+
+                for player in jsonData:
+                    objects.append(Character(player))
+
+                return(objects)
+
+            else:
+                # What now PEP8? WHAT NOW? Should have let me do it above.
+                return(self.getJson('characters/' + urllib.parse.quote(name)))
         else:
             raise TypeError('getCharacter() requires list or str')
 
@@ -1320,8 +1342,24 @@ class Character:
         self.creation = playerJSON['created']
         self.age      = playerJSON['age']
         self.deaths   = playerJSON['deaths']
-        self.gear     = playerJSON['equipment']
-        self.bags     = playerJSON['bags']
+
+        # These are optional, depending on permissions.
+        try:
+            self.gear = playerJSON['equipment']
+        except KeyError:
+            # Obviously they didn't give equipment access.
+            self.gear = None
+
+        try:
+            # This is a 3 element list. pvp, wvw, pve
+            self.builds = playerJSON['specializations']
+        except KeyError:
+            self.builds = None
+
+        try:
+            self.bags = playerJSON['bags']
+        except KeyError:
+            self.bags = None
 
 class Item:
     '''
