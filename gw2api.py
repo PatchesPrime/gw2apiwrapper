@@ -1701,9 +1701,6 @@ class Trait:
         except KeyError:
             self.traited_facts  = None
 
-# TODO / NOTE : This appears to be not in use
-# by the Traits API yet. Still, it works and will only require
-# minor adjustment when it's implemented.
 class Skill:
     '''
     Builds an object based off the JSON returned by the
