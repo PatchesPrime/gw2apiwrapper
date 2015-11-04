@@ -48,34 +48,80 @@ def getJson(url, header = None):
         else:
             raise(e)
 
-def typer(f):
+class typer(object):
     '''
     This decorator is designed to handle input of a
     variable type for the "getX" methods of objects.
 
     '''
-    def wrapper(instance, param):
-        api = f.__name__[3:].lower() + 's'
+    def __init__(self, f):
+        '''
+        Here we build the important information
+        once at import, so we don't have to every time
+        we call a decorated method..
+        '''
+        # Convient location for function.
+        self.f = f
+
+        # The string we'll need.
+        self.api = self.f.__name__[3:].lower() + 's'
 
         # Some aren't consistent.
-        if api == 'dyes':
-            api = 'colors'
+        if self.api == 'dyes':
+            self.api = 'colors'
 
+    def _parse(self, string):
+        '''
+        Return a "safe" string for URLs.
+
+        Won't even lie: I wrote this for PEP8 character count.
+        '''
+        return urllib.parse.quote(string)
+
+    def __get__(self, instance, className):
+        '''
+        This is called immediately before __call__ internally
+        and we need the instance object of the method who called us.
+
+        This allows us to have that information.
+
+        Returns typer.__call__
+        '''
+        self.obj       = instance
+        self.className = className
+
+        # Doesn't work unless you return where to
+        # go next. Naturally, you want calling it to
+        # call __call__
+        return self.__call__
+
+    def __call__(self, param):
+        '''
+        The workhorse of the "typer" decorator.
+
+        This section handles all the work of determining what to do
+        with the input you passed the decorated method.
+
+        Returns an object or list of objects depending on input.
+        '''
         # Type checking..
         if type(param) is list:
+            # Going to need this.
             objects = []
 
             # Build clean string to append to URL.
             cleanList = ','.join(str(x) for x in param)
 
             # Build the URL.
-            cleanURL = urllib.parse.quote('{}?ids={}'.format(api, cleanList))
+            cleanURL = '{}?ids={}'.format(self.api, self._parse(cleanList))
 
-            data = instance.getJson(cleanURL)
+            # Get the JSON.
+            data = self.obj.getJson(cleanURL)
+
 
             # Generate the objects.
             for item in data:
-                objects.append(f(instance, item))
+                objects.append(self.f(self.obj, item))
 
             # Return said objects.
             return(objects)
@@ -84,11 +130,11 @@ def typer(f):
             # You shouldn't do this. It can take a really
             # long time.
             if param == 'all':
-
+                # Need this too.
                 objects = []
 
                 # Default case: get all of them.
-                ids = instance.getJson(api)
+                ids = self.obj.getJson(self.api)
 
                 # Useful line is useful.
                 safeList = [ids[x:x + 200] for x in range(0, len(ids), 200)]
@@ -97,31 +143,30 @@ def typer(f):
                 for safe in safeList:
                     # Clean them up into a proper string.
                     cleanStr = ','.join(str(x) for x in safe)
-                    cleanStr = urllib.parse.quote(cleanStr)
+                    cleanStr = self._parse(cleanStr)
 
                     # Build a pretty URL.
-                    cleanURL = '{}?ids={}'.format(api, cleanStr)
+                    cleanURL = '{}?ids={}'.format(self.api, cleanStr)
 
-                    data = instance.getJson(cleanURL)
+                    data = self.obj.getJson(cleanURL)
 
                     # Build objects.
                     for item in data:
-                        objects.append(f(instance, item))
+                        objects.append(self.f(self.obj, item))
 
                 # Return them all.
                 return(objects)
             else:
-                safeString = urllib.parse.quote(param)
-                jsonData = instance.getJson('{}/{}'.format(api, safeString))
+                safeArgs = (self.api, self._parse(param))
+                jsonData = self.obj.getJson('{}/{}'.format(*safeArgs))
 
-                return(f(instance, jsonData))
+                return(self.f(self.obj, jsonData))
 
         elif type(param) is int:
-            jsonData = instance.getJson('{}/{}'.format(api, param))
+            jsonData = self.obj.getJson('{}/{}'.format(self.api, param))
 
-            return(f(instance, jsonData))
+            return(self.f(self.obj, jsonData))
 
-    return wrapper
 
 def getBuild():
     '''
