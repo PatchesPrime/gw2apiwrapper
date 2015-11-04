@@ -69,7 +69,7 @@ def typer(f):
             cleanList = ','.join(str(x) for x in param)
 
             # Build the URL.
-            cleanURL = '{}?ids={}'.format(api, cleanList)
+            cleanURL = urllib.parse.quote('{}?ids={}'.format(api, cleanList))
 
             data = instance.getJson(cleanURL)
 
@@ -97,6 +97,7 @@ def typer(f):
                 for safe in safeList:
                     # Clean them up into a proper string.
                     cleanStr = ','.join(str(x) for x in safe)
+                    cleanStr = urllib.parse.quote(cleanStr)
 
                     # Build a pretty URL.
                     cleanURL = '{}?ids={}'.format(api, cleanStr)
@@ -110,7 +111,8 @@ def typer(f):
                 # Return them all.
                 return(objects)
             else:
-                jsonData = instance.getJson('{}/{}'.format(api, param))
+                safeString = urllib.parse.quote(param)
+                jsonData = instance.getJson('{}/{}'.format(api, safeString))
 
                 return(f(instance, jsonData))
 
@@ -459,9 +461,8 @@ class AccountAPI:
 
         return self.getJson('characters/')
 
-    # Starting here, things get repetative. Still, not bad.
-    # Just going to have to clean it up at some point.
-    def getCharacter(self, name, objects = None):
+    @typer
+    def getCharacter(self, json):
         '''
         Uses the Guild Wars 2 API to query for a given
         character name on your account, and passes the
@@ -471,57 +472,7 @@ class AccountAPI:
         '''
         self.checkPermission('characters')
 
-        # Removes the need for a factory by type checking.
-        if type(name) is list:
-            # Serves a dual purpose. We get a list to append
-            # and they have the option of using their own.
-            if objects is None:
-                objects = []
-
-            # Build clean string to append to URL.
-            cleanStr = ','.join(str(x) for x in name)
-
-            # Build the URL.
-            cleanURL = urllib.parse.quote('characters?ids={}'.format(cleanStr))
-
-            data = self.getJson(cleanURL)
-
-            # Generate the objects.
-            for player in data:
-                objects.append(Character(player))
-
-            # Return said objects.
-            return(objects)
-
-        elif type(name) is str:
-            if name == 'all':
-                if objects is None:
-                    objects = []
-
-                # 'line is >79 characters' yadda yadda
-                characters = []
-
-                # There now it's multi-line.
-                for toon in self.getCharacterList():
-                    characters.append(urllib.parse.quote(toon))
-
-                # Build string.
-                cleanList = ",".join(characters)
-                cleanURL = 'characters?ids={}'.format(cleanList)
-
-                # Get and use the data.
-                jsonData = self.getJson(cleanURL)
-
-                for player in jsonData:
-                    objects.append(Character(player))
-
-                return(objects)
-
-            else:
-                # What now PEP8? WHAT NOW? Should have let me do it above.
-                return(self.getJson('characters/' + urllib.parse.quote(name)))
-        else:
-            raise TypeError('getCharacter() requires list or str')
+        return Character(json)
 
     def getDyes(self):
         '''
@@ -539,27 +490,29 @@ class AccountAPI:
         self.dyes = []
 
         # Get all of the IDs we're going to need.
-        dyeIDs = self.getJson('account/dyes')
+        skinIDs = self.getJson('account/dyes')
 
         # I am both proud of an ashamed of this line.
-        # I split the dyeIDs into 200 element chunks.
+        # I split the skinIDs into 200 element chunks.
         # The API only supports 200 IDs at once.
         # Personally I blame terrorism.
-        safeList = [dyeIDs[x:x + 200] for x in range(0, len(dyeIDs), 200)]
 
-        # The construction of the dye attribute.
+        safeList = [skinIDs[x:x + 200] for x in range(0, len(skinIDs), 200)]
+
+        # The construction of the skin attribute.
         for safe in safeList:
             # Clean them up into a proper string.
             cleanStr = ','.join(str(x) for x in safe)
 
             # Build a pretty URL.
-            cleanURL = self.url + 'colors?ids={}'.format(cleanStr)
+            cleanURL = self.url + 'dyes?ids={}'.format(cleanStr)
 
             # Lets build some objects!
-            for dye in getJson(cleanURL):
-                self.dyes.append(Dye(dye))
+            for skin in getJson(cleanURL):
+                self.dyes.append(Skin(skin))
 
-        # Return finished Dye List.
+        # Return it for immediate use as interator.
+        # If that's what gets you hard.
         return(self.dyes)
 
     def getSkins(self):
