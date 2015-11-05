@@ -235,8 +235,6 @@ def isMaterial(itemID):
         # Return the IDs that ARE materials.
         return(set(matIDs).intersection(itemID))
 
-
-
 def recipeSearch(in_or_out, itemID):
     '''
     Search using the 'recipe/search' API for the given
@@ -1178,17 +1176,8 @@ class Map:
 
 class Character:
     '''
-    Character objects take a JSON lump of character data and
-    convert it to a python object.
-
-    This eliminates the need to pass the API key here.
-    It does not inherit the GW2Armory class because we want
-    to use an active instance of GW2Armory, not an empty version
-    or template.
-
-    Usage:
-        # Return object of a character...
-        EngiPatches = Character(jsonData)
+    Builds an object based off the JSON returned by the
+    Guild Wars 2 official character API.
     '''
     def __init__(self, playerJSON):
         # Assign ALL THE THINGS
