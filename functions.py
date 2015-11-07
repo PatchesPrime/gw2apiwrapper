@@ -50,7 +50,7 @@ class typer(object):
         # call __call__
         return self.__call__
 
-    def __call__(self, param):
+    def __call__(self, *args):
         '''
         The workhorse of the "typer" decorator.
 
@@ -63,28 +63,33 @@ class typer(object):
         if 'AccountAPI' in str(self.obj):
             # The AccountAPI gets have an s at the end so
             # we need to remove that due to our __init__
+
+            # "This is begging to be fixed." -Matt.
+            # "One day." -Patches
             if self.api[-2:]  == 'ss':
-                self.api = self.api[:-1]
+                api = self.api[:-1]
 
             # For returning later.
             objects = []
 
             # Get all of the IDs we're going to need.
-            if self.api == 'characters':
+            if api == 'characters':
                 # We want character stuff, remove account prefix.
-                data = self.obj.getJson(self.api)
+                data = self.obj.getJson(api)
             else:
                 # We're not looking for character information.
-                self.api = 'account/{}'.format(self.api)
+                print(api)
+                api = 'account/{}'.format(api)
+                print(api)
 
             # Get the
-            data = self.obj.getJson(self.api)
+            data = self.obj.getJson(api)
 
             # We do this again because the string for our
             # API has possibly been handled. It also sets us
             # up to easily integrate pvp/wvw later.
-            if 'dyes' in self.api:
-                self.api = 'colors'
+            if 'dyes' in api:
+                api = 'colors'
 
             # I am both proud of an ashamed of this line.
             # I split the skinIDs into 200 element chunks.
@@ -99,9 +104,9 @@ class typer(object):
 
                 # Build a pretty URL.
                 if ' ' in cleanStr:
-                    cleanURL = '{}?ids={}'.format(self.api, self._parse(cleanStr))
+                    cleanURL = '{}?ids={}'.format(api, self._parse(cleanStr))
                 else:
-                    cleanURL = '{}?ids={}'.format(self.api, cleanStr)
+                    cleanURL = '{}?ids={}'.format(api, cleanStr)
 
                 # Lets build some objects!
                 for item in self.obj.getJson(cleanURL):
@@ -112,12 +117,12 @@ class typer(object):
             return(objects)
 
         # Type checking..
-        if type(param) is list:
+        if type(*args) is list:
             # Going to need this.
             objects = []
 
             # Build clean string to append to URL.
-            cleanList = ','.join(str(x) for x in param)
+            cleanList = ','.join(str(x) for x in args)
 
             # Build the URL.
             if ' ' in cleanList:
@@ -138,10 +143,10 @@ class typer(object):
             # Return said objects.
             return(objects)
 
-        elif type(param) is str:
+        elif type(*args) is str:
             # You shouldn't do this. It can take a really
             # long time.
-            if param == 'all':
+            if args == 'all':
                 # Need this too.
                 objects = []
 
@@ -169,13 +174,13 @@ class typer(object):
                 # Return them all.
                 return(objects)
             else:
-                safeArgs = (self.api, self._parse(param))
+                safeArgs = (self.api, self._parse(*args))
                 jsonData = self.obj.getJson('{}/{}'.format(*safeArgs))
 
                 return(self.f(self.obj, jsonData))
 
-        elif type(param) is int:
-            jsonData = self.obj.getJson('{}/{}'.format(self.api, param))
+        elif type(*args) is int:
+            jsonData = self.obj.getJson('{}/{}'.format(self.api, *args))
 
             return(self.f(self.obj, jsonData))
 
