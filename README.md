@@ -9,13 +9,13 @@ It will eventually (as it's released) implement all of the GW2 v2 API.
 
 Example:
 ``` python
-import gw2api
+import GW2API
 
 # Get an account based object. Requires API Key.
-personal = AccountAPI("<APIKEY>")
+personal = GW2API.AccountAPI("<APIKEY>")
 
 # Get a 'Global' api object. (Non-authed)
-workHorse = GlobalAPI()
+workHorse = GW2API.GlobalAPI()
 
 # This is iterable, as not only does it fill the personal.bank
 # attribute, it also returns that information.
