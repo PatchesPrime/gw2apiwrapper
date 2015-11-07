@@ -576,7 +576,12 @@ class Mini:
     def __init__(self, miniJSON):
         self.id      = miniJSON['id']
         self.name    = miniJSON['name']
-        self.unlock  = miniJSON['unlock']
         self.icon    = miniJSON['icon']
         self.order   = miniJSON['order']
         self.item_id = miniJSON['item_id']
+
+        # Only exists on a few minis.
+        try:
+            self.unlock = miniJSON['unlock']
+        except KeyError:
+            self.unlock = None
