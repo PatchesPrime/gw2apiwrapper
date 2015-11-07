@@ -567,3 +567,16 @@ class PVPMatch:
         self.team       = pvpJSON['team']
         self.profession = pvpJSON['profession']
         self.scores     = pvpJSON['scores']
+
+class Mini:
+    '''
+    Builds an object based off the JSON returned by the
+    Guild Wars 2 official mini API.
+    '''
+    def __init__(self, miniJSON):
+        self.id      = miniJSON['id']
+        self.name    = miniJSON['name']
+        self.unlock  = miniJSON['unlock']
+        self.icon    = miniJSON['icon']
+        self.order   = miniJSON['order']
+        self.item_id = miniJSON['item_id']
