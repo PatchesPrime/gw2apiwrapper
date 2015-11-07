@@ -78,9 +78,7 @@ class typer(object):
                 data = self.obj.getJson(api)
             else:
                 # We're not looking for character information.
-                print(api)
                 api = 'account/{}'.format(api)
-                print(api)
 
             # Get the
             data = self.obj.getJson(api)
@@ -122,14 +120,13 @@ class typer(object):
             objects = []
 
             # Build clean string to append to URL.
-            cleanList = ','.join(str(x) for x in args)
+            cleanList = ','.join(str(x) for x in list(*args))
 
             # Build the URL.
             if ' ' in cleanList:
                 # If there is a space, we need to parse that.
                 cleanURL = '{}?ids={}'.format(self.api, self._parse(cleanList))
             else:
-                #
                 cleanURL = '{}?ids={}'.format(self.api, cleanList)
 
             # Get the JSON.
