@@ -61,6 +61,18 @@ class GlobalAPI:
         '''
         return eps.Recipe(json)
 
+    @typer
+    def getMini(self, json):
+        '''
+        Query the Guild Wars 2 Recipe API and build
+        object(s) based off the returned JSON.
+
+        See Recipe class for more documentation.
+
+        Returns Mini object(s).
+        '''
+        return eps.Mini(json)
+
 
     def getWVWObjective(self, wvwID, objects = None):
         '''
@@ -404,7 +416,7 @@ class AccountAPI:
         '''
         self.checkPermission('characters')
 
-        return eps.Character(json)
+        return(eps.Character(json))
 
     @typer
     def getDyes(self, json):
@@ -422,7 +434,7 @@ class AccountAPI:
         return(eps.Dye(json))
 
     @typer
-    def getSkins(self):
+    def getSkins(self, json):
         '''
         Queries the Guild Wars 2 account Skins API
         and builds an object (or objects) based on the
@@ -435,34 +447,7 @@ class AccountAPI:
         '''
         self.checkPermission('unlocks')
 
-        # Only exists if it's asked for.
-        self.skins = []
-
-        # Get all of the IDs we're going to need.
-        skinIDs = self.getJson('account/skins')
-
-        # I am both proud of an ashamed of this line.
-        # I split the skinIDs into 200 element chunks.
-        # The API only supports 200 IDs at once.
-        # Personally I blame terrorism.
-
-        safeList = [skinIDs[x:x + 200] for x in range(0, len(skinIDs), 200)]
-
-        # The construction of the skin attribute.
-        for safe in safeList:
-            # Clean them up into a proper string.
-            cleanStr = ','.join(str(x) for x in safe)
-
-            # Build a pretty URL.
-            cleanURL = 'skins?ids={}'.format(cleanStr)
-
-            # Lets build some objects!
-            for skin in self.getJson(cleanURL):
-                self.skins.append(eps.Skin(skin))
-
-        # Return it for immediate use as interator.
-        # If that's what gets you hard.
-        return(self.skins)
+        return(eps.Skin(json))
 
     def getTraits(self, charName, areaFlag = None):
         '''
