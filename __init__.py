@@ -421,6 +421,7 @@ class AccountAPI:
 
         return(eps.Dye(json))
 
+    @typer
     def getSkins(self):
         '''
         Queries the Guild Wars 2 account Skins API
