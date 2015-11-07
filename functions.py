@@ -72,8 +72,14 @@ class typer(object):
             # For returning later.
             objects = []
 
+            # List used to store names of "crossing" endpoints.
+            crossList = ['characters',
+                         'skins',
+                         'dyes',
+                         'minis']
+
             # Get all of the IDs we're going to need.
-            if api == 'characters':
+            if api in crossList:
                 # We want character stuff, remove account prefix.
                 data = self.obj.getJson(api)
             else:
@@ -82,12 +88,6 @@ class typer(object):
 
             # Get the
             data = self.obj.getJson(api)
-
-            # We do this again because the string for our
-            # API has possibly been handled. It also sets us
-            # up to easily integrate pvp/wvw later.
-            if 'dyes' in api:
-                api = 'colors'
 
             # I am both proud of an ashamed of this line.
             # I split the skinIDs into 200 element chunks.
