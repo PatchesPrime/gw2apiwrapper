@@ -240,7 +240,7 @@ class AccountAPI:
             # PEP8 compliance Matt. It's the devil.
             # It makes me do bad things. But the line is pink
             # and it must not be pink.
-            raise PermissionError('PermissionError: {:s}'.format(apiName))
+            raise PermissionError(apiName)
 
     def getWallet(self):
         '''
@@ -395,7 +395,7 @@ class AccountAPI:
                 'selling': self.selling, 'buying': self.buying})
 
     @typer
-    def getCharacters(self, json):
+    def getCharacters(self):
         '''
         Uses the Guild Wars 2 API to query for a given
         character name on your account, and passes the
@@ -405,10 +405,10 @@ class AccountAPI:
         '''
         self.checkPermission('characters')
 
-        return(eps.Character(json))
+        pass
 
     @typer
-    def getDyes(self, json):
+    def getDyes(self):
         '''
         Query the Guild Wars 2 account Dye api and build
         'Dye()' objects based off the JSON.
@@ -420,10 +420,10 @@ class AccountAPI:
         '''
         self.checkPermission('unlocks')
 
-        return(eps.Dye(json))
+        pass
 
     @typer
-    def getSkins(self, json):
+    def getSkins(self):
         '''
         Queries the Guild Wars 2 account Skins API
         and builds an object (or objects) based on the
@@ -436,7 +436,7 @@ class AccountAPI:
         '''
         self.checkPermission('unlocks')
 
-        return(eps.Skin(json))
+        pass
 
     def getTraits(self, charName, areaFlag = None):
         '''
