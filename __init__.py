@@ -394,19 +394,8 @@ class AccountAPI:
         return({'sold': self.sold, 'bought': self.bought,
                 'selling': self.selling, 'buying': self.buying})
 
-    def getCharacterList(self):
-        '''
-        Instead of having two types of Character instance, just have a method
-        to return a list of characters.
-
-        Returns a list of of your character names.
-        '''
-        self.checkPermission('characters')
-
-        return self.getJson('characters/')
-
     @typer
-    def getCharacter(self, json):
+    def getCharacters(self, json):
         '''
         Uses the Guild Wars 2 API to query for a given
         character name on your account, and passes the
