@@ -1,7 +1,9 @@
 import json
 import urllib.parse
 import urllib.request
+import importlib
 from .exceptions import BadIDError, PermissionError, FlagParameterError
+
 
 class typer(object):
     '''
@@ -61,33 +63,33 @@ class typer(object):
         '''
         # Dirty, but effective...?
         if 'AccountAPI' in str(self.obj):
-            # The AccountAPI gets have an s at the end so
+            # The AccountAPI get methods have an s at the end so
             # we need to remove that due to our __init__
-
             # "This is begging to be fixed." -Matt.
             # "One day." -Patches
             if self.api[-2:]  == 'ss':
                 api = self.api[:-1]
+            else:
+                api = self.api
+
+            # We do this to check for permissions!
+            self.f(self.obj)
 
             # For returning later.
             objects = []
 
             # List used to store names of "crossing" endpoints.
-            crossList = ['characters',
-                         'skins',
-                         'dyes',
-                         'minis']
+            # Note: I thought about adding characters to it, but
+            # the characters endpoint is unique. It is authed yet
+            # has no prefix.
+            crossList = {'skins': 'skins',
+                         'dyes': 'colors',
+                         'minis': 'minis'}
 
-            # Get all of the IDs we're going to need.
-            if api in crossList:
-                # We want character stuff, remove account prefix.
-                data = self.obj.getJson(api)
+            if api != 'characters':
+                data = self.obj.getJson('account/{}'.format(api))
             else:
-                # We're not looking for character information.
-                api = 'account/{}'.format(api)
-
-            # Get the
-            data = self.obj.getJson(api)
+                data = self.obj.getJson(api)
 
             # I am both proud of an ashamed of this line.
             # I split the skinIDs into 200 element chunks.
@@ -102,13 +104,33 @@ class typer(object):
 
                 # Build a pretty URL.
                 if ' ' in cleanStr:
-                    cleanURL = '{}?ids={}'.format(api, self._parse(cleanStr))
+                    # Remove spaces.
+                    parsed = self._parse(cleanStr)
+
+                    # As it is now, this line works. If for some reason
+                    # you begin getting strange errors, it might be this.
+                    # It only works because the 'characters' endpoint is the
+                    # only one with spaces.
+                    cleanURL = '{}?ids={}'.format(api, parsed)
+
                 else:
-                    cleanURL = '{}?ids={}'.format(api, cleanStr)
+                    cleanURL = '{}?ids={}'.format(crossList[api], cleanStr)
 
                 # Lets build some objects!
                 for item in self.obj.getJson(cleanURL):
-                    objects.append(self.f(self.obj, item))
+                    # This whole for loop makes me laugh.
+                    # And nauseous.
+                    if self.f.__name__[-1:] == 's':
+                        name = self.f.__name__[3:-1]
+                    else:
+                        name = self.f.__name__
+
+                    # I know this is bad.
+                    # But all the cool kids bypass import rules..
+                    module = importlib.import_module('GW2API.descriptions')
+                    obj = getattr(module, name)
+
+                    objects.append(obj(item))
 
             # Return it for immediate use as interator.
             # If that's what gets you hard.
