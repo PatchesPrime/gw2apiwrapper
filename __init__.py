@@ -438,6 +438,22 @@ class AccountAPI:
 
         pass
 
+    @typer
+    def getMinis(self):
+        '''
+        Queries the Guild Wars 2 account Minis API
+        and builds an object (or objects) based on the
+        returned JSON.
+
+        See the Mini class for its documentation.
+
+        NOTE: This can be slightly memory intensive. It IS every
+        mini you have unlocked after all.
+        '''
+        self.checkPermission('unlocks')
+
+        pass
+
     def getTraits(self, charName, areaFlag = None):
         '''
         Query multiple APIs (account specialization, trait, etc)
