@@ -326,6 +326,7 @@ class AccountAPI:
 
         pass
 
+    @typer
     def getMaterials(self):
         '''
         Gets your materials raw JSON via the Guild Wars 2 official
@@ -344,11 +345,7 @@ class AccountAPI:
         '''
         self.checkPermission('inventories')
 
-        # Store it in the object.
-        self.materials = self.getJson('account/materials')
-
-        # Return a list of dictionaries.
-        return(self.materials)
+        pass
 
     def getTradeHistory(self):
         '''
