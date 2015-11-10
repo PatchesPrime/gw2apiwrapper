@@ -27,6 +27,10 @@ class typer(object):
         if self.api == 'dyes':
             self.api = 'colors'
 
+        # Don't judge me...
+        elif self.api == 'banks':
+            self.api = 'bank'
+
     def _parse(self, string):
         '''
         Return a "safe" string for URLs.
@@ -84,7 +88,10 @@ class typer(object):
             # has no prefix.
             crossList = {'skins': 'skins',
                          'dyes': 'colors',
-                         'minis': 'minis'}
+                         'minis': 'minis',
+                         'achievements': 'achievements',
+                         'bank': 'items',
+                         'materials': 'items'}
 
             if api != 'characters':
                 data = self.obj.getJson('account/{}'.format(api))
@@ -97,10 +104,31 @@ class typer(object):
             # Personally I blame terrorism.
             safeList = [data[x:x + 200] for x in range(0, len(data), 200)]
 
+            # This feels wrong, I may address it later if
+            # it begins to cause problems.
+            if type(data[0]) is dict:
+                dictFlag = True
+            else:
+                dictFlag = False
+
             # The construction of the skin attribute.
             for safe in safeList:
                 # Clean them up into a proper string.
-                cleanStr = ','.join(str(x) for x in safe)
+                try:
+                    # I could do this in a list comprehension but
+                    # then it is against PEP8 at 84 charactes.
+                    temp = []
+                    for current in safe:
+                        if current is not None:
+                                temp.append(current['id'])
+
+
+                    # I much prefer list comprehensions.
+                    # I will remove the 4 character difference somehow..
+                    cleanStr = ','.join(str(x) for x in temp)
+
+                except (KeyError, TypeError):
+                    cleanStr = ','.join(str(x) for x in safe)
 
                 # Build a pretty URL.
                 if ' ' in cleanStr:
@@ -125,12 +153,28 @@ class typer(object):
                     else:
                         name = self.f.__name__
 
+                    # Currently for bank/materials
+                    if 'get' in name:
+                        name = name[3:]
+                        if name.lower() in crossList:
+                            # Haha, it's so ugly it's cute.
+                            name = crossList[name.lower()].title()[:-1]
+
                     # I know this is bad.
                     # But all the cool kids bypass import rules..
                     module = importlib.import_module('GW2API.descriptions')
                     obj = getattr(module, name)
 
-                    objects.append(obj(item))
+                    # Handle dictionaries differently.
+                    if dictFlag:
+                        # Add our item object to the dictionary
+                        # that references it.
+                        item.update({'object': obj(item)})
+
+                        # Append.
+                        objects.append(item)
+                    else:
+                        objects.append(obj(item))
 
             # Return it for immediate use as interator.
             # If that's what gets you hard.
