@@ -177,6 +177,9 @@ class typer(object):
                     else:
                         objects.append(obj(item))
 
+            # We need to assign the data to the object.
+            setattr(self.obj, api, objects)
+
             # Return it for immediate use as interator.
             # If that's what gets you hard.
             return(objects)
