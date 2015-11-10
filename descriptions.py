@@ -585,3 +585,22 @@ class Mini:
             self.unlock = miniJSON['unlock']
         except KeyError:
             self.unlock = None
+
+class Achievement:
+    '''
+    Builds and object based off the JSON returned by the
+    Guild Wars 2 official achievements API.
+    '''
+    def __init__(self, achieveJSON):
+        self.id = achieveJSON['id']
+
+        try:
+            self.icon = achieveJSON['icon']
+        except KeyError:
+            self.icon = None
+
+        self.name        = achieveJSON['name']
+        self.description = achieveJSON['description']
+        self.requirement = achieveJSON['requirement']
+        self.type        = achieveJSON['type']
+        self.flags       = achieveJSON['flags']
