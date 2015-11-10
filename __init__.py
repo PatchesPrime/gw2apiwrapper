@@ -14,6 +14,19 @@ class GlobalAPI:
         return(getJson(self.url + api, header=None))
 
     @typer
+    def getAchievement(self, json):
+        '''
+        Query the non-authed Guild Wars 2 achievement
+        API and build Achievement(s) objects based off
+        the returned json.
+
+        See Achievement class for documentation
+
+        Returns Achievement(s) objects.
+        '''
+        return eps.Achievement(json)
+
+    @typer
     def getSkin(self, json):
         '''
         Query the non-authed skin Guild Wars 2 Skin API
@@ -275,31 +288,42 @@ class AccountAPI:
 
         return(self.wallet)
 
+    @typer
     def getBank(self):
         '''
         Gets your banks raw JSON via the Guild Wars 2 official
         API and stores it in the object.
 
-        Also returns this information, to immediately use in thing
-        such as a for loop.
-
-        Use the rest of the API to get more detailed information.
-
         Returns a list of dictionaries which have keys:
-
         id        - (int) The item's ID.
         count     - (int) The amount of items in the item stack.
+        object    - (Item)
         skin      - (int, optional) If not default skin, its ID.
         upgrades  - (list, optional) IDs for each rune/signet on the item.
         infusions - (list, optional) IDs for each infusion on the item.
+
         '''
         self.checkPermission('inventories')
 
-        # Store it in the object.
-        self.bank = self.getJson('account/bank')
+        pass
 
-        # Return a list of dictionaries.
-        return(self.bank)
+    @typer
+    def getAchievements(self):
+        '''
+        Gets your achievements raw JSON via the Guild Wars 2
+        official API and stores an Achievement objects based
+        off the IDs inside.
+
+        Returns a list of dictionaries with the following keys:
+        id      - (int) The achievement's ID.
+        current - (int) The current progress on the achivement.
+        max     - (int) The total progress needed to be finished.
+        done    - (boolean) True/False for if achievement is finished.
+
+        '''
+        self.checkPermission('progression')
+
+        pass
 
     def getMaterials(self):
         '''
