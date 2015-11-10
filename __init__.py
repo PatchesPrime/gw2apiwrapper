@@ -316,6 +316,7 @@ class AccountAPI:
 
         Returns a list of dictionaries with the following keys:
         id      - (int) The achievement's ID.
+        object  - (Achievement) The object representing achiement.
         current - (int) The current progress on the achivement.
         max     - (int) The total progress needed to be finished.
         done    - (boolean) True/False for if achievement is finished.
