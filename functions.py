@@ -86,12 +86,14 @@ class typer(object):
             # Note: I thought about adding characters to it, but
             # the characters endpoint is unique. It is authed yet
             # has no prefix.
-            crossList = {'skins': 'skins',
-                         'dyes': 'colors',
-                         'minis': 'minis',
-                         'achievements': 'achievements',
-                         'bank': 'items',
-                         'materials': 'items'}
+            crossList = {'skins': {'url': 'skins', 'obj': 'Skin'},
+                         'dyes': {'url': 'colors', 'obj': 'Dye'},
+                         'minis': {'url': 'minis', 'obj': 'Mini'},
+                         'bank': {'url': 'items', 'obj': 'Item'},
+                         'materials': {'url': 'items', 'obj': 'Item'},
+                         'achievements': {'url': 'achievements',
+                                          'obj': 'Achievement'}}
+
 
             if api != 'characters':
                 data = self.obj.getJson('account/{}'.format(api))
@@ -142,28 +144,27 @@ class typer(object):
                     cleanURL = '{}?ids={}'.format(api, parsed)
 
                 else:
-                    cleanURL = '{}?ids={}'.format(crossList[api], cleanStr)
+                    temp = crossList[api]['url']
+                    cleanURL = '{}?ids={}'.format(temp, cleanStr)
 
                 # Lets build some objects!
                 for item in self.obj.getJson(cleanURL):
                     # This whole for loop makes me laugh.
-                    # And nauseous.
-                    if self.f.__name__[-1:] == 's':
-                        name = self.f.__name__[3:-1]
-                    else:
-                        name = self.f.__name__
+                    try:
+                        objName = crossList[api]['obj']
+                    except KeyError:
+                        # Something went wrong. Likely 'characters' fault.
+                        # Try to build it off the API name
+                        if api.title()[-1] == 's':
+                            objName = api.title()[:-1]
+                        else:
+                            objName = api.title()
 
-                    # Currently for bank/materials
-                    if 'get' in name:
-                        name = name[3:]
-                        if name.lower() in crossList:
-                            # Haha, it's so ugly it's cute.
-                            name = crossList[name.lower()].title()[:-1]
 
                     # I know this is bad.
                     # But all the cool kids bypass import rules..
                     module = importlib.import_module('GW2API.descriptions')
-                    obj = getattr(module, name)
+                    obj = getattr(module, objName)
 
                     # Handle dictionaries differently.
                     if dictFlag:
@@ -300,6 +301,7 @@ def getAssets():
     icon - (str) URL off the asset.
     '''
     return(getJson('https://api.guildwars2.com/v2/files?ids=all'))
+
 def isMaterial(itemID):
     '''
     Takes an item ID (int or list), and checks the materials
