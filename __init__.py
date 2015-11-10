@@ -517,7 +517,11 @@ class AccountAPI:
                 build[area] = []
                 # Specialization strings.
                 # We format everything here purely for PEP8.
-                specIDs = ','.join(str(x['id']) for x in buildJSON[area])
+                try:
+                    specIDs = ','.join(str(x['id']) for x in buildJSON[area])
+                except TypeError:
+                    continue
+
                 specStr = 'specializations?ids={}'.format(specIDs)
 
                 # Specialization JSON
