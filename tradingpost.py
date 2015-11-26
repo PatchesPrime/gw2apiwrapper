@@ -1,3 +1,5 @@
+from .functions import getJson
+
 class GW2TP:
     def __init__(self):
         '''
