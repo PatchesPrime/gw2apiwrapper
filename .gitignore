@@ -4,3 +4,5 @@
 *pycache*
 /#descriptions.py#
 *#*
+*.pyc
+/testsgw2api.py
