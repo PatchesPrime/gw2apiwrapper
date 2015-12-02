@@ -86,7 +86,6 @@ class GlobalAPI:
         '''
         return eps.Mini(json)
 
-
     def getWVWObjective(self, wvwID, objects = None):
         '''
         Query the Guild Wars 2 wvw/objectives API and build
