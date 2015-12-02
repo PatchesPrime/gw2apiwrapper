@@ -412,3 +412,21 @@ def getWorldName(worldID):
 
     # Return them. Raw JSON but...oh well?
     return(getJson(cleanURL))
+
+def getEmblem(fg_or_bg, emblemID):
+    '''
+    A simple method to query the Guild Wars 2 emblem API
+    to provide guild emblem assets.
+
+    fg_or_bg should be 'foregrounds' or 'backgrounds'
+
+    eg.
+
+    GW2API.functions.getEmblem('foregrounds', 11)
+
+    '''
+    url = 'https://api.guildwars2.com/v2/emblem/'
+
+    cleanURL = "{}{}?ids={}".format(url, fg_or_bg, emblemID)
+
+    return getJson(cleanURL)
