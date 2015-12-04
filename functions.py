@@ -413,20 +413,33 @@ def getWorldName(worldID):
     # Return them. Raw JSON but...oh well?
     return(getJson(cleanURL))
 
-def getEmblem(fg_or_bg, emblemID):
+def getEmblem(emblemID, layer = None):
     '''
     A simple method to query the Guild Wars 2 emblem API
     to provide guild emblem assets.
 
-    fg_or_bg should be 'foregrounds' or 'backgrounds'
+    layer should be either 'fg' or 'bg'.
 
     eg.
 
-    GW2API.functions.getEmblem('foregrounds', 11)
+    GW2API.functions.getEmblem(11)
 
     '''
-    url = 'https://api.guildwars2.com/v2/emblem/'
+    # The two URLs.
+    urls = {'fg': 'https://api.guildwars2.com/v2/emblem/foregrounds',
+            'bg': 'https://api.guildwars2.com/v2/emblem/backgrounds'}
 
-    cleanURL = "{}{}?ids={}".format(url, fg_or_bg, emblemID)
+    if layer in urls.keys():
+        # Simple, we know what we want: get it.
+        cleanURL = "{}?ids={}".format(urls[layer], emblemID)
+        return getJson(cleanURL)
+    else:
+        # Still simple, but takes longer. We don't know what we want.
+        # Get both.
+        endList = []
 
-    return getJson(cleanURL)
+        for key in urls.keys():
+            cleanURL = "{}?ids={}".format(urls[key], emblemID)
+            endList.append(getJson(cleanURL))
+
+    return endList
