@@ -75,7 +75,13 @@ class typer(object):
 
                      # Achievement Stuff.
                      'achievements': {'url': 'achievements',
-                                      'obj': 'Achievement'}}
+                                      'obj': 'Achievement'},
+
+                     'achievementgroups': {'url': 'achievements/groups',
+                                           'obj': 'AchievementGroup'},
+
+                     'achievementcategorys': {'url': 'achievements/categories',
+                                              'obj': 'AchievementCategory'}}
 
 
         # The AccountAPI get methods have an s at the end so
@@ -107,17 +113,6 @@ class typer(object):
 
             # For returning later.
             objects = []
-
-            # # List used to store names of "crossing" endpoints.
-            # crossList = {'skins': {'url': 'skins', 'obj': 'Skin'},
-            #              'dyes': {'url': 'colors', 'obj': 'Dye'},
-            #              'minis': {'url': 'minis', 'obj': 'Mini'},
-            #              'bank': {'url': 'items', 'obj': 'Item'},
-            #              'materials': {'url': 'items', 'obj': 'Item'},
-
-            #              # Achievement Stuff.
-            #              'achievements': {'url': 'achievements',
-            #                               'obj': 'Achievement'}}
 
             # This is hackery.
             if api != 'characters':
@@ -219,9 +214,9 @@ class typer(object):
             # Build the URL.
             if ' ' in cleanList:
                 # If there is a space, we need to parse that.
-                cleanURL = '{}?ids={}'.format(self.api, self._parse(cleanList))
+                cleanURL = '{}?ids={}'.format(url, self._parse(cleanList))
             else:
-                cleanURL = '{}?ids={}'.format(self.api, cleanList)
+                cleanURL = '{}?ids={}'.format(url, cleanList)
 
             # Get the JSON.
             data = self.obj.getJson(cleanURL)
@@ -242,7 +237,7 @@ class typer(object):
                 objects = []
 
                 # Default case: get all of them.
-                ids = self.obj.getJson(self.api)
+                ids = self.obj.getJson(url)
 
                 # Useful line is useful.
                 safeList = [ids[x:x + 200] for x in range(0, len(ids), 200)]
@@ -254,7 +249,7 @@ class typer(object):
                     cleanStr = self._parse(cleanStr)
 
                     # Build a pretty URL.
-                    cleanURL = '{}?ids={}'.format(self.api, cleanStr)
+                    cleanURL = '{}?ids={}'.format(url, cleanStr)
 
                     data = self.obj.getJson(cleanURL)
 
@@ -265,13 +260,13 @@ class typer(object):
                 # Return them all.
                 return(objects)
             else:
-                safeArgs = (self.api, self._parse(*args))
+                safeArgs = (url, self._parse(*args))
                 jsonData = self.obj.getJson('{}/{}'.format(*safeArgs))
 
                 return(self.f(self.obj, jsonData))
 
         elif type(*args) is int:
-            jsonData = self.obj.getJson('{}/{}'.format(self.api, *args))
+            jsonData = self.obj.getJson('{}/{}'.format(url, *args))
 
             return(self.f(self.obj, jsonData))
 
@@ -295,6 +290,7 @@ def getJson(url, header = None):
             # 404 NOT FOUND is useful, but it helps to point them
             # in the right direction.
             error = 'HTTPError! Likely bad ID: {} {}'.format(e.code, e.msg)
+            print("Bad URL: ", url)
 
             # Dangerous magic!
             raise BadIDError(error) from None
