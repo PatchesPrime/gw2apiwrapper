@@ -24,12 +24,12 @@ class typer(object):
         self.api = self.f.__name__[3:].lower() + 's'
 
         # Some aren't consistent.
-        if self.api == 'dyes':
-            self.api = 'colors'
+        # if self.api == 'dyes':
+        #     self.api = 'colors'
 
-        # Don't judge me...
-        elif self.api == 'banks':
-            self.api = 'bank'
+        # # Don't judge me...
+        # elif self.api == 'banks':
+        #     self.api = 'bank'
 
     def _parse(self, string):
         '''
@@ -65,36 +65,61 @@ class typer(object):
 
         Returns an object or list of objects depending on input.
         '''
+        # This dictionary provides an easy way for me to direct
+        # what kind of data I want from endpoints.
+        crossList = {'skins': {'url': 'skins', 'obj': 'Skin'},
+                     'dyes': {'url': 'colors', 'obj': 'Dye'},
+                     'minis': {'url': 'minis', 'obj': 'Mini'},
+                     'bank': {'url': 'items', 'obj': 'Item'},
+                     'materials': {'url': 'items', 'obj': 'Item'},
+
+                     # Achievement Stuff.
+                     'achievements': {'url': 'achievements',
+                                      'obj': 'Achievement'}}
+
+
+        # The AccountAPI get methods have an s at the end so
+        # we need to remove that due to our __init__
+        # "This is begging to be fixed." -Matt.
+        # "One day." -Patches
+        if self.api[-2:]  == 'ss':
+            api = self.api[:-1]
+
+        # I didn't think this one through back then.
+        # Hack in place :P
+        elif self.api == 'banks':
+            api = 'bank'
+
+        # Failure case? we try...
+        else:
+            api = self.api
+
+        # Easy to remember url...
+        if api in crossList.keys():
+            url = crossList[api]['url']
+        else:
+            url = api
+
         # Dirty, but effective...?
         if 'AccountAPI' in str(self.obj):
-            # The AccountAPI get methods have an s at the end so
-            # we need to remove that due to our __init__
-            # "This is begging to be fixed." -Matt.
-            # "One day." -Patches
-            if self.api[-2:]  == 'ss':
-                api = self.api[:-1]
-            else:
-                api = self.api
-
             # We do this to check for permissions!
             self.f(self.obj)
 
             # For returning later.
             objects = []
 
-            # List used to store names of "crossing" endpoints.
-            # Note: I thought about adding characters to it, but
-            # the characters endpoint is unique. It is authed yet
-            # has no prefix.
-            crossList = {'skins': {'url': 'skins', 'obj': 'Skin'},
-                         'dyes': {'url': 'colors', 'obj': 'Dye'},
-                         'minis': {'url': 'minis', 'obj': 'Mini'},
-                         'bank': {'url': 'items', 'obj': 'Item'},
-                         'materials': {'url': 'items', 'obj': 'Item'},
-                         'achievements': {'url': 'achievements',
-                                          'obj': 'Achievement'}}
+            # # List used to store names of "crossing" endpoints.
+            # crossList = {'skins': {'url': 'skins', 'obj': 'Skin'},
+            #              'dyes': {'url': 'colors', 'obj': 'Dye'},
+            #              'minis': {'url': 'minis', 'obj': 'Mini'},
+            #              'bank': {'url': 'items', 'obj': 'Item'},
+            #              'materials': {'url': 'items', 'obj': 'Item'},
 
+            #              # Achievement Stuff.
+            #              'achievements': {'url': 'achievements',
+            #                               'obj': 'Achievement'}}
 
+            # This is hackery.
             if api != 'characters':
                 data = self.obj.getJson('account/{}'.format(api))
             else:
@@ -141,11 +166,10 @@ class typer(object):
                     # you begin getting strange errors, it might be this.
                     # It only works because the 'characters' endpoint is the
                     # only one with spaces.
-                    cleanURL = '{}?ids={}'.format(api, parsed)
+                    cleanURL = '{}?ids={}'.format(url, parsed)
 
                 else:
-                    temp = crossList[api]['url']
-                    cleanURL = '{}?ids={}'.format(temp, cleanStr)
+                    cleanURL = '{}?ids={}'.format(url, cleanStr)
 
                 # Lets build some objects!
                 for item in self.obj.getJson(cleanURL):
