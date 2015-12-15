@@ -604,3 +604,29 @@ class Achievement:
         self.requirement = achieveJSON['requirement']
         self.type        = achieveJSON['type']
         self.flags       = achieveJSON['flags']
+
+class AchievementGroup:
+    '''
+    Builds an object based off the JSON returned by the
+    Guild Wars 2 offical achievements/groups API.
+    '''
+    def __init__(self, groupJSON):
+        self.id          = groupJSON['id']
+        self.name        = groupJSON['name']
+        self.description = groupJSON['description']
+        self.order       = groupJSON['order']
+        self.categories  = groupJSON['categories']
+
+class AchievementCategory:
+    '''
+    Builds an object based off the JSON returned by
+    the Guild Wars 2 official achievements/categories
+    API.
+    '''
+    def __init__(self, catJSON):
+        self.id           = catJSON['id']
+        self.name         = catJSON['name']
+        self.description  = catJSON['description']
+        self.order        = catJSON['order']
+        self.icon         = catJSON['icon']
+        self.achievements = catJSON['achievements']
