@@ -27,6 +27,30 @@ class GlobalAPI:
         return eps.Achievement(json)
 
     @typer
+    def getAchievementGroup(self, json):
+        '''
+        Query the non-authed Guild Wars 2 achievement
+        groups API and build objects based off the return JSON.
+
+        See AchievementGroup class for documentation.
+
+        Returns AchievementGroup(s) objects.
+        '''
+        return eps.AchievementGroup(json)
+
+    @typer
+    def getAchievementCategory(self, json):
+        '''
+        Query the non-authed Guild Wars 2 achievement/categories
+        API and build objects from the JSON.
+
+        See AchievementCategory class for more documentation.
+
+        Returns AchievementCategory(s) objects.
+        '''
+        return eps.AchievementCategory(json)
+
+    @typer
     def getSkin(self, json):
         '''
         Query the non-authed skin Guild Wars 2 Skin API
@@ -216,6 +240,24 @@ class GlobalAPI:
 
                 # Return the Object.
                 return(eps.WVWMatch(jsonData))
+
+    def getDailies(self):
+        '''
+        Simple method to grab the dailies from GW2 official
+        API and returns achievement objects for them.
+        '''
+        # Temporary list to reduce requests.
+        idList = []
+
+        # The data.
+        jsonData = self.getJson('achievements/daily')
+
+        # Get the achievements for each area.
+        for key in jsonData.keys():
+            for achievement in jsonData[key]:
+                idList.append(achievement['id'])
+
+        return(self.getAchievement(idList))
 
 class AccountAPI:
     def __init__(self, api_key):
