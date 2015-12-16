@@ -630,3 +630,39 @@ class AchievementCategory:
         self.order        = catJSON['order']
         self.icon         = catJSON['icon']
         self.achievements = catJSON['achievements']
+
+
+class GuildUpgrade:
+    '''
+    Builds an object based off the JSON returned by
+    the Guild Wars 2 official guild/upgrades API.
+    '''
+    def __init__(self, upgradeJSON):
+        self.id   = upgradeJSON['id']
+        self.name = upgradeJSON['name']
+        self.icon           = upgradeJSON['icon']
+        self.build_time     = upgradeJSON['build_time']
+        self.required_level = upgradeJSON['required_level']
+        self.experience     = upgradeJSON['experience']
+        self.prerequisites  = upgradeJSON['prerequisites']
+
+        # Nested
+        self.type = upgradeJSON['type']
+            # AccumulatingCurrency - Used for mine capacity upgrades.
+            # BankBag              - Used for guild bank upgrades. Additional fields include:
+            #     bag_max_items (number) - The maximum item slots of the guild bank tab.
+            #     bag_max_coins (number) - The maximum amount of coins that can be stored in the bank tab.
+            # Boost      - Used for permanent guild buffs such as waypoint cost reduction.
+            # Claimable  - Used for guild WvW tactics.
+            # Consumable - Used for banners and guild siege.
+            # Decoration - Used for decorations that must be crafted by a Scribe.
+            # Hub        - Used for the Guild Initiative office unlock.
+            # Unlock     - Used for permanent unlocks, such as merchants and arena decorations.
+
+
+        # Nested
+        self.costs = upgradeJSON['costs']
+            # type (string) - The type of cost. One of Item, Collectible, Currency
+            # name (string) - The name of the cost.
+            # count (number) - The amount needed.
+            # item_id (number, optional) - The ID of the item, if applicable.
