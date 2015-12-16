@@ -73,6 +73,10 @@ class typer(object):
                      'bank': {'url': 'items', 'obj': 'Item'},
                      'materials': {'url': 'items', 'obj': 'Item'},
 
+                     # Guild endpoints.
+                     'guildupgrades': {'url': 'guild/upgrades',
+                                        'obj': 'GuildUpgrade'},
+
                      # Achievement Stuff.
                      'achievements': {'url': 'achievements',
                                       'obj': 'Achievement'},
@@ -232,7 +236,7 @@ class typer(object):
         elif type(*args) is str:
             # You shouldn't do this. It can take a really
             # long time.
-            if args == 'all':
+            if args[0] == 'all':
                 # Need this too.
                 objects = []
 
