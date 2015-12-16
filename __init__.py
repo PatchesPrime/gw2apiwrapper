@@ -19,11 +19,23 @@ class GlobalAPI:
         Query the non-authed Guild Wars 2 API to build
         objects off the returned JSON.
 
-        See GuildUpgradge class for documentation
+        See GuildUpgrade class for documentation
 
-        Returns GuildUpgradge(s) objects.
+        Returns GuildUpgrade(s) objects.
         '''
-        return eps.GuildUpgradge(json)
+        return eps.GuildUpgrade(json)
+
+    @typer
+    def getGuildPermission(self, json):
+        '''
+        Query the non-authed Guild Wars 2 API to build
+        objects off the returned JSON.
+
+        See GuildPermission class for documentation
+
+        Returns GuildPermission(s) objects.
+        '''
+        return eps.GuildPermission(json)
 
     @typer
     def getAchievement(self, json):

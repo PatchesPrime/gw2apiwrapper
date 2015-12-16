@@ -76,14 +76,14 @@ class typer(object):
                      # Guild endpoints.
                      'guildupgrades': {'url': 'guild/upgrades',
                                         'obj': 'GuildUpgrade'},
+                     'guildpermissions': {'url': 'guild/permissions',
+                                          'obj': 'GuildPermission'},
 
                      # Achievement Stuff.
                      'achievements': {'url': 'achievements',
                                       'obj': 'Achievement'},
-
                      'achievementgroups': {'url': 'achievements/groups',
                                            'obj': 'AchievementGroup'},
-
                      'achievementcategorys': {'url': 'achievements/categories',
                                               'obj': 'AchievementCategory'}}
 

@@ -666,3 +666,14 @@ class GuildUpgrade:
             # name (string) - The name of the cost.
             # count (number) - The amount needed.
             # item_id (number, optional) - The ID of the item, if applicable.
+
+class GuildPermission:
+    '''
+    Builds a simple object based off the JSON returned by
+    the Guild Wars 2 official guild/permissions API.
+    '''
+    def __init__(self, gpJSON):
+        # Not sure about this class, honestly.
+        self.id          = gpJSON['id']
+        self.name        = gpJSON['name']
+        self.description = gpJSON['description']
