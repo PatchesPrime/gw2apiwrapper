@@ -767,3 +767,36 @@ class AccountAPI:
         # Contains a dictionary of similar stats to the above.
         self.pvp_ranked   = statJSON['ladders']['ranked']
         self.pvp_unranked = statJSON['ladders']['unranked']
+
+    def getGuildRanks(self, guildID):
+        '''
+        Simple method. Returns a list of dictionaries containing
+        the ranks and their permissions.
+
+        'id'          - Name of rank.
+        'order'       - Position in the list.
+        'icon'        - URL to the icon of the rank.
+        'permissions' - Rank permissions See below.
+
+        This method only works for guild leaders.
+        '''
+        url = "guild/{}/ranks".format(guildID)
+
+        return(self.getJson(url))
+
+    def getGuildMembers(self, guildID):
+        '''
+        Simple method. Returns a list of dictionaries
+        containing the member, date they joined, and their rank.
+
+        dict.keys():
+
+        'name' - Member account ID.
+        'rank' - Member rank.
+        'joined' - Member join date.
+
+        This method only works for guild leaders.
+        '''
+        url = "guild/{}/members".format(guildID)
+
+        return(self.getJson(url))
