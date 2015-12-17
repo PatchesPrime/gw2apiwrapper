@@ -289,7 +289,7 @@ class AccountAPI:
         Initalize various bits of account information.
         '''
         self.api_key = api_key
-        self.header  = {'Authorization: ' : 'Bearer ' + self.api_key}
+        self.header  = {'Authorization': 'Bearer ' + self.api_key}
         self.url     = 'https://api.guildwars2.com/v2/'
 
         data = self.getJson('tokeninfo')
