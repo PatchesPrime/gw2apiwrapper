@@ -75,7 +75,7 @@ class typer(object):
 
                      # Guild endpoints.
                      'guildupgrades': {'url': 'guild/upgrades',
-                                        'obj': 'GuildUpgrade'},
+                                       'obj': 'GuildUpgrade'},
                      'guildpermissions': {'url': 'guild/permissions',
                                           'obj': 'GuildPermission'},
 
