@@ -192,11 +192,15 @@ class typer(object):
                     # Handle dictionaries differently.
                     if dictFlag:
                         # Add our item object to the dictionary
-                        # that references it.
-                        item.update({'object': obj(item)})
+                        # that references it
+                        for part in data:
+                            # getBank can return None.
+                            if part:
+                                if item['id'] == part['id']:
+                                    part.update({'object': obj(item)})
 
-                        # Append.
-                        objects.append(item)
+                                    # List of dictionaries recreated!
+                                    objects.append(part)
                     else:
                         objects.append(obj(item))
 
@@ -224,7 +228,6 @@ class typer(object):
 
             # Get the JSON.
             data = self.obj.getJson(cleanURL)
-
 
             # Generate the objects.
             for item in data:
@@ -464,6 +467,6 @@ def getEmblem(emblemID, layer = None):
 
         for key in urls.keys():
             cleanURL = "{}?ids={}".format(urls[key], emblemID)
-            endList.append(getJson(cleanURL))
+            endList.append(getJson(cleanURL)[0])
 
     return endList
