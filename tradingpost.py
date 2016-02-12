@@ -1,4 +1,6 @@
 from .functions import getJson
+from .exceptions import FlagParameterError
+
 
 class GW2TP:
     def __init__(self):

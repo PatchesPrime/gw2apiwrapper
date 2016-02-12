@@ -87,12 +87,11 @@ class typer(object):
                      'achievementcategorys': {'url': 'achievements/categories',
                                               'obj': 'AchievementCategory'}}
 
-
         # The AccountAPI get methods have an s at the end so
         # we need to remove that due to our __init__
         # "This is begging to be fixed." -Matt.
         # "One day." -Patches
-        if self.api[-2:]  == 'ss':
+        if self.api[-2:] == 'ss':
             api = self.api[:-1]
 
         # I didn't think this one through back then.
@@ -148,7 +147,6 @@ class typer(object):
                         if current is not None:
                                 temp.append(current['id'])
 
-
                     # I much prefer list comprehensions.
                     # I will remove the 4 character difference somehow..
                     cleanStr = ','.join(str(x) for x in temp)
@@ -182,7 +180,6 @@ class typer(object):
                             objName = api.title()[:-1]
                         else:
                             objName = api.title()
-
 
                     # I know this is bad.
                     # But all the cool kids bypass import rules..
@@ -277,6 +274,7 @@ class typer(object):
 
             return(self.f(self.obj, jsonData))
 
+
 def getJson(url, header = None):
     '''
     Got tired of writing this over and over.
@@ -312,6 +310,7 @@ def getJson(url, header = None):
         else:
             raise(e)
 
+
 def getBuild():
     '''
     Get the current build ID for Guild Wars 2.
@@ -319,6 +318,7 @@ def getBuild():
     Returns an integer.
     '''
     return(getJson('https://api.guildwars2.com/v2/build')['id'])
+
 
 def getAssets():
     '''
@@ -331,6 +331,7 @@ def getAssets():
     icon - (str) URL off the asset.
     '''
     return(getJson('https://api.guildwars2.com/v2/files?ids=all'))
+
 
 def isMaterial(itemID):
     '''
@@ -365,7 +366,6 @@ def isMaterial(itemID):
         # Return a negative result as the default.
         return(False)
 
-
     if type(itemID) is list or type(itemID) is set:
         # We'll need a temporary list if we don't
         # want one of the world ugliest list comprehension.
@@ -375,9 +375,9 @@ def isMaterial(itemID):
         for category in matCategories:
             matIDs.extend(category['items'])
 
-
         # Return the IDs that ARE materials.
         return(set(matIDs).intersection(itemID))
+
 
 def recipeSearch(in_or_out, itemID):
     '''
@@ -406,6 +406,7 @@ def recipeSearch(in_or_out, itemID):
     # Return raw JSON. It will always be a list.
     # Right ANET?
     return(getJson(cleanURL))
+
 
 def getWorldName(worldID):
     '''
@@ -439,6 +440,7 @@ def getWorldName(worldID):
 
     # Return them. Raw JSON but...oh well?
     return(getJson(cleanURL))
+
 
 def getEmblem(emblemID, layer = None):
     '''

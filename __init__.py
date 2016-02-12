@@ -3,9 +3,10 @@ import concurrent.futures as cc
 from . import descriptions as eps
 from .functions import getJson, typer
 
+
 class GlobalAPI:
     def __init__(self):
-        self.url     = 'https://api.guildwars2.com/v2/'
+        self.url = 'https://api.guildwars2.com/v2/'
 
     def getJson(self, api):
         '''
@@ -217,7 +218,6 @@ class GlobalAPI:
             # Return our "modified" WVWObjectives
             return(objects)
 
-
     def getWVWMatches(self, matchID, objects = None):
         '''
         Build and return WVWMatch objects for all
@@ -282,6 +282,7 @@ class GlobalAPI:
                 idList.append(achievement['id'])
 
         return(self.getAchievement(idList))
+
 
 class AccountAPI:
     def __init__(self, api_key):
@@ -457,13 +458,11 @@ class AccountAPI:
         else:
             self.selling = None
 
-
         # Get our transaction HISTORY. Only completed trades.
         # PEP8...please.
         historyURL = 'commerce/transactions/history/'
         boughtData = self.getJson(historyURL + 'buys')
         soldData   = self.getJson(historyURL + 'sells')
-
 
         # As before, sanitize this.
         if len(boughtData) > 0:
@@ -607,7 +606,6 @@ class AccountAPI:
                             specObjs.append(future.result())
                         except Exception as e:
                             print('Error: ', e)
-
 
                 # Trait list. [[id,id,id], [id,id,id], [id,id,id]]
                 traitList = [x['traits'] for x in buildJSON[area]]

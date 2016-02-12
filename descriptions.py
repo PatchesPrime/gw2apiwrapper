@@ -1,5 +1,6 @@
 from .functions import getJson
 
+
 class Character:
     '''
     Builds an object based off the JSON returned by the
@@ -38,6 +39,7 @@ class Character:
             self.bags = playerJSON['bags']
         except KeyError:
             self.bags = None
+
 
 class Specialization:
     '''
@@ -78,6 +80,7 @@ class Specialization:
             else:
                 raise TypeError('Weird trait type! Bailing')
 
+
 class Trait:
     '''
     Builds an object based off the JSON returned by the
@@ -113,6 +116,7 @@ class Trait:
         except KeyError:
             self.traited_facts  = None
 
+
 class Skill:
     '''
     Builds an object based off the JSON returned by the
@@ -137,6 +141,7 @@ class Skill:
             self.traited_facts = skillJSON['traited_facts']
         except KeyError:
             self.traited_facts = None
+
 
 class Item:
     '''
@@ -174,7 +179,6 @@ class Item:
         self.flags        = itemJSON['flags']
         self.valid_modes  = itemJSON['game_types']
         self.restrictions = itemJSON['restrictions']
-
 
         # NOTE: This is dependant on the item type, so we have to check that.
         # This whole section is just to tear the JSON down into python object
@@ -281,7 +285,6 @@ class Item:
             except KeyError:
                 self.infix_upgrade = None
 
-
             # Optional attribute with no default value if empty.
             # Again.
             try:
@@ -332,6 +335,7 @@ class Item:
 
             self.what = itemJSON['details']['secondary_suffix_item_id']
 
+
 class Skin:
     '''
     Builds an object based off the JSON returned by the
@@ -362,6 +366,7 @@ class Skin:
             self.weapon     = skinJSON['details']['type']
             self.damageType = skinJSON['details']['damage_type']
 
+
 class Dye:
     '''
     Builds an object based off the JSON returned by the
@@ -378,6 +383,7 @@ class Dye:
         self.cloth   = dyeJSON['cloth']
         self.leather = dyeJSON['leather']
         self.metal   = dyeJSON['metal']
+
 
 class Recipe:
     '''
@@ -404,6 +410,7 @@ class Recipe:
         # List of recipe ingredients. Contains: item_id, count
         self.ingredients = recipeJSON['ingredients']
 
+
 class Map:
     '''
     Builds an object that represents the Guild Wars 2
@@ -421,7 +428,6 @@ class Map:
         # Build the basic Map object.
         self.url = 'https://api.guildwars2.com/v2/maps/'
         mapJSON = getJson(self.url + '{}'.format(mapID))
-
 
         self.id             = mapJSON['id']
         self.name           = mapJSON['name']
@@ -483,6 +489,7 @@ class Map:
         for current in tasksInfo:
             self.hearts.append(tasksInfo[current])
 
+
 class WVWMatch:
     '''
     Builds an object based off the JSON returned by the
@@ -507,6 +514,7 @@ class WVWMatch:
         for data in wvwJSON['maps']:
             self.maps.append(WVWMap(data))
 
+
 class WVWMap:
     '''
     Class designed to turn WVWMatch 'maps' attributes
@@ -524,6 +532,7 @@ class WVWMap:
 
         # list of dictionaries.
         self.objectives = mapJSON['objectives']
+
 
 class WVWObjective:
     '''
@@ -553,6 +562,7 @@ class WVWObjective:
         self.claimed_by   = None
         self.claimed_at   = None
 
+
 class PVPMatch:
     '''
     Builds an object based off the JSON returned by the
@@ -567,6 +577,7 @@ class PVPMatch:
         self.team       = pvpJSON['team']
         self.profession = pvpJSON['profession']
         self.scores     = pvpJSON['scores']
+
 
 class Mini:
     '''
@@ -585,6 +596,7 @@ class Mini:
             self.unlock = miniJSON['unlock']
         except KeyError:
             self.unlock = None
+
 
 class Achievement:
     '''
@@ -605,6 +617,7 @@ class Achievement:
         self.type        = achieveJSON['type']
         self.flags       = achieveJSON['flags']
 
+
 class AchievementGroup:
     '''
     Builds an object based off the JSON returned by the
@@ -616,6 +629,7 @@ class AchievementGroup:
         self.description = groupJSON['description']
         self.order       = groupJSON['order']
         self.categories  = groupJSON['categories']
+
 
 class AchievementCategory:
     '''
@@ -659,13 +673,13 @@ class GuildUpgrade:
             # Hub        - Used for the Guild Initiative office unlock.
             # Unlock     - Used for permanent unlocks, such as merchants and arena decorations.
 
-
         # Nested
         self.costs = upgradeJSON['costs']
             # type (string) - The type of cost. One of Item, Collectible, Currency
             # name (string) - The name of the cost.
             # count (number) - The amount needed.
             # item_id (number, optional) - The ID of the item, if applicable.
+
 
 class GuildPermission:
     '''
