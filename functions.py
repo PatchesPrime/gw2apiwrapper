@@ -99,6 +99,9 @@ class typer(object):
         elif self.api == 'banks':
             api = 'bank'
 
+        elif self.api == 'inventorys':
+            api = 'inventory'
+
         # Failure case? we try...
         else:
             api = self.api
@@ -131,10 +134,22 @@ class typer(object):
 
             # This feels wrong, I may address it later if
             # it begins to cause problems.
-            if type(data[0]) is dict:
-                dictFlag = True
-            else:
+            try:
+                # So it caused a minor problem. See Exception.
+                if type(data[0]) is dict:
+                    dictFlag = True
+                else:
+                    dictFlag = False
+            except IndexError:
+                # Basically, this caused a 'problem'. Note the quotes.
+                # I don't have shared inventory slots. data = []
+                # Obviously, the above type check breaks from this.
+                # That's the theory anyway.
+                # Anyone got one and an API key? :)
+
+                # This will silently fail and set dictFlag to False.
                 dictFlag = False
+                pass
 
             # The construction of the skin attribute.
             for safe in safeList:
