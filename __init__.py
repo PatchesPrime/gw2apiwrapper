@@ -413,6 +413,25 @@ class AccountAPI:
 
         pass
 
+    @typer
+    def getInventory(self):
+        '''
+        Queries the shared inventory API endpoint for
+        Guild wars 2.
+
+        Returns list of dictionaries.
+
+        id      - (int) Item ID in slot.
+        count   - (int) Amount of item in slot.
+        binding - (str) The bound/binding status of item.
+
+        DEV NOTE: I do not have shared invetory slots.
+        This method is experimental until I can get one
+        or a key is shared that has one. Use at your own peril.
+        '''
+        self.checkPermission('inventories')
+        pass
+
     def getTradeHistory(self):
         '''
         Gets all trading post activity on your account
