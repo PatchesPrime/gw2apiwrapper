@@ -265,7 +265,7 @@ class GlobalAPI:
                 # Return the Object.
                 return(eps.WVWMatch(jsonData))
 
-    def getDailies(self):
+    def getDailies(self, tomorrow = False):
         '''
         Simple method to grab the dailies from GW2 official
         API and returns achievement objects for them.
@@ -274,7 +274,10 @@ class GlobalAPI:
         idList = []
 
         # The data.
-        jsonData = self.getJson('achievements/daily')
+        if tomorrow:
+            jsonData = self.getJson('achievements/daily/tomorrow')
+        else:
+            jsonData = self.getJson('achievements/daily')
 
         # Get the achievements for each area.
         for key in jsonData.keys():
