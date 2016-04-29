@@ -1,7 +1,7 @@
 # GW2API
 Object Orientated GW2 API Wrapper
 
-**This project is under heavy development and is not complete.**
+**2016-04-29 - All currently released endpoints are implemented.**
 
 Being dissatisfied with the current implementations of the Guild Wars 2 API written in python, I began this project.
 
