@@ -1,7 +1,7 @@
 import urllib.parse
 import concurrent.futures as cc
-import descriptions as eps
-from functions import getJson, typer
+from GW2API import descriptions as eps
+from GW2API.functions import getJson, typer
 
 
 class GlobalAPI:

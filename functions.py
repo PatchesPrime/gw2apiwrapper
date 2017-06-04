@@ -2,7 +2,7 @@ import json
 import urllib.parse
 import urllib.request
 import importlib
-from exceptions import BadIDError, PermissionError, FlagParameterError
+from GW2API.exceptions import BadIDError, PermissionError, FlagParameterError
 
 
 class typer(object):
