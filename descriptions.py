@@ -44,20 +44,20 @@ class Character:
 class Profession:
     '''
     Builds an object based off the JSON returned by the
-    Guild Wars 2 official proessions API.
+    Guild Wars 2 official professions API.
     '''
-    def __init__(self, specJSON):
+    def __init__(self, profJSON):
         # Used for specializations below.
         specURL  = 'https://api.guildwars2.com/v2/specializations?ids='
 
-        self.id              = specJSON['id']
-        self.name            = specJSON['name']
-        self.icon            = specJSON['icon']
-        self.icon_big        = specJSON['icon_big']
+        self.id              = profJSON['id']
+        self.name            = profJSON['name']
+        self.icon            = profJSON['icon']
+        self.icon_big        = profJSON['icon_big']
         self.specializations = []  # Temporarily initialize empty.
 
         # Build URL String..
-        spec_ids = ','.join(str(x) for x in specJSON['specializations'])
+        spec_ids = ','.join(str(x) for x in profJSON['specializations'])
 
         # Fill up the list.
         for spec in getJson(specURL + spec_ids):
@@ -66,7 +66,7 @@ class Profession:
         # Honestly, I might get to converting the skills
         # embedded in this dictionaries 'track' field at some
         # later date, but don't expect it. Same for traits.
-        self.training        = specJSON['training']
+        self.training        = profJSON['training']
 
 
 class Specialization:
