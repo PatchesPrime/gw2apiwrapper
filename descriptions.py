@@ -1,4 +1,4 @@
-from .functions import getJson
+from functions import getJson
 
 
 class Character:
@@ -39,6 +39,34 @@ class Character:
             self.bags = playerJSON['bags']
         except KeyError:
             self.bags = None
+
+
+class Profession:
+    '''
+    Builds an object based off the JSON returned by the
+    Guild Wars 2 official proessions API.
+    '''
+    def __init__(self, specJSON):
+        # Used for specializations below.
+        specURL  = 'https://api.guildwars2.com/v2/specializations?ids='
+
+        self.id              = specJSON['id']
+        self.name            = specJSON['name']
+        self.icon            = specJSON['icon']
+        self.icon_big        = specJSON['icon_big']
+        self.specializations = []  # Temporarily initialize empty.
+
+        # Build URL String..
+        spec_ids = ','.join(str(x) for x in specJSON['specializations'])
+
+        # Fill up the list.
+        for spec in getJson(specURL + spec_ids):
+            self.specializations.append(Specialization(spec))
+
+        # Honestly, I might get to converting the skills
+        # embedded in this dictionaries 'track' field at some
+        # later date, but don't expect it. Same for traits.
+        self.training        = specJSON['training']
 
 
 class Specialization:
