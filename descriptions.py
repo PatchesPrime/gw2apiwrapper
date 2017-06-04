@@ -41,6 +41,21 @@ class Character:
             self.bags = None
 
 
+class Race:
+    '''
+    Builds objects based off the JSON returned by the
+    Guild Wars 2 official Races API.
+    '''
+    def __init__(self, raceJSON):
+        skillsURL  = 'https://api.guildwars2.com/v2/skills?ids='
+        self.id     = raceJSON['id']
+        self.skills = []
+
+        skill_ids = ','.join(str(x) for x in raceJSON['skills'])
+        for skill in getJson(skillsURL + skill_ids):
+            self.skills.append(Skill(skill))
+
+
 class Profession:
     '''
     Builds an object based off the JSON returned by the
