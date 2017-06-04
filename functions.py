@@ -2,7 +2,7 @@ import json
 import urllib.parse
 import urllib.request
 import importlib
-from .exceptions import BadIDError, PermissionError, FlagParameterError
+from exceptions import BadIDError, PermissionError, FlagParameterError
 
 
 class typer(object):
@@ -72,6 +72,7 @@ class typer(object):
                      'minis': {'url': 'minis', 'obj': 'Mini'},
                      'bank': {'url': 'items', 'obj': 'Item'},
                      'materials': {'url': 'items', 'obj': 'Item'},
+                     'professions': {'url': 'professions', 'obj': 'Profession'},
 
                      # Guild endpoints.
                      'guildupgrades': {'url': 'guild/upgrades',
