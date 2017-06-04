@@ -1,7 +1,7 @@
 import urllib.parse
 import concurrent.futures as cc
-from . import descriptions as eps
-from .functions import getJson, typer
+import descriptions as eps
+from functions import getJson, typer
 
 
 class GlobalAPI:
@@ -13,6 +13,16 @@ class GlobalAPI:
         Simple wrapper for less typing.
         '''
         return(getJson(self.url + api, header=None))
+
+    @typer
+    def getProfession(self, json):
+        '''
+        Query the non-authed Guild Wars 2 API to build
+        objects based off the Returned JSON.
+
+        See Profession class for documentation
+        '''
+        return eps.Profession(json)
 
     @typer
     def getGuildUpgrade(self, json):
