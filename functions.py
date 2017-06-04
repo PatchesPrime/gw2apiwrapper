@@ -73,6 +73,7 @@ class typer(object):
                      'bank': {'url': 'items', 'obj': 'Item'},
                      'materials': {'url': 'items', 'obj': 'Item'},
                      'professions': {'url': 'professions', 'obj': 'Profession'},
+                     'races': {'url': 'races', 'obj': 'Race'},
 
                      # Guild endpoints.
                      'guildupgrades': {'url': 'guild/upgrades',
