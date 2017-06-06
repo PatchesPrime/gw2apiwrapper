@@ -74,6 +74,7 @@ class typer(object):
                      'materials': {'url': 'items', 'obj': 'Item'},
                      'professions': {'url': 'professions', 'obj': 'Profession'},
                      'races': {'url': 'races', 'obj': 'Race'},
+                     'pets': {'url': 'pets', 'obj': 'Pet'},
 
                      # Guild endpoints.
                      'guildupgrades': {'url': 'guild/upgrades',
