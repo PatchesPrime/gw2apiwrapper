@@ -1,6 +1,26 @@
 from GW2API.functions import getJson
 
 
+class Pet:
+    '''
+    Builds an object based off the JSON returned by the
+    Guild Wars 2 official pet API.
+    '''
+    def __init__(self, petJSON):
+        skillsURL  = 'https://api.guildwars2.com/v2/skills?ids='
+
+        self.id = petJSON['id']
+        self.name = petJSON['name']
+        self.description = petJSON['description']
+        self.icon = petJSON['icon']
+        self.skills = []
+
+        # I need to stop doing this.
+        skill_ids = ','.join(str(x['id']) for x in petJSON['skills'])
+        for skill in getJson(skillsURL + skill_ids):
+            self.skills.append(Skill(skill))
+
+
 class Character:
     '''
     Builds an object based off the JSON returned by the
