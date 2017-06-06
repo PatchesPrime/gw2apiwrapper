@@ -9,11 +9,12 @@ class Pet:
     def __init__(self, petJSON):
         skillsURL  = 'https://api.guildwars2.com/v2/skills?ids='
 
-        self.id = petJSON['id']
-        self.name = petJSON['name']
+        # Possible attributes.
+        self.id          = petJSON['id']
+        self.name        = petJSON['name']
         self.description = petJSON['description']
-        self.icon = petJSON['icon']
-        self.skills = []
+        self.icon        = petJSON['icon']
+        self.skills      = []
 
         # I need to stop doing this.
         skill_ids = ','.join(str(x['id']) for x in petJSON['skills'])
@@ -101,7 +102,7 @@ class Profession:
         # Honestly, I might get to converting the skills
         # embedded in this dictionaries 'track' field at some
         # later date, but don't expect it. Same for traits.
-        self.training        = profJSON['training']
+        self.training = profJSON['training']
 
 
 class Specialization:
@@ -111,7 +112,7 @@ class Specialization:
     '''
     def __init__(self, specJSON):
         # We need this for building trait objects.
-        self.traitsURL  = 'https://api.guildwars2.com/v2/traits?ids='
+        self.traitsURL = 'https://api.guildwars2.com/v2/traits?ids='
 
         # Back to regularly scheduled programming.
         self.id         = specJSON['id']
