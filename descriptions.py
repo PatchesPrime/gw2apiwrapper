@@ -1,6 +1,21 @@
 from GW2API.functions import getJson
 
 
+class Mastery:
+    '''
+    Builds an object based off the JSON returned by the
+    Guild Wars 2 official mastery API.
+    '''
+    def __init__(self, masteryJSON):
+        self.id          = masteryJSON['id']
+        self.name        = masteryJSON['name']
+        self.requirement = masteryJSON['requirement']
+        self.order       = masteryJSON['order']
+        self.background  = masteryJSON['background']
+        self.region      = masteryJSON['region']
+        self.levels      = masteryJSON['levels']
+
+
 class Pet:
     '''
     Builds an object based off the JSON returned by the
