@@ -15,7 +15,7 @@ class GlobalAPI:
         return(getJson(self.url + api, header=None))
 
     @typer
-    def getMastery(self, json):
+    def getMasteries(self, json):
         '''
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
@@ -451,9 +451,26 @@ class AccountAPI:
         id       - (int) The item ID of the material.
         category - (int) The material category the item belongs to.
         count    - (int) The amount of material in storage.
+        object   - (Item) The object representing what's in slot.
+
         '''
         self.checkPermission('inventories')
 
+        pass
+
+    @typer
+    def getMasteries(self):
+        '''
+        Gets the accounts current masteries from the Guild Wars 2
+        official API and stores objects representing them.
+
+        Returns a list of dictionaries with the following keys:
+
+        id     - (int) The mastery ID.
+        level  - (int) The current level of said mastery.
+        object - (Mastery) The object representing the mastery.
+        '''
+        self.checkPermission('progression')
         pass
 
     @typer
@@ -467,6 +484,7 @@ class AccountAPI:
         id      - (int) Item ID in slot.
         count   - (int) Amount of item in slot.
         binding - (str) The bound/binding status of item.
+        object  - (Item) Object representing item in slot.
 
         DEV NOTE: I do not have shared invetory slots.
         This method is experimental until I can get one

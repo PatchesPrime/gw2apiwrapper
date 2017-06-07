@@ -75,7 +75,7 @@ class typer(object):
                      'professions': {'url': 'professions', 'obj': 'Profession'},
                      'races': {'url': 'races', 'obj': 'Race'},
                      'pets': {'url': 'pets', 'obj': 'Pet'},
-                     'masterys': {'url': 'masteries', 'obj': 'Mastery'},
+                     'masteries': {'url': 'masteries', 'obj': 'Mastery'},
                      'inventory': {'url': 'items', 'obj': 'Item'},
 
                      # Guild endpoints.
