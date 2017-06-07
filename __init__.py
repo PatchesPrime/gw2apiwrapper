@@ -15,6 +15,16 @@ class GlobalAPI:
         return(getJson(self.url + api, header=None))
 
     @typer
+    def getMastery(self, json):
+        '''
+        Query the non-authed Guild Wars 2 API to build
+        objects from the returned JSON.
+
+        See Mastery class for documentation
+        '''
+        return eps.Mastery(json)
+
+    @typer
     def getPet(self, json):
         '''
         Query the non-authed Guild Wars 2 API to build
