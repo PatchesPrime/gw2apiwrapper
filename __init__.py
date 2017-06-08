@@ -15,6 +15,16 @@ class GlobalAPI:
         return(getJson(self.url + api, header=None))
 
     @typer
+    def getOutfit(self, json):
+        '''
+        Query the non-authed Guild wars 2 API to build
+        objects from the returned JSON.
+
+        See Outfit class for documentation
+        '''
+        return eps.Outfit(json)
+
+    @typer
     def getMasteries(self, json):
         '''
         Query the non-authed Guild Wars 2 API to build
@@ -456,6 +466,17 @@ class AccountAPI:
         '''
         self.checkPermission('inventories')
 
+        pass
+
+    @typer
+    def getOutfits(self):
+        '''
+        Get your unlocked outfits from the Guild Wars 2 official
+        outfit API.
+
+        Returns a list of Outfit objects (see descriptions)
+        '''
+        self.checkPermission('unlocks')
         pass
 
     @typer
