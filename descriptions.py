@@ -1,6 +1,20 @@
 from GW2API.functions import getJson
 
 
+class Outfit:
+    def __init__(self, outfitJSON):
+        itemURL = 'https://api.guildwars2.com/v2/items?ids='
+
+        self.id           = outfitJSON['id']
+        self.name         = outfitJSON['name']
+        self.icon         = outfitJSON['icon']
+        self.unlock_items = []
+
+        item_ids = ','.join(str(x) for x in outfitJSON['unlock_items'])
+        for item in getJson(itemURL + item_ids):
+            self.unlock_items.append(Item(item))
+
+
 class Mastery:
     '''
     Builds an object based off the JSON returned by the
