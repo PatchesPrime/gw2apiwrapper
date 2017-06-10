@@ -20,7 +20,7 @@ class Title:
             ids += titleJSON['achievements']
 
         # This is only active sometimes as well..
-        if titleJSON.get('achievement'):
+        if titleJSON.get('achievement') is not None:
             ids.append(titleJSON['achievement'])
 
         if len(ids) > 0:
