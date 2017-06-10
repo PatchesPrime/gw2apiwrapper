@@ -2,22 +2,33 @@ from GW2API.functions import getJson
 
 
 class Title:
+    '''
+    Builds an object based off the JSON returned by the
+    Guild Wars 2 official title API.
+    '''
     def __init__(self, titleJSON):
         a_link = 'https://api.guildwars2.com/v2/achievements?ids='
 
         self.id           = titleJSON['id']
         self.name         = titleJSON['name']
-        self.ap_required  = titleJSON['ap_required']
-        self.achievements  = []
+        self.ap_required  = titleJSON.get('ap_required')  # Not always there.
+        self.achievements = []
 
+        ids = []
+        # It's hacky, I know, but I've been up late. I hate it too.
+        if titleJSON.get('achievements') is not None:
+            ids += titleJSON['achievements']
 
-        # I...I don't know why they kept these separate?
-        titleJSON['achievements'].append(titleJSON['achievement'])
+        # This is only active sometimes as well..
+        if titleJSON.get('achievement'):
+            ids.append(titleJSON['achievement'])
 
-        # Build id list, get objects for them.
-        ids = ','.join(str(x) for x in titleJSON['achievements'])
-        for achieve in getJson(a_link + ids):
-            self.achievements.append(Achievement(achieve))
+        if len(ids) > 0:
+            # Build id list, get objects for them.
+            ids = ','.join(str(x) for x in ids)
+
+            for achieve in getJson(a_link + ids):
+                self.achievements.append(Achievement(achieve))
 
 
 class Outfit:
