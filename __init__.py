@@ -15,6 +15,16 @@ class GlobalAPI:
         return(getJson(self.url + api, header=None))
 
     @typer
+    def getTitle(self, json):
+        '''
+        Query the non-authed Guild wars 2 API to build
+        objects from the returned JSON.
+
+        See Title class for documentation
+        '''
+        return eps.Title(json)
+
+    @typer
     def getOutfit(self, json):
         '''
         Query the non-authed Guild wars 2 API to build
@@ -406,6 +416,16 @@ class AccountAPI:
         self.wallet = currencyJSON
 
         return(self.wallet)
+
+    @typer
+    def getTitles(self):
+        '''
+        Gets your Titles and builds Title objects based off
+        the returned JSON from the official Guild Wars 2 API.
+
+        Note: This one can take a few seconds to finish.
+        '''
+        self.checkPermission('progression')
 
     @typer
     def getBank(self):
