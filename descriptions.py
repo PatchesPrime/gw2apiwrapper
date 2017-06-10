@@ -1,7 +1,30 @@
 from GW2API.functions import getJson
 
 
+class Title:
+    def __init__(self, titleJSON):
+        a_link = 'https://api.guildwars2.com/v2/achievements?ids='
+
+        self.id           = titleJSON['id']
+        self.name         = titleJSON['name']
+        self.ap_required  = titleJSON['ap_required']
+        self.achievements  = []
+
+
+        # I...I don't know why they kept these separate?
+        titleJSON['achievements'].append(titleJSON['achievement'])
+
+        # Build id list, get objects for them.
+        ids = ','.join(str(x) for x in titleJSON['achievements'])
+        for achieve in getJson(a_link + ids):
+            self.achievements.append(Achievement(achieve))
+
+
 class Outfit:
+    '''
+    Builds an object based off the JSON returned by the
+    Guild Wars 2 official outfit API.
+    '''
     def __init__(self, outfitJSON):
         itemURL = 'https://api.guildwars2.com/v2/items?ids='
 
