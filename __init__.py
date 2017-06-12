@@ -418,6 +418,16 @@ class AccountAPI:
         return(self.wallet)
 
     @typer
+    def getRecipes(self):
+        '''
+        Gets your unlocked recipes and builds objects based off
+        the returned JSON from the official Guild Wars 2 API.
+
+        Returns list of Recipe objects. (see descriptions)
+        '''
+        self.checkPermission('unlocks')
+
+    @typer
     def getTitles(self):
         '''
         Gets your Titles and builds Title objects based off
