@@ -186,10 +186,10 @@ class GlobalAPI:
     @typer
     def getMini(self, json):
         '''
-        Query the Guild Wars 2 Recipe API and build
+        Query the Guild Wars 2 Mini API and build
         object(s) based off the returned JSON.
 
-        See Recipe class for more documentation.
+        See Mini class for more documentation.
 
         Returns Mini object(s).
         '''
