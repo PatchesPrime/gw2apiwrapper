@@ -1,5 +1,5 @@
 from GW2API.functions import getJson
-
+from urllib.error import HTTPError
 
 class Title:
     '''
@@ -779,13 +779,24 @@ class GuildUpgrade:
     the Guild Wars 2 official guild/upgrades API.
     '''
     def __init__(self, upgradeJSON):
+        upgradeURL = 'https://api.guildwars2.com/v2/guild/upgrades?ids='
         self.id   = upgradeJSON['id']
         self.name = upgradeJSON['name']
         self.icon           = upgradeJSON['icon']
         self.build_time     = upgradeJSON['build_time']
         self.required_level = upgradeJSON['required_level']
         self.experience     = upgradeJSON['experience']
-        self.prerequisites  = upgradeJSON['prerequisites']
+        self.prerequisites  = []
+
+        # Build upgrades.
+        ids = ','.join(str(x) for x in upgradeJSON['prerequisites'])
+
+        try:
+            for upgrade in getJson(upgradeURL + ids):
+                self.prerequisites.append(GuildUpgrade(upgrade))
+        except HTTPError:
+            # Just has no prerequisites...I guess?
+            pass
 
         # Nested
         self.type = upgradeJSON['type']
