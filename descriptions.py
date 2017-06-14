@@ -673,7 +673,7 @@ class WVWObjective:
         self.map_id    = wvwJSON['map_id']
         self.map_type  = wvwJSON['map_type']
         self.sector_id = wvwJSON['sector_id']
-        self.coord     = wvwJSON['coord']
+        self.coord     = wvwJSON.get('coord')
 
         try:
             self.marker = wvwJSON['marker']
@@ -751,11 +751,16 @@ class AchievementGroup:
     Guild Wars 2 offical achievements/groups API.
     '''
     def __init__(self, groupJSON):
+        catURL = 'https://api.guildwars2.com/v2/achievements/categories?ids='
         self.id          = groupJSON['id']
         self.name        = groupJSON['name']
         self.description = groupJSON['description']
         self.order       = groupJSON['order']
-        self.categories  = groupJSON['categories']
+        self.categories  = []
+
+        ids = ','.join(str(x) for x in groupJSON['categories'])
+        for cat in getJson(catURL + ids):
+            self.categories.append(AchievementCategory(cat))
 
 
 class AchievementCategory:
