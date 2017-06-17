@@ -6,3 +6,4 @@
 *#*
 *.pyc
 /testsgw2api.py
+/tests/apikey.py
