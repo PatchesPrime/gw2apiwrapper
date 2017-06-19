@@ -573,8 +573,8 @@ class AccountAPI:
         currentURL = 'commerce/transactions/current'
 
         # Get the data.
-        buyingData  = self.getJson(currentURL + 'buys')
-        sellingData = self.getJson(currentURL + 'sells')
+        buyingData  = self.getJson(currentURL + '/buys')
+        sellingData = self.getJson(currentURL + '/sells')
 
         # If there is no buying data, set it to None.
         # You know, like API should have.
