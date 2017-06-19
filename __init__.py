@@ -195,7 +195,7 @@ class GlobalAPI:
         '''
         return eps.Mini(json)
 
-    def getWVWObjective(self, wvwID, objects = None):
+    def getWVWObjective(self, wvwID, objects=None):
         '''
         Query the Guild Wars 2 wvw/objectives API and build
         object(s) based off the returned JSON.
@@ -278,7 +278,7 @@ class GlobalAPI:
             # Return our "modified" WVWObjectives
             return(objects)
 
-    def getWVWMatches(self, matchID, objects = None):
+    def getWVWMatches(self, matchID, objects=None):
         '''
         Build and return WVWMatch objects for all
         currently in progress WVW Matches.
