@@ -78,6 +78,8 @@ class typer(object):
                      'masteries': {'url': 'masteries', 'obj': 'Mastery'},
                      'inventory': {'url': 'items', 'obj': 'Item'},
                      'outfits': {'url': 'outfits', 'obj': 'Outfit'},
+                     'titles': {'url': 'titles', 'obj': 'Title'},
+                     'recipes': {'url': 'recipes', 'obj': 'Recipe'},
 
                      # Guild endpoints.
                      'guildupgrades': {'url': 'guild/upgrades',
