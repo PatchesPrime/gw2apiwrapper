@@ -1,6 +1,7 @@
 from GW2API.functions import getJson
 from urllib.error import HTTPError
 
+
 class Title:
     '''
     Builds an object based off the JSON returned by the
