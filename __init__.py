@@ -669,9 +669,7 @@ class AccountAPI:
         '''
         self.checkPermission('unlocks')
 
-        pass
-
-    def getTraits(self, charName, areaFlag = None):
+    def getTraits(self, charName, areaFlag=None):
         '''
         Query multiple APIs (account specialization, trait, etc)
         and build the needed objects.
