@@ -14,7 +14,7 @@ class TestGlobalAPI(unittest.TestCase):
         finisher = gAPI.getFinisher(12)
         item = finisher.unlock_items[0]
         self.assertTrue(isinstance(finisher, descriptions.Finisher))
-        self.assertEqual(finisher.name, 'WHump the Giant Finisher')
+        self.assertEqual(finisher.name, 'Whump the Giant Finisher')
         self.assertEqual(item.name, 'Permanent Whump the Giant Finisher')
 
         # Test string()
