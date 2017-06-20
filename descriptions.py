@@ -312,7 +312,7 @@ class Item:
         self.id   = itemJSON['id']
         self.name = itemJSON['name']
         self.icon = itemJSON['icon']
-        self.type = itemJSON['type']
+        self.type = itemJSON.get('type')
 
         # Here we go. Optional arguments that are not
         # defined or empty if not in use. This is bad
@@ -322,9 +322,9 @@ class Item:
         except KeyError:
             self.description = None
 
-        self.rarity = itemJSON['rarity']
-        self.level  = itemJSON['level']
-        self.vendor = itemJSON['vendor_value']
+        self.rarity = itemJSON.get('rarity')
+        self.level  = itemJSON.get('level')
+        self.vendor = itemJSON.get('vendor_value')
         # Another optional that causes errors due to no
         # default empty value..
         try:
@@ -332,9 +332,9 @@ class Item:
         except KeyError:
             self.baseskin = None
 
-        self.flags        = itemJSON['flags']
-        self.valid_modes  = itemJSON['game_types']
-        self.restrictions = itemJSON['restrictions']
+        self.flags        = itemJSON.get('flags')
+        self.valid_modes  = itemJSON.get('game_types')
+        self.restrictions = itemJSON.get('restrictions')
 
         # NOTE: This is dependant on the item type, so we have to check that.
         # This whole section is just to tear the JSON down into python object
