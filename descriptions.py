@@ -16,12 +16,13 @@ class Finisher:
         self.icon = finishJSON['icon']
         self.name = finishJSON['name']
 
-        if finishJSON.get('unlock_items') is not None:
+        if len(finishJSON.get('unlock_items')) > 0:
             # Build the string of IDs.
             ids = ','.join(str(x) for x in finishJSON.get('unlock_items'))
 
             # Build a list of items and populate.
             self.unlock_items = []
+
             for item in getJson(f_link + ids):
                 self.unlock_items.append(Item(item))
         else:
