@@ -8,6 +8,36 @@ gAPI = GlobalAPI()
 
 
 class TestGlobalAPI(unittest.TestCase):
+    def test_getFinisher(self):
+        # Test int()
+        # I know for a fact finisher id 12 has an unlock item.
+        finisher = gAPI.getFinisher(12)
+        item = finisher.unlock_items[0]
+        self.assertTrue(isinstance(finisher, descriptions.Finisher))
+        self.assertEqual(finisher.name, 'WHump the Giant Finisher')
+        self.assertEqual(item.name, 'Permanent Whump the Giant Finisher')
+
+        # Test string()
+        # Finisher id 1 does not have a finisher item.
+        finisher = gAPI.getFinisher('1')
+        self.assertTrue(isinstance(finisher, descriptions.Finisher))
+        self.assertEqual(finisher.name, 'Rabbit Rank Finisher')
+
+        # Test list()
+        # Test both cases: Finisher unlock item and no unlock item.
+        for unit in gAPI.getFinisher([1, 12]):
+            self.assertTrue(
+                isinstance(unit, descriptions.Finisher)
+            )
+            if unit.unlock_items is not None:
+                self.assertTrue(
+                    isinstance(unit.unlock_items[0], descriptions.Item)
+                )
+                self.assertEqual(
+                    unit.unlock_items[0].name,
+                    'Permanent Whump the Giant Finisher'
+                )
+
     def test_getTitle(self):
         # Test int()
         title = gAPI.getTitle(8)
