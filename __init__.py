@@ -15,6 +15,16 @@ class GlobalAPI:
         return(getJson(self.url + api, header=None))
 
     @typer
+    def getFinisher(self, json):
+        '''
+        Query the non-authed Guild Wars 2 API to build
+        objects from the returned JSON.
+
+        See Finisher class for documentation.
+        '''
+        return eps.Finisher(json)
+
+    @typer
     def getTitle(self, json):
         '''
         Query the non-authed Guild wars 2 API to build
