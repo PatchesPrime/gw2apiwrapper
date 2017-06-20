@@ -8,7 +8,7 @@ class Finisher:
     Guild Wars 2 official Finishers API.
     '''
     def __init__(self, finishJSON):
-        f_link = 'https://api.guildwars2.com/v2/finishers?ids='
+        f_link = 'https://api.guildwars2.com/v2/items?ids='
 
         self.id = finishJSON['id']
         self.unlock_details = finishJSON['unlock_details']
