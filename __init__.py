@@ -394,6 +394,20 @@ class AccountAPI:
             # and it must not be pink.
             raise PermissionError(apiName)
 
+    @typer
+    def getFinishers(self):
+        '''
+        Gets the details of your unlocked finishers from
+        the official API.
+
+        Contains a list of dictionaries with the following keys:
+
+        id        - (int) ID of Finisher
+        permanent - (Boolean) True/false for permanancy of finisher.
+        object    - (Item) Object representing unlock_item for finisher.
+        '''
+        self.checkPermission('unlocks')
+
     def getWallet(self):
         '''
         Gets your money and money related accessories.
