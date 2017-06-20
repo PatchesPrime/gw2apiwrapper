@@ -8,6 +8,17 @@ class TestAccountAPI(unittest.TestCase):
     def getAccount(self):
         return(AccountAPI(APIKEY))
 
+    def test_getFinishers(self):
+        api = self.getAccount()
+
+        self.assertTrue(len(api.getFinishers()) > 5)
+
+        # Test for proper keys and types.
+        for unit in api.finishers:
+            self.assertTrue('permanent' in unit.keys())
+            self.assertTrue('id' in unit.keys())
+            self.assertTrue(isinstance(unit['object'], descriptions.Item))
+
     def test_getWallet(self):
         api = self.getAccount()
 
