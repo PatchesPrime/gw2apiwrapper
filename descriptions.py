@@ -2,6 +2,33 @@ from GW2API.functions import getJson
 from urllib.error import HTTPError
 
 
+class Finisher:
+    '''
+    Builds an object based off the JSON returned by the
+    Guild Wars 2 official Finishers API.
+    '''
+    def __init__(self, finishJSON):
+        f_link = 'https://api.guildwars2.com/v2/finishers?ids='
+
+        self.id = finishJSON['id']
+        self.unlock_details = finishJSON['unlock_details']
+        self.order = finishJSON['order']
+        self.icon = finishJSON['icon']
+        self.name = finishJSON['name']
+
+        if finishJSON.get('unlock_items') is not None:
+            # Build the string of IDs.
+            ids = ','.join(str(x) for x in finishJSON.get('unlock_items'))
+
+            # Build a list of items and populate.
+            self.unlock_items = []
+            for item in getJson(f_link + ids):
+                self.unlock_items.append(Item(item))
+        else:
+            # Default to None.
+            self.unlock_items = None
+
+
 class Title:
     '''
     Builds an object based off the JSON returned by the
