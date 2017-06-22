@@ -2,6 +2,33 @@ from GW2API.functions import getJson
 from urllib.error import HTTPError
 
 
+class Legend:
+    '''
+    Builds an object based off the JSON returned by the
+    Guild Wars 2 Legend API.
+
+    Also uses 'skills' API.
+    '''
+    def __init__(self, legendJSON):
+        s_link = 'https://api.guildwars2.com/v2/skills?ids='
+
+        self.id = legendJSON['id']
+        self.swap = legendJSON['swap']
+        self.heal = legendJSON['heal']
+        self.elite = legendJSON['elite']
+        self.utilities = legendJSON['utilities']
+
+        # Hahahaha, okay.
+        ids = ','.join(
+            str(x) for x in [self.swap, self.heal, self.elite] + self.utilities
+        )
+
+        # Have you ever seen such terror? If so we should BOTH be ashamed.
+        skillJSON = getJson(s_link + ids)
+        self.swap, self.heal, self.elite = [Skill(x) for x in skillJSON[:3]]
+        self.utilities = [Skill(x) for x in skillJSON[3:]]
+
+
 class Finisher:
     '''
     Builds an object based off the JSON returned by the
