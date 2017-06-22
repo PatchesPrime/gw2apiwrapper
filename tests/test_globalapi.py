@@ -8,6 +8,21 @@ gAPI = GlobalAPI()
 
 
 class TestGlobalAPI(unittest.TestCase):
+    def test_getSkill(self):
+        # Test int()
+        skill = gAPI.getSkill(14375)
+        self.assertTrue(isinstance(skill, descriptions.Skill))
+        self.assertEqual(skill.name, 'Arcing Slice')
+
+        # Test string()
+        skill = gAPI.getSkill(5516)
+        self.assertTrue(isinstance(skill, descriptions.Skill))
+        self.assertEqual(skill.name, 'Conjure Fiery Greatsword')
+
+        # Test list()
+        for unit in gAPI.getSkill([5516, 5517, '14375']):
+            self.assertTrue(isinstance(unit, descriptions.Skill))
+
     def test_getLegend(self):
         legend = gAPI.getLegend('Legend2')
 
