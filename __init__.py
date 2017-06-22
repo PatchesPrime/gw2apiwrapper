@@ -15,6 +15,14 @@ class GlobalAPI:
         return(getJson(self.url + api, header=None))
 
     @typer
+    def getSkill(self, json):
+        '''
+        Query the non-authed Guild Wars 2 API to build
+        objects from the returned JSON.
+        '''
+        return eps.Skill(json)
+
+    @typer
     def getLegend(self, json):
         '''
         Query the non-authed Guild Wars 2 API to build
