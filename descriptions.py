@@ -311,19 +311,46 @@ class Skill:
     def __init__(self, skillJSON):
         self.id          = skillJSON['id']
         self.name        = skillJSON['name']
-        self.description = skillJSON['description']
         self.icon        = skillJSON['icon']
+        self.chat_link   = skillJSON['chat_link']
+        self.type        = skillJSON['type']
+        self.weapon_type = skillJSON['weapon_type']
+        self.slot        = skillJSON['slot']
+        self.professions = skillJSON['professions']  # See NOTE below.
 
-        # Optional keys...PLS ANET
-        try:
-            self.facts = skillJSON['facts']
-        except KeyError:
-            self.facts = None
+        # NOTE: This is how I WOULD build a profession for EACH
+        # skill object, but turns out this can take a LONG time
+        # if you're doing a bunch of skills. It's one request per.
+        # Way too much. If you want a Profession object from this
+        # You should call it yourself in your code rather than here.
 
-        try:
-            self.traited_facts = skillJSON['traited_facts']
-        except KeyError:
-            self.traited_facts = None
+        # p_link = 'https://api.guildwars2.com/v2/professions?id='
+        # profs = ','.join(str(x) for x in skillJSON['professions'])
+        # self.professions = [Profession(x) for x in [getJson(p_link + profs)]]
+
+        # Optional. Either the value or None.
+        self.categories    = skillJSON.get('categories')
+        self.attunement    = skillJSON.get('attunement')
+        self.cost          = skillJSON.get('cost')
+        self.dual_wield    = skillJSON.get('dual_wield')
+        self.description   = skillJSON.get('description')
+        self.facts         = skillJSON.get('facts')
+        self.traited_facts = skillJSON.get('traited_facts')
+        self.initiative    = skillJSON.get('initiative')
+
+        # Also optional, but no objects are built from this
+        # data for the same reasons as professions up above.
+        # If we built objects off these when defined, it would
+        # DRASTICALLY increase the time to build Skill objects.
+        # Once again, should you want these to be Skill objects
+        # instead of IDs, you'll have to do that yourself in your
+        # code.
+        self.flip_skill       = skillJSON.get('flip_skill')
+        self.next_chain       = skillJSON.get('next_chain')
+        self.prev_chain       = skillJSON.get('prev_chain')
+        self.transform_skills = skillJSON.get('transform_skills')
+        self.bundle_skills    = skillJSON.get('bundle_skills')
+        self.toolbelt_skill   = skillJSON.get('toolbelt_skill')
 
 
 class Item:
