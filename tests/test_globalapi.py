@@ -8,6 +8,13 @@ gAPI = GlobalAPI()
 
 
 class TestGlobalAPI(unittest.TestCase):
+    def test_getLegend(self):
+        legend = gAPI.getLegend('Legend2')
+
+        self.assertTrue(isinstance(legend, descriptions.Legend))
+        self.assertEqual(legend.heal.name, 'Enchanted Daggers')
+        self.assertEqual(legend.heal.slot, 'Heal')
+
     def test_getFinisher(self):
         # Test int()
         # I know for a fact finisher id 12 has an unlock item.
