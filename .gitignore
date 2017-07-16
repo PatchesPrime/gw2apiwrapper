@@ -8,3 +8,4 @@
 /testsgw2api.py
 /tests/apikey.py
 *~
+tests/secrets.py
