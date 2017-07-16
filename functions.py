@@ -145,7 +145,7 @@ class typer(object):
             # it begins to cause problems.
             try:
                 # So it caused a minor problem. See Exception.
-                if type(data[0]) is dict:
+                if any(isinstance(x, dict) for x in data):
                     dictFlag = True
                 else:
                     dictFlag = False
