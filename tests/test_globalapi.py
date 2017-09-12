@@ -8,6 +8,11 @@ gAPI = GlobalAPI()
 
 
 class TestGlobalAPI(unittest.TestCase):
+    def test_getDungeon(self):
+        dungeon = gAPI.getDungeon('caudecus_manor')
+        self.assertTrue(isinstance(dungeon, descriptions.Dungeon))
+        self.assertTrue(dungeon.paths[1]['id'] == 'asura')
+
     def test_getSkill(self):
         # Test int()
         skill = gAPI.getSkill(14375)

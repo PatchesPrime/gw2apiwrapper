@@ -2,6 +2,16 @@ from GW2API.functions import getJson
 from urllib.error import HTTPError
 
 
+class Dungeon:
+    '''
+    Builds an object based off the JSON returned by the
+    Guild Wars 2 Dungeons API.
+    '''
+    def __init__(self, dunJSON):
+        self.id = dunJSON['id']
+        self.paths = dunJSON['paths']
+
+
 class Legend:
     '''
     Builds an object based off the JSON returned by the
