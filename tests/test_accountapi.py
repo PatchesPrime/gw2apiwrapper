@@ -8,6 +8,23 @@ class TestAccountAPI(unittest.TestCase):
     def getAccount(self):
         return(AccountAPI(APIKEY))
 
+    def test_getDungeon(self):
+        # I don't really do dungeons so I'm having a hard time verifying
+        # the validity of this test. If you got a key and do dungeons
+        # send me a message.
+        api = self.getAccount()
+        paths = ['cm_story', 'asura', 'seraph', 'butler', 'ac_story',
+                 'hodgins', 'detha', 'tzark', 'ta_story', 'leurent',
+                 'vevina', 'aetherpath', 'se_story', 'fergg', 'rasalov',
+                 'koptev', 'cof_story', 'ferrah', 'magg', 'rhiannon',
+                 'hotw_story', 'butcher', 'plunderer', 'zealot',
+                 'coe_story', 'submarine', 'teleport', 'front_door',
+                 'arah_story', 'jotun', 'mursaat', 'forgotten', 'seer']
+        dun = api.getDungeons()
+
+        # I guess this'll work for now until I get someone who does dungeons.
+        self.assertTrue(any(x in dun for x in paths))
+
     def test_getFinishers(self):
         api = self.getAccount()
 

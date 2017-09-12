@@ -419,6 +419,17 @@ class AccountAPI:
             raise PermissionError(apiName)
 
     @typer
+    def getDungeons(self):
+        '''
+        Gets the details of your completed dungeons from
+        the official API.
+
+        NOTE: I can't test if this works, I don't do dungeons.
+        If you do, feel free to send me a message so I can verify it.
+        '''
+        self.checkPermission('progression')
+
+    @typer
     def getFinishers(self):
         '''
         Gets the details of your unlocked finishers from
