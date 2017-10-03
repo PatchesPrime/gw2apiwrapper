@@ -89,6 +89,8 @@ class typer(object):
                                        'obj': 'GuildUpgrade'},
                      'guildpermissions': {'url': 'guild/permissions',
                                           'obj': 'GuildPermission'},
+                     'guilds': {'url': 'guild',
+                                'obj': 'Guild'},
 
                      # Achievement Stuff.
                      'achievements': {'url': 'achievements',
@@ -112,6 +114,9 @@ class typer(object):
 
         elif self.api == 'inventorys':
             api = 'inventory'
+
+        elif self.api == 'guilds':
+            api = 'guild'
 
         # Failure case? we try...
         else:

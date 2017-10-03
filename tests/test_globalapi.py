@@ -8,6 +8,10 @@ gAPI = GlobalAPI()
 
 
 class TestGlobalAPI(unittest.TestCase):
+    def test_getGuild(self):
+        guild = gAPI.getGuild('116E0C0E-0035-44A9-BB22-4AE3E23127E5')
+        self.assertTrue(isinstance(guild, descriptions.Guild))
+
     def test_getDungeon(self):
         dungeon = gAPI.getDungeon('caudecus_manor')
         self.assertTrue(isinstance(dungeon, descriptions.Dungeon))
@@ -267,7 +271,7 @@ class TestGlobalAPI(unittest.TestCase):
         # Test list()
         for unit in gAPI.getSkin([1, 2]):
             self.assertTrue(
-                isinstance(unit, descriptions.Skin)
+               isinstance(unit, descriptions.Skin)
             )
 
     def test_getItem(self):
