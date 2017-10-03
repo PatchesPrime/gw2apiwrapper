@@ -115,9 +115,6 @@ class typer(object):
         elif self.api == 'inventorys':
             api = 'inventory'
 
-        elif self.api == 'guilds':
-            api = 'guild'
-
         # Failure case? we try...
         else:
             api = self.api
