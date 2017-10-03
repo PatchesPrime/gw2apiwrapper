@@ -8,6 +8,13 @@ class TestAccountAPI(unittest.TestCase):
     def getAccount(self):
         return(AccountAPI(APIKEY))
 
+    def test_getGuild(self):
+        api = self.getAccount()
+
+        guild = api.getGuild('A4AF6C09-452F-44EE-BD3E-704FB5C371FB')
+        self.assertTrue(isinstance(guild, descriptions.Guild))
+        self.assertTrue(guild.influence > 0)
+
     def test_getDungeon(self):
         # I don't really do dungeons so I'm having a hard time verifying
         # the validity of this test. If you got a key and do dungeons

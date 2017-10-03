@@ -15,6 +15,14 @@ class GlobalAPI:
         return(getJson(self.url + api, header=None))
 
     @typer
+    def getGuild(self, json):
+        '''
+        Query the non-authed Guild wars 2 API to build
+        objects from the returned JSON.
+        '''
+        return eps.Guild(json)
+
+    @typer
     def getDungeon(self, json):
         '''
         Query the non-authed Guild Wars 2 API to build
@@ -417,6 +425,16 @@ class AccountAPI:
             # It makes me do bad things. But the line is pink
             # and it must not be pink.
             raise PermissionError(apiName)
+
+    def getGuild(self, guildID):
+        '''
+        Get the extended details of a guild the API key we are
+        authenticated to is a member of.
+        '''
+        self.checkPermission('guilds')
+
+        guild = eps.Guild(self.getJson('guild/{}'.format(guildID)))
+        return guild
 
     @typer
     def getDungeons(self):
