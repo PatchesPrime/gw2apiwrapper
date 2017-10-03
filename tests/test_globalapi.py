@@ -11,6 +11,7 @@ class TestGlobalAPI(unittest.TestCase):
     def test_getGuild(self):
         guild = gAPI.getGuild('116E0C0E-0035-44A9-BB22-4AE3E23127E5')
         self.assertTrue(isinstance(guild, descriptions.Guild))
+        self.assertTrue(guild.name == 'Edit Conflict')
 
     def test_getDungeon(self):
         dungeon = gAPI.getDungeon('caudecus_manor')
