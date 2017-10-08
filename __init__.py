@@ -15,6 +15,14 @@ class GlobalAPI:
         return(getJson(self.url + api, header=None))
 
     @typer
+    def getRaid(self, json):
+        '''
+        Query the non-authed Guild Wars 2 API to build
+        objects from the returned JSON.
+        '''
+        return eps.Raid(json)
+
+    @typer
     def getGuild(self, json):
         '''
         Query the non-authed Guild wars 2 API to build
@@ -425,6 +433,17 @@ class AccountAPI:
             # It makes me do bad things. But the line is pink
             # and it must not be pink.
             raise PermissionError(apiName)
+
+    @typer
+    def getRaids(self):
+        '''
+        Get the details of your completed dungeons from
+        the official API.
+
+        NOTE: I can't test if this works as I don't do raids.
+        If you do, feel free to send me a message so I can verify it.
+        '''
+        self.checkPermission('progression')
 
     def getGuild(self, guildID):
         '''
