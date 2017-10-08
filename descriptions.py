@@ -945,3 +945,13 @@ class GuildPermission:
         self.id          = gpJSON['id']
         self.name        = gpJSON['name']
         self.description = gpJSON['description']
+
+
+class Raid:
+    '''
+    Builds an object based off the JSON returned by the
+    Guild Wars 2 official raids API.
+    '''
+    def __init__(self, rJSON):
+        self.id    = rJSON['id']
+        self.wings = rJSON['wings']
