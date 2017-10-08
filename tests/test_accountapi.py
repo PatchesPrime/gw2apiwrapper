@@ -8,6 +8,19 @@ class TestAccountAPI(unittest.TestCase):
     def getAccount(self):
         return(AccountAPI(APIKEY))
 
+    def test_getRaids(self):
+        api = self.getAccount()
+
+        encounters = ["vale_guardian", "spirit_woods", "gorseval",
+                      "sabetha", "slothasor", "bandit_trio",
+                      "matthias", "escort", "keep_construct",
+                      "xera", "cairn", "mursaat_overseer",
+                      "samarog", "deimos"]
+        raids = api.getRaids()
+
+        # I don't do raids..
+        self.assertTrue(any(x in raids for x in encounters))
+
     def test_getGuild(self):
         api = self.getAccount()
 
