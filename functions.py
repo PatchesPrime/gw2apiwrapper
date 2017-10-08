@@ -83,6 +83,7 @@ class typer(object):
                      'finishers': {'url': 'finishers', 'obj': 'Item'},
                      'legends': {'url': 'legends', 'obj': 'Legend'},
                      'dungeons': {'url': 'dungeons', 'obj': 'Dungeon'},
+                     'raids': {'url': 'raids', 'obj': 'Raid'},
 
                      # Guild endpoints.
                      'guildupgrades': {'url': 'guild/upgrades',
