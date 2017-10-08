@@ -922,17 +922,17 @@ class Guild:
     Builds an object representing a Guild according to the GW2API.
     '''
     def __init__(self, guildJSON):
-        self.id = guildJSON['id']
-        self.name = guildJSON['name']
-        self.tag = guildJSON['tag']
+        self.id     = guildJSON['id']
+        self.name   = guildJSON['name']
+        self.tag    = guildJSON['tag']
         self.emblem = guildJSON['emblem']
 
         # Optional tags.
-        self.level = guildJSON.get('level')
-        self.motd = guildJSON.get('motd')
+        self.level     = guildJSON.get('level')
+        self.motd      = guildJSON.get('motd')
         self.influence = guildJSON.get('influence')
         self.aetherium = guildJSON.get('aetherium')
-        self.favor = guildJSON.get('favor')
+        self.favor     = guildJSON.get('favor')
 
 
 class GuildPermission:
