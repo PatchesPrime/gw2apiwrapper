@@ -8,6 +8,11 @@ gAPI = GlobalAPI()
 
 
 class TestGlobalAPI(unittest.TestCase):
+    def test_getRaid(self):
+        raid = gAPI.getRaid('forsaken_thicket')
+        self.assertTrue(isinstance(raid, descriptions.Raid))
+        self.assertTrue(raid.id == 'forsaken_thicket')
+
     def test_getGuild(self):
         guild = gAPI.getGuild('116E0C0E-0035-44A9-BB22-4AE3E23127E5')
         self.assertTrue(isinstance(guild, descriptions.Guild))
