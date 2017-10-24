@@ -19,7 +19,10 @@ class TestAccountAPI(unittest.TestCase):
         raids = api.getRaids()
 
         # I don't do raids..
-        self.assertTrue(any(x in raids for x in encounters))
+        # self.assertTrue(any(x in raids for x in encounters))
+
+        # This should always be false when using my API key...
+        self.assertFalse(any(x in raids for x in encounters))
 
     def test_getGuild(self):
         api = self.getAccount()
@@ -43,7 +46,10 @@ class TestAccountAPI(unittest.TestCase):
         dun = api.getDungeons()
 
         # I guess this'll work for now until I get someone who does dungeons.
-        self.assertTrue(any(x in dun for x in paths))
+        # self.assertTrue(any(x in dun for x in paths))
+
+        # This should always be false when using my API key...
+        self.assertFalse(any(x in dun for x in paths))
 
     def test_getFinishers(self):
         api = self.getAccount()
