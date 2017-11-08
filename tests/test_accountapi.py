@@ -1,6 +1,5 @@
 import unittest
 from GW2API import AccountAPI
-from GW2API import descriptions
 from .secrets import APIKEY
 
 
@@ -28,7 +27,7 @@ class TestAccountAPI(unittest.TestCase):
         api = self.getAccount()
 
         guild = api.getGuild('A4AF6C09-452F-44EE-BD3E-704FB5C371FB')
-        self.assertTrue(isinstance(guild, descriptions.Guild))
+        self.assertEqual(type(guild).__name__, 'Guild')
         self.assertTrue(guild.influence > 0)
 
     def test_getDungeon(self):
@@ -60,7 +59,7 @@ class TestAccountAPI(unittest.TestCase):
         for unit in api.finishers:
             self.assertTrue('permanent' in unit.keys())
             self.assertTrue('id' in unit.keys())
-            self.assertTrue(isinstance(unit['object'], descriptions.Item))
+            self.assertEqual(type(unit['object']).__name__, 'Finisher')
 
     def test_getWallet(self):
         api = self.getAccount()
@@ -82,7 +81,7 @@ class TestAccountAPI(unittest.TestCase):
 
         # Verify some information.
         self.assertTrue(api.recipes[0].id == 842)
-        self.assertTrue(api.recipes[0].time == 5000)
+        self.assertTrue(api.recipes[0].time_to_craft_ms == 5000)
 
     def test_getTitles(self):
         api = self.getAccount()
@@ -96,7 +95,7 @@ class TestAccountAPI(unittest.TestCase):
         self.assertTrue(len(api.getBank()) > 5)
 
         for unit in api.bank:
-            self.assertTrue(isinstance(unit['object'], descriptions.Item))
+            self.assertEqual(type(unit['object']).__name__, 'Item')
 
     def test_getAchievements(self):
         api = self.getAccount()
@@ -105,9 +104,7 @@ class TestAccountAPI(unittest.TestCase):
         self.assertTrue(api.achievements[0]['object'].name == 'Centaur Slayer')
 
         for unit in api.achievements:
-            self.assertTrue(
-                isinstance(unit['object'], descriptions.Achievement)
-            )
+            self.assertEqual(type(unit['object']).__name__, 'Achievement')
 
     def test_getMaterials(self):
         api = self.getAccount()
@@ -116,9 +113,7 @@ class TestAccountAPI(unittest.TestCase):
         self.assertTrue(api.materials[0]['object'].name == 'Carrot')
 
         for unit in api.materials:
-            self.assertTrue(
-                isinstance(unit['object'], descriptions.Item)
-            )
+            self.assertEqual(type(unit['object']).__name__, 'Material')
 
     def test_getOutfits(self):
         api = self.getAccount()
@@ -127,9 +122,7 @@ class TestAccountAPI(unittest.TestCase):
         self.assertTrue(api.outfits[0].name == 'Hexed Outfit')
 
         for unit in api.outfits:
-            self.assertTrue(
-                isinstance(unit, descriptions.Outfit)
-            )
+            self.assertEqual(type(unit).__name__, 'Outfit')
 
     def test_getMasteries(self):
         api = self.getAccount()
@@ -138,9 +131,7 @@ class TestAccountAPI(unittest.TestCase):
         self.assertTrue(api.masteries[0]['object'].name == 'Exalted Lore')
 
         for unit in api.masteries:
-            self.assertTrue(
-                isinstance(unit['object'], descriptions.Mastery)
-            )
+            self.assertEqual(type(unit['object']).__name__, 'Mastery')
 
     def test_getInventory(self):
         api = self.getAccount()
@@ -150,9 +141,7 @@ class TestAccountAPI(unittest.TestCase):
         self.assertTrue(api.inventory[0]['object'].name == 'Royal Terrace Pass')
 
         for unit in api.inventory:
-            self.assertTrue(
-                isinstance(unit['object'], descriptions.Item)
-            )
+            self.assertEqual(type(unit['object']).__name__, 'Item')
 
     def test_getTradeHistory(self):
         api = self.getAccount()
@@ -169,7 +158,7 @@ class TestAccountAPI(unittest.TestCase):
         self.assertTrue(len(api.getCharacters()) > 3)
 
         for unit in api.characters:
-            self.assertTrue(isinstance(unit, descriptions.Character))
+            self.assertEqual(type(unit).__name__, 'Character')
 
     def test_getDyes(self):
         api = self.getAccount()
@@ -177,7 +166,7 @@ class TestAccountAPI(unittest.TestCase):
         self.assertTrue(len(api.getDyes()) > 100)  # I have a lot of dyes.
 
         for unit in api.dyes:
-            self.assertTrue(isinstance(unit, descriptions.Dye))
+            self.assertEqual(type(unit).__name__, 'Dye')
 
         self.assertTrue(api.dyes[0].name == 'Chalk')
 
@@ -187,7 +176,7 @@ class TestAccountAPI(unittest.TestCase):
         self.assertTrue(len(api.getSkins()) > 100)
 
         for unit in api.skins:
-            self.assertTrue(isinstance(unit, descriptions.Skin))
+            self.assertEqual(type(unit).__name__, 'Skin')
 
         self.assertTrue(api.skins[0].name == 'Chainmail Leggings')
 
@@ -200,13 +189,7 @@ class TestAccountAPI(unittest.TestCase):
         # Today on ugly, we have this.
         for unit in build.values():
             for area in unit:
-                self.assertTrue(
-                    isinstance(area['line'], descriptions.Specialization)
-                )
-                for trait in area['traits']:
-                    self.assertTrue(
-                        isinstance(trait, descriptions.Trait)
-                    )
+                self.assertEqual(type(area['line']).__name__, 'Specialization')
 
     def test_getMatchResults(self):
         api = self.getAccount()
@@ -214,9 +197,7 @@ class TestAccountAPI(unittest.TestCase):
         results = api.getMatchResults('all')
 
         for match in results:
-            self.assertTrue(
-                isinstance(match, descriptions.PVPMatch)
-            )
+            self.assertEqual(type(match).__name__, 'PVPMatch')
 
     def test_getPVPStats(self):
         api = self.getAccount()
