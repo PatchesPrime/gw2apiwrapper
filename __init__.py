@@ -20,7 +20,7 @@ class GlobalAPI:
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
         '''
-        return eps.Raid(json)
+        pass
 
     @typer
     def getGuild(self, json):
@@ -28,7 +28,7 @@ class GlobalAPI:
         Query the non-authed Guild wars 2 API to build
         objects from the returned JSON.
         '''
-        return eps.Guild(json)
+        pass
 
     @typer
     def getDungeon(self, json):
@@ -36,7 +36,7 @@ class GlobalAPI:
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
         '''
-        return eps.Dungeon(json)
+        pass
 
     @typer
     def getSkill(self, json):
@@ -44,7 +44,7 @@ class GlobalAPI:
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
         '''
-        return eps.Skill(json)
+        pass
 
     @typer
     def getLegend(self, json):
@@ -52,7 +52,7 @@ class GlobalAPI:
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
         '''
-        return eps.Legend(json)
+        pass
 
     @typer
     def getFinisher(self, json):
@@ -62,7 +62,7 @@ class GlobalAPI:
 
         See Finisher class for documentation.
         '''
-        return eps.Finisher(json)
+        pass
 
     @typer
     def getTitle(self, json):
@@ -72,7 +72,7 @@ class GlobalAPI:
 
         See Title class for documentation
         '''
-        return eps.Title(json)
+        pass
 
     @typer
     def getOutfit(self, json):
@@ -82,7 +82,7 @@ class GlobalAPI:
 
         See Outfit class for documentation
         '''
-        return eps.Outfit(json)
+        pass
 
     @typer
     def getMasteries(self, json):
@@ -92,7 +92,7 @@ class GlobalAPI:
 
         See Mastery class for documentation
         '''
-        return eps.Mastery(json)
+        pass
 
     @typer
     def getPet(self, json):
@@ -102,7 +102,7 @@ class GlobalAPI:
 
         See Pet class for documentation
         '''
-        return eps.Pet(json)
+        pass
 
     @typer
     def getRace(self, json):
@@ -112,7 +112,7 @@ class GlobalAPI:
 
         See Race class for documentation
         '''
-        return eps.Race(json)
+        pass
 
     @typer
     def getProfession(self, json):
@@ -122,7 +122,7 @@ class GlobalAPI:
 
         See Profession class for documentation
         '''
-        return eps.Profession(json)
+        pass
 
     @typer
     def getGuildUpgrade(self, json):
@@ -134,7 +134,7 @@ class GlobalAPI:
 
         Returns GuildUpgrade(s) objects.
         '''
-        return eps.GuildUpgrade(json)
+        pass
 
     @typer
     def getGuildPermission(self, json):
@@ -146,7 +146,7 @@ class GlobalAPI:
 
         Returns GuildPermission(s) objects.
         '''
-        return eps.GuildPermission(json)
+        pass
 
     @typer
     def getAchievement(self, json):
@@ -159,7 +159,7 @@ class GlobalAPI:
 
         Returns Achievement(s) objects.
         '''
-        return eps.Achievement(json)
+        pass
 
     @typer
     def getAchievementGroup(self, json):
@@ -171,7 +171,7 @@ class GlobalAPI:
 
         Returns AchievementGroup(s) objects.
         '''
-        return eps.AchievementGroup(json)
+        pass
 
     @typer
     def getAchievementCategory(self, json):
@@ -183,7 +183,7 @@ class GlobalAPI:
 
         Returns AchievementCategory(s) objects.
         '''
-        return eps.AchievementCategory(json)
+        pass
 
     @typer
     def getSkin(self, json):
@@ -195,7 +195,7 @@ class GlobalAPI:
 
         Returns Skin object(s).
         '''
-        return eps.Skin(json)
+        pass
 
     @typer
     def getItem(self, json):
@@ -207,7 +207,7 @@ class GlobalAPI:
 
         Returns Item object(s).
         '''
-        return eps.Item(json)
+        pass
 
     @typer
     def getDye(self, json):
@@ -219,7 +219,7 @@ class GlobalAPI:
 
         Returns Dye object(s).
         '''
-        return eps.Dye(json)
+        pass
 
     @typer
     def getRecipe(self, json):
@@ -231,7 +231,7 @@ class GlobalAPI:
 
         Returns Recipe object(s).
         '''
-        return eps.Recipe(json)
+        pass
 
     @typer
     def getMini(self, json):
@@ -243,7 +243,7 @@ class GlobalAPI:
 
         Returns Mini object(s).
         '''
-        return eps.Mini(json)
+        pass
 
     def getWVWObjective(self, wvwID, objects=None):
         '''
@@ -375,7 +375,7 @@ class GlobalAPI:
                 # Return the Object.
                 return(eps.WVWMatch(jsonData))
 
-    def getDailies(self, tomorrow = False):
+    def getDailies(self, tomorrow=False):
         '''
         Simple method to grab the dailies from GW2 official
         API and returns achievement objects for them.
