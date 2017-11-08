@@ -212,10 +212,6 @@ class typer(object):
                         else:
                             objName = api.title()
 
-                    # # I know this is bad.
-                    # # But all the cool kids bypass import rules..
-                    # module = importlib.import_module('GW2API.descriptions')
-                    # obj = getattr(module, objName)
                     obj = namedtuple(objName, item.keys())
 
                     # Handle dictionaries differently.
