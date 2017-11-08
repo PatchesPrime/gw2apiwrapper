@@ -1,7 +1,7 @@
 import json
 import urllib.parse
 import urllib.request
-import importlib
+from collections import namedtuple
 from GW2API.exceptions import BadIDError, PermissionError, FlagParameterError
 
 
@@ -71,7 +71,7 @@ class typer(object):
                      'dyes': {'url': 'colors', 'obj': 'Dye'},
                      'minis': {'url': 'minis', 'obj': 'Mini'},
                      'bank': {'url': 'items', 'obj': 'Item'},
-                     'materials': {'url': 'items', 'obj': 'Item'},
+                     'materials': {'url': 'items', 'obj': 'Material'},
                      'professions': {'url': 'professions', 'obj': 'Profession'},
                      'races': {'url': 'races', 'obj': 'Race'},
                      'pets': {'url': 'pets', 'obj': 'Pet'},
@@ -80,10 +80,12 @@ class typer(object):
                      'outfits': {'url': 'outfits', 'obj': 'Outfit'},
                      'titles': {'url': 'titles', 'obj': 'Title'},
                      'recipes': {'url': 'recipes', 'obj': 'Recipe'},
-                     'finishers': {'url': 'finishers', 'obj': 'Item'},
+                     'finishers': {'url': 'finishers', 'obj': 'Finisher'},
                      'legends': {'url': 'legends', 'obj': 'Legend'},
                      'dungeons': {'url': 'dungeons', 'obj': 'Dungeon'},
                      'raids': {'url': 'raids', 'obj': 'Raid'},
+                     'skills': {'url': 'skills', 'obj': 'Skill'},
+                     'items': {'url': 'items', 'obj': 'Item'},
 
                      # Guild endpoints.
                      'guildupgrades': {'url': 'guild/upgrades',
@@ -210,10 +212,11 @@ class typer(object):
                         else:
                             objName = api.title()
 
-                    # I know this is bad.
-                    # But all the cool kids bypass import rules..
-                    module = importlib.import_module('GW2API.descriptions')
-                    obj = getattr(module, objName)
+                    # # I know this is bad.
+                    # # But all the cool kids bypass import rules..
+                    # module = importlib.import_module('GW2API.descriptions')
+                    # obj = getattr(module, objName)
+                    obj = namedtuple(objName, item.keys())
 
                     # Handle dictionaries differently.
                     if dictFlag:
@@ -223,12 +226,12 @@ class typer(object):
                             # getBank can return None.
                             if part:
                                 if item['id'] == part['id']:
-                                    part.update({'object': obj(item)})
+                                    part.update({'object': obj(**item)})
 
                                     # List of dictionaries recreated!
                                     objects.append(part)
                     else:
-                        objects.append(obj(item))
+                        objects.append(obj(**item))
 
             # We need to assign the data to the object.
             setattr(self.obj, api, objects)
@@ -257,7 +260,11 @@ class typer(object):
 
             # Generate the objects.
             for item in data:
-                objects.append(self.f(self.obj, item))
+                # Define a namedtuple for use as object.
+                # I'm not sure how good of a practice it is to
+                # create the namedtuple in here. Likely to change.
+                obj = namedtuple(crossList[api]['obj'], item.keys())
+                objects.append(obj(**item))
 
             # Return said objects.
             return(objects)
@@ -288,7 +295,8 @@ class typer(object):
 
                     # Build objects.
                     for item in data:
-                        objects.append(self.f(self.obj, item))
+                        obj = namedtuple(crossList[api]['obj'], item.keys())
+                        objects.append(obj(**item))
 
                 # Return them all.
                 return(objects)
@@ -296,12 +304,14 @@ class typer(object):
                 safeArgs = (url, self._parse(*args))
                 jsonData = self.obj.getJson('{}/{}'.format(*safeArgs))
 
-                return(self.f(self.obj, jsonData))
+                obj = namedtuple(crossList[api]['obj'], jsonData.keys())
+                return(obj(**jsonData))
 
         elif type(*args) is int:
             jsonData = self.obj.getJson('{}/{}'.format(url, *args))
 
-            return(self.f(self.obj, jsonData))
+            obj = namedtuple(crossList[api]['obj'], jsonData.keys())
+            return(obj(**jsonData))
 
 
 def getJson(url, header = None):
