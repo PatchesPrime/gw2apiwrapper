@@ -1,6 +1,7 @@
 import urllib.parse
 import concurrent.futures as cc
-from GW2API import descriptions as eps
+from collections import namedtuple
+import GW2API.descriptions as eps
 from GW2API.functions import getJson, typer
 
 
@@ -267,10 +268,11 @@ class GlobalAPI:
             cleanURL = 'wvw/objectives?ids={}'.format(cleanList)
 
             data = self.getJson(cleanURL)
+            obj = namedtuple('WVWObjective', data[0].keys())
 
             # Generate the objects.
             for name in data:
-                objects.append(eps.WVWObjective(name))
+                objects.append(obj(**name))
 
             # Return said objects.
             return(objects)
@@ -282,51 +284,28 @@ class GlobalAPI:
 
                 # Default case: get all of them.
                 wvwJSON = self.getJson('wvw/objectives?ids=all')
+                obj = namedtuple('WVWObjective', wvwJSON[0].keys())
 
                 # Generate objects.
                 for item in wvwJSON:
-                    objects.append(eps.WVWObjective(item))
+                    # As is expected from the GW2 official API
+                    # there is inconsistency and no default values
+                    # for their returned JSON. So we must do this..
+                    try:
+                        objects.append(obj(**item))
+                    except TypeError:
+                        temp_obj = namedtuple('WVWObjective', item.keys())
+                        objects.append(temp_obj(**item))
 
                 # Return them all.
                 return(objects)
 
             else:
                 jsonData = self.getJson('wvw/objectives/{}'.format(wvwID))
+                obj = namedtuple('WVWObjective', jsonData.keys())
 
                 # Return the Object.
-                return(eps.WVWObjective(jsonData))
-
-        # I hate this.
-        elif type(wvwID) is eps.WVWMap:
-            if objects is None:
-                objects = []
-
-            # We will have to do a couple requests.
-            idList = [x['id'] for x in wvwID.objectives]
-
-            # Build the URL string.
-            cleanList = ','.join(idList)
-
-            # Get the JSON.
-            wvwJSON = self.getJson('wvw/objectives?ids={}'.format(cleanList))
-
-            for item in wvwJSON:
-                for current in wvwID.objectives:
-                    if item['id'] == current['id']:
-                        # Make the object.
-                        new = eps.WVWObjective(item)
-
-                        # Assign the WVWMap specfic values.
-                        new.owner        = current['owner']
-                        new.last_flipped = current['last_flipped']
-                        new.claimed_at   = current['claimed_at']
-                        new.claimed_by   = current['claimed_by']
-
-                        # Append to our object list.
-                        objects.append(new)
-
-            # Return our "modified" WVWObjectives
-            return(objects)
+                return(obj(**jsonData))
 
     def getWVWMatches(self, matchID, objects=None):
         '''
@@ -346,10 +325,11 @@ class GlobalAPI:
             cleanURL = 'wvw/matches?ids={}'.format(cleanList)
 
             data = self.getJson(cleanURL)
+            obj = namedtuple('WVWMatch', data[0].keys())
 
             # Generate the objects.
             for name in data:
-                objects.append(eps.WVWMatch(name))
+                objects.append(obj(**name))
 
             # Return said objects.
             return(objects)
@@ -361,19 +341,21 @@ class GlobalAPI:
 
                 # Default case: get all of them.
                 wvwJSON = self.getJson('wvw/matches?ids=all')
+                obj = namedtuple('WVWMatch', wvwJSON[0].keys())
 
                 # Generate objects.
                 for item in wvwJSON:
-                    objects.append(eps.WVWMatch(item))
+                    objects.append(obj(**item))
 
                 # Return them all.
                 return(objects)
 
             else:
                 jsonData = self.getJson('wvw/matches/{}'.format(matchID))
+                obj = namedtuple('WVWMatch', jsonData.keys())
 
                 # Return the Object.
-                return(eps.WVWMatch(jsonData))
+                return(obj(**jsonData))
 
     def getDailies(self, tomorrow=False):
         '''
@@ -452,8 +434,11 @@ class AccountAPI:
         '''
         self.checkPermission('guilds')
 
-        guild = eps.Guild(self.getJson('guild/{}'.format(guildID)))
-        return guild
+        # Build our tuple.
+        jsonData = self.getJson('guild/{}'.format(guildID))
+        obj = namedtuple('Guild', jsonData.keys())
+
+        return obj(**jsonData)
 
     @typer
     def getDungeons(self):
@@ -914,22 +899,27 @@ class AccountAPI:
         self.checkPermission('pvp')
 
         if type(matchID) is str:
+            # Build the ID string.
             if matchID == 'all':
-                # Build the ID string.
                 gameSTR = 'pvp/games?ids=all'
-
-                # Make the objects.
-                matches = [eps.PVPMatch(x) for x in self.getJson(gameSTR)]
-
-                return(matches)
             else:
-                # Build the URL
-                gameSTR = 'pvp/games?id={}'.format(matchID)
+                gameSTR = 'pvp/games?ids={}'.format(matchID)
 
-                # Use the url.
-                match = eps.PVPMatch(self.getJson(gameSTR))
+            # Get the JSON
+            jsonData = self.getJson(gameSTR)
+            obj = namedtuple('PVPMatch', jsonData[0].keys())
 
-                return(match)
+            # Make the objects.
+            matches = []
+            for match in jsonData:
+                try:
+                    matches.append(obj(**match))
+                except TypeError:
+                    # Very likely missing or adding new attributes.
+                    temp_obj = namedtuple('PVPMatch', match.keys())
+                    matches.append(temp_obj(**match))
+
+            return(matches)
 
         # A list of IDs.
         elif type(matchID) is list:
@@ -948,7 +938,8 @@ class AccountAPI:
                 cleanURL = 'pvp/games?ids={}'.format(cleanStr)
 
                 for match in self.getJson(cleanURL):
-                    matches.append(eps.PVPMatch(match))
+                    obj = namedtuple('PVPMatch', match.keys())
+                    matches.append(obj(**match))
 
             # Return objects.
             return(matches)
