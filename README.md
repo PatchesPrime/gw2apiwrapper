@@ -1,11 +1,18 @@
 # GW2API
 Object Orientated GW2 API Wrapper
 
-**2017-06-04 - Slowly implementing the newer/forgotten APIs. Very slowly.**
+**2017-11-13 - Decent sized refactor in progress. Majority of conversion is done, but still a few fiddly bits..**
 
 Being dissatisfied with the current implementations of the Guild Wars 2 API written in python, I began this project.
 
 It will eventually (as it's released) implement all of the GW2 v2 API.
+
+To install, simply change to your projects directory and run this:
+``` bash
+git clone https://github.com/PatchesPrime/GW2API.git
+```
+Then import it.
+
 
 Example:
 ``` python
