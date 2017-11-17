@@ -20,6 +20,8 @@ class GlobalAPI:
         '''
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
+
+        https://wiki.guildwars2.com/wiki/API:2/raids#Response
         '''
         pass
 
@@ -28,6 +30,8 @@ class GlobalAPI:
         '''
         Query the non-authed Guild wars 2 API to build
         objects from the returned JSON.
+
+        https://wiki.guildwars2.com/wiki/API:2/guild/:id#Response
         '''
         pass
 
@@ -36,6 +40,8 @@ class GlobalAPI:
         '''
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
+
+        https://wiki.guildwars2.com/wiki/API:2/dungeons#Response
         '''
         pass
 
@@ -44,6 +50,8 @@ class GlobalAPI:
         '''
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
+
+        https://wiki.guildwars2.com/wiki/API:2/skills#Response
         '''
         pass
 
@@ -52,6 +60,8 @@ class GlobalAPI:
         '''
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
+
+        https://wiki.guildwars2.com/wiki/API:2/legends#Response
         '''
         pass
 
@@ -61,7 +71,7 @@ class GlobalAPI:
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
 
-        See Finisher class for documentation.
+        https://wiki.guildwars2.com/wiki/API:2/finishers#Response
         '''
         pass
 
@@ -71,7 +81,7 @@ class GlobalAPI:
         Query the non-authed Guild wars 2 API to build
         objects from the returned JSON.
 
-        See Title class for documentation
+        https://wiki.guildwars2.com/wiki/API:2/titles#Response
         '''
         pass
 
@@ -81,7 +91,7 @@ class GlobalAPI:
         Query the non-authed Guild wars 2 API to build
         objects from the returned JSON.
 
-        See Outfit class for documentation
+        https://wiki.guildwars2.com/wiki/API:2/outfits#Response
         '''
         pass
 
@@ -91,7 +101,7 @@ class GlobalAPI:
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
 
-        See Mastery class for documentation
+        https://wiki.guildwars2.com/wiki/API:2/masteries#Response
         '''
         pass
 
@@ -101,7 +111,7 @@ class GlobalAPI:
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
 
-        See Pet class for documentation
+        https://wiki.guildwars2.com/wiki/API:2/pets#Response
         '''
         pass
 
@@ -111,7 +121,7 @@ class GlobalAPI:
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
 
-        See Race class for documentation
+        https://wiki.guildwars2.com/wiki/API:2/races
         '''
         pass
 
@@ -119,9 +129,9 @@ class GlobalAPI:
     def getProfession(self, json):
         '''
         Query the non-authed Guild Wars 2 API to build
-        objects based off the Returned JSON.
+        objects based off the returned JSON.
 
-        See Profession class for documentation
+        https://wiki.guildwars2.com/wiki/API:2/professions#Response
         '''
         pass
 
@@ -131,9 +141,7 @@ class GlobalAPI:
         Query the non-authed Guild Wars 2 API to build
         objects off the returned JSON.
 
-        See GuildUpgrade class for documentation
-
-        Returns GuildUpgrade(s) objects.
+        https://wiki.guildwars2.com/wiki/API:2/guild/upgrades#Response
         '''
         pass
 
@@ -143,9 +151,7 @@ class GlobalAPI:
         Query the non-authed Guild Wars 2 API to build
         objects off the returned JSON.
 
-        See GuildPermission class for documentation
-
-        Returns GuildPermission(s) objects.
+        https://wiki.guildwars2.com/wiki/API:2/guild/permissions#Response
         '''
         pass
 
@@ -156,9 +162,7 @@ class GlobalAPI:
         API and build Achievement(s) objects based off
         the returned json.
 
-        See Achievement class for documentation
-
-        Returns Achievement(s) objects.
+        https://wiki.guildwars2.com/wiki/API:2/achievements
         '''
         pass
 
@@ -168,9 +172,7 @@ class GlobalAPI:
         Query the non-authed Guild Wars 2 achievement
         groups API and build objects based off the return JSON.
 
-        See AchievementGroup class for documentation.
-
-        Returns AchievementGroup(s) objects.
+        https://wiki.guildwars2.com/wiki/API:2/achievements/groups#Response
         '''
         pass
 
@@ -180,9 +182,7 @@ class GlobalAPI:
         Query the non-authed Guild Wars 2 achievement/categories
         API and build objects from the JSON.
 
-        See AchievementCategory class for more documentation.
-
-        Returns AchievementCategory(s) objects.
+        https://wiki.guildwars2.com/wiki/API:2/achievements/categories#Response
         '''
         pass
 
@@ -192,9 +192,7 @@ class GlobalAPI:
         Query the non-authed skin Guild Wars 2 Skin API
         and build Skin object(s) based on it.
 
-        See the Skin class for documentation.
-
-        Returns Skin object(s).
+        https://wiki.guildwars2.com/wiki/API:2/skins#Response
         '''
         pass
 
@@ -204,9 +202,7 @@ class GlobalAPI:
         Query the Guild Wars 2 item API and build
         object(s) based off the returned JSON.
 
-        See Item class for more documentation.
-
-        Returns Item object(s).
+        https://wiki.guildwars2.com/wiki/API:2/items#Response
         '''
         pass
 
@@ -216,9 +212,7 @@ class GlobalAPI:
         Query the Guild Wars 2 Dye API and build
         object(s) based off the returned JSON.
 
-        See Dye class for more documentation.
-
-        Returns Dye object(s).
+        https://wiki.guildwars2.com/wiki/API:2/colors#Response
         '''
         pass
 
@@ -228,9 +222,7 @@ class GlobalAPI:
         Query the Guild Wars 2 Recipe API and build
         object(s) based off the returned JSON.
 
-        See Recipe class for more documentation.
-
-        Returns Recipe object(s).
+        https://wiki.guildwars2.com/wiki/API:2/recipes#Response
         '''
         pass
 
@@ -240,9 +232,7 @@ class GlobalAPI:
         Query the Guild Wars 2 Mini API and build
         object(s) based off the returned JSON.
 
-        See Mini class for more documentation.
-
-        Returns Mini object(s).
+        https://wiki.guildwars2.com/wiki/API:2/minis#Response
         '''
         pass
 
@@ -253,9 +243,7 @@ class GlobalAPI:
 
         Accepts lists, strings, and WVWMaps.
 
-        See WVWObjective class for more documentation.
-
-        Returns WVWObjective object(s).
+        https://wiki.guildwars2.com/wiki/API:2/wvw/objectives#Response
         '''
         if type(wvwID) is list:
             if objects is None:
@@ -562,11 +550,6 @@ class AccountAPI:
         Gets your materials raw JSON via the Guild Wars 2 official
         API and stores it in the object.
 
-        Also returns this information, to immediately use in thing
-        such as a for loop.
-
-        Use the rest of the API to get more detailed information.
-
         Returns a list of dictionaries which have keys:
 
         id       - (int) The item ID of the material.
@@ -699,7 +682,7 @@ class AccountAPI:
         character name on your account, and passes the
         information to the 'Character()' object.
 
-        See the Character class for documentation.
+        https://wiki.guildwars2.com/wiki/API:2/characters#Response
         '''
         self.checkPermission('characters')
 
@@ -711,10 +694,7 @@ class AccountAPI:
         Query the Guild Wars 2 account Dye api and build
         'Dye()' objects based off the JSON.
 
-        See the Dye class for its documentation.
-
-        NOTE: This can be slightly memory intensive. It IS every
-        Dye you have unlocked after all.
+        https://wiki.guildwars2.com/wiki/API:2/account/dyes#Response
         '''
         self.checkPermission('unlocks')
 
@@ -727,10 +707,7 @@ class AccountAPI:
         and builds an object (or objects) based on the
         returned JSON.
 
-        See the Skin class for its documentation.
-
-        NOTE: This can be slightly memory intensive. It IS every
-        skin you have unlocked after all.
+        https://wiki.guildwars2.com/wiki/API:2/account/skins#Response
         '''
         self.checkPermission('unlocks')
 
@@ -743,10 +720,7 @@ class AccountAPI:
         and builds an object (or objects) based on the
         returned JSON.
 
-        See the Mini class for its documentation.
-
-        NOTE: This can be slightly memory intensive. It IS every
-        mini you have unlocked after all.
+        https://wiki.guildwars2.com/wiki/API:2/account/minis#Response
         '''
         self.checkPermission('unlocks')
 
@@ -755,7 +729,9 @@ class AccountAPI:
         Query multiple APIs (account specialization, trait, etc)
         and build the needed objects.
 
-        See the Specialization and Trait classes for documentation.
+        Reference:
+          - https://wiki.guildwars2.com/wiki/API:2/specializations#Response
+          - https://wiki.guildwars2.com/wiki/API:2/traits#Response
 
         Takes an optional parameter 'areaFlag' with the following
         acceptable strings: pvp, pve, wvw
