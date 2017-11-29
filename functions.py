@@ -1,6 +1,7 @@
 import json
 import urllib.parse
 import urllib.request
+from functools import singledispatch
 from collections import namedtuple
 from GW2API.exceptions import BadIDError, PermissionError, FlagParameterError
 
@@ -57,15 +58,7 @@ class typer(object):
         return self.__call__
 
     def __call__(self, *args):
-        '''
-        The workhorse of the "typer" decorator.
-
-        This section handles all the work of determining what to do
-        with the input you passed the decorated method.
-
-        Returns an object or list of objects depending on input.
-        '''
-        # This dictionary provides an easy way for me to direct
+                # This dictionary provides an easy way for me to direct
         # what kind of data I want from endpoints.
         crossList = {'skins': {'url': 'skins', 'obj': 'Skin'},
                      'dyes': {'url': 'colors', 'obj': 'Dye'},
@@ -128,189 +121,214 @@ class typer(object):
         else:
             url = api
 
-        # Dirty, but effective...?
-        if 'AccountAPI' in str(self.obj):
-            # We do this to check for permissions!
-            self.f(self.obj)
+        # Make it available to the dispatch functions.
+        # Note, some of these should just be instance variables
+        # already. TODO: clean that up and make it so.
+        self.api = api
+        self.url = url
+        self.crossList = crossList
 
-            # For returning later.
+        # Dirty, but effective...?
+        if 'AccountAPI' not in str(self.obj):
+            return typer._worker(*args, self)
+        else:
+            return self._account(args)
+
+    @singledispatch
+    def _worker(args, self):
+        '''
+        The workhorse of the "typer" decorator.
+
+        This section handles all the work of determining what to do
+        with the input you passed the decorated method.
+
+        Returns an object or list of objects depending on input.
+        '''
+        raise NotImplementedError('@typer does not support {}'.format(type(args)))
+
+    @_worker.register(int)
+    def _int(args, self):
+        jsonData = self.obj.getJson('{}/{}'.format(self.url, args))
+
+        obj = namedtuple(self.crossList[self.api]['obj'], jsonData.keys())
+        return(obj(**jsonData))
+
+    @_worker.register(str)
+    def _str(args, self):
+        # You shouldn't do this. It can take a really
+        # long time.
+        if args[0] == 'all':
+            # Need this too.
             objects = []
 
-            # This is hackery.
-            if api != 'characters':
-                data = self.obj.getJson('account/{}'.format(api))
-            else:
-                data = self.obj.getJson(api)
+            # Default case: get all of them.
+            ids = self.obj.getJson(self.url)
 
-            # I am both proud of an ashamed of this line.
-            # I split the skinIDs into 200 element chunks.
-            # The API only supports 200 IDs at once.
-            # Personally I blame terrorism.
-            safeList = [data[x:x + 200] for x in range(0, len(data), 200)]
+            # Useful line is useful.
+            safeList = [ids[x:x + 200] for x in range(0, len(ids), 200)]
 
-            # This feels wrong, I may address it later if
-            # it begins to cause problems.
-            try:
-                # So it caused a minor problem. See Exception.
-                if any(isinstance(x, dict) for x in data):
-                    dictFlag = True
-                else:
-                    dictFlag = False
-            except IndexError:
-                # Basically, this caused a 'problem'. Note the quotes.
-                # I don't have shared inventory slots. data = []
-                # Obviously, the above type check breaks from this.
-                # That's the theory anyway.
-                # Anyone got one and an API key? :)
-
-                # This will silently fail and set dictFlag to False.
-                dictFlag = False
-                pass
-
-            # The construction of the skin attribute.
+            # Generate objects.
             for safe in safeList:
                 # Clean them up into a proper string.
-                try:
-                    # I could do this in a list comprehension but
-                    # then it is against PEP8 at 84 charactes.
-                    temp = []
-                    for current in safe:
-                        if current is not None:
-                                temp.append(current['id'])
-
-                    # I much prefer list comprehensions.
-                    # I will remove the 4 character difference somehow..
-                    cleanStr = ','.join(str(x) for x in temp)
-
-                except (KeyError, TypeError):
-                    cleanStr = ','.join(str(x) for x in safe)
+                cleanStr = ','.join(str(x) for x in safe)
+                cleanStr = self._parse(cleanStr)
 
                 # Build a pretty URL.
-                if ' ' in cleanStr:
-                    # Remove spaces.
-                    parsed = self._parse(cleanStr)
+                cleanURL = '{}?ids={}'.format(self.url, cleanStr)
 
-                    # As it is now, this line works. If for some reason
-                    # you begin getting strange errors, it might be this.
-                    # It only works because the 'characters' endpoint is the
-                    # only one with spaces.
-                    cleanURL = '{}?ids={}'.format(url, parsed)
+                data = self.obj.getJson(cleanURL)
 
-                else:
-                    cleanURL = '{}?ids={}'.format(url, cleanStr)
+                # Build objects.
+                for item in data:
+                    obj = namedtuple(self.crossList[self.api]['obj'], item.keys())
+                    objects.append(obj(**item))
 
-                # Lets build some objects!
-                for item in self.obj.getJson(cleanURL):
-                    # This whole for loop makes me laugh.
-                    try:
-                        objName = crossList[api]['obj']
-                    except KeyError:
-                        # Something went wrong. Likely 'characters' fault.
-                        # Try to build it off the API name
-                        if api.title()[-1] == 's':
-                            objName = api.title()[:-1]
-                        else:
-                            objName = api.title()
-
-                    obj = namedtuple(objName, item.keys())
-
-                    # Handle dictionaries differently.
-                    if dictFlag:
-                        # Add our item object to the dictionary
-                        # that references it
-                        for part in data:
-                            # getBank can return None.
-                            if part:
-                                if item['id'] == part['id']:
-                                    part.update({'object': obj(**item)})
-
-                                    # List of dictionaries recreated!
-                                    objects.append(part)
-                    else:
-                        objects.append(obj(**item))
-
-            # We need to assign the data to the object.
-            setattr(self.obj, api, objects)
-
-            # Return it for immediate use as interator.
-            # If that's what gets you hard.
+            # Return them all.
             return(objects)
+        else:
+            safeArgs = (self.url, self._parse(args))
+            jsonData = self.obj.getJson('{}/{}'.format(*safeArgs))
 
-        # Type checking..
-        if type(*args) is list:
-            # Going to need this.
-            objects = []
-
-            # Build clean string to append to URL.
-            cleanList = ','.join(str(x) for x in list(*args))
-
-            # Build the URL.
-            if ' ' in cleanList:
-                # If there is a space, we need to parse that.
-                cleanURL = '{}?ids={}'.format(url, self._parse(cleanList))
-            else:
-                cleanURL = '{}?ids={}'.format(url, cleanList)
-
-            # Get the JSON.
-            data = self.obj.getJson(cleanURL)
-
-            # Generate the objects.
-            for item in data:
-                # Define a namedtuple for use as object.
-                # I'm not sure how good of a practice it is to
-                # create the namedtuple in here. Likely to change.
-                obj = namedtuple(crossList[api]['obj'], item.keys())
-                objects.append(obj(**item))
-
-            # Return said objects.
-            return(objects)
-
-        elif type(*args) is str:
-            # You shouldn't do this. It can take a really
-            # long time.
-            if args[0] == 'all':
-                # Need this too.
-                objects = []
-
-                # Default case: get all of them.
-                ids = self.obj.getJson(url)
-
-                # Useful line is useful.
-                safeList = [ids[x:x + 200] for x in range(0, len(ids), 200)]
-
-                # Generate objects.
-                for safe in safeList:
-                    # Clean them up into a proper string.
-                    cleanStr = ','.join(str(x) for x in safe)
-                    cleanStr = self._parse(cleanStr)
-
-                    # Build a pretty URL.
-                    cleanURL = '{}?ids={}'.format(url, cleanStr)
-
-                    data = self.obj.getJson(cleanURL)
-
-                    # Build objects.
-                    for item in data:
-                        obj = namedtuple(crossList[api]['obj'], item.keys())
-                        objects.append(obj(**item))
-
-                # Return them all.
-                return(objects)
-            else:
-                safeArgs = (url, self._parse(*args))
-                jsonData = self.obj.getJson('{}/{}'.format(*safeArgs))
-
-                obj = namedtuple(crossList[api]['obj'], jsonData.keys())
-                return(obj(**jsonData))
-
-        elif type(*args) is int:
-            jsonData = self.obj.getJson('{}/{}'.format(url, *args))
-
-            obj = namedtuple(crossList[api]['obj'], jsonData.keys())
+            obj = namedtuple(self.crossList[self.api]['obj'], jsonData.keys())
             return(obj(**jsonData))
 
+    @_worker.register(list)
+    def _list(args, self):
+        # Going to need this.
+        objects = []
 
-def getJson(url, header = None):
+        # Build clean string to append to URL.
+        cleanList = ','.join(str(x) for x in args)
+
+        # Build the URL.
+        if ' ' in cleanList:
+            # If there is a space, we need to parse that.
+            cleanURL = '{}?ids={}'.format(self.url, self._parse(cleanList))
+        else:
+            cleanURL = '{}?ids={}'.format(self.url, cleanList)
+
+        # Get the JSON.
+        data = self.obj.getJson(cleanURL)
+
+        # Generate the objects.
+        for item in data:
+            # Define a namedtuple for use as object.
+            # I'm not sure how good of a practice it is to
+            # create the namedtuple in here. Likely to change.
+            obj = namedtuple(self.crossList[self.api]['obj'], item.keys())
+            objects.append(obj(**item))
+
+        # Return said objects.
+        return(objects)
+
+    def _account(self, args):
+        # We do this to check for permissions!
+        self.f(self.obj)
+
+        # For returning later.
+        objects = []
+
+        # This is hackery.
+        if self.api != 'characters':
+            data = self.obj.getJson('account/{}'.format(self.api))
+        else:
+            data = self.obj.getJson(self.api)
+
+        # I am both proud of an ashamed of this line.
+        # I split the skinIDs into 200 element chunks.
+        # The API only supports 200 IDs at once.
+        # Personally I blame terrorism.
+        safeList = [data[x:x + 200] for x in range(0, len(data), 200)]
+
+        # This feels wrong, I may address it later if
+        # it begins to cause problems.
+        try:
+            # So it caused a minor problem. See Exception.
+            if any(isinstance(x, dict) for x in data):
+                dictFlag = True
+            else:
+                dictFlag = False
+        except IndexError:
+            # Basically, this caused a 'problem'. Note the quotes.
+            # I don't have shared inventory slots. data = []
+            # Obviously, the above type check breaks from this.
+            # That's the theory anyway.
+            # Anyone got one and an API key? :)
+
+            # This will silently fail and set dictFlag to False.
+            dictFlag = False
+            pass
+
+        # The construction of the skin attribute.
+        for safe in safeList:
+            # Clean them up into a proper string.
+            try:
+                # I could do this in a list comprehension but
+                # then it is against PEP8 at 84 charactes.
+                temp = []
+                for current in safe:
+                    if current is not None:
+                            temp.append(current['id'])
+
+                # I much prefer list comprehensions.
+                # I will remove the 4 character difference somehow..
+                cleanStr = ','.join(str(x) for x in temp)
+
+            except (KeyError, TypeError):
+                cleanStr = ','.join(str(x) for x in safe)
+
+            # Build a pretty URL.
+            if ' ' in cleanStr:
+                # Remove spaces.
+                parsed = self._parse(cleanStr)
+
+                # As it is now, this line works. If for some reason
+                # you begin getting strange errors, it might be this.
+                # It only works because the 'characters' endpoint is the
+                # only one with spaces.
+                cleanURL = '{}?ids={}'.format(self.url, parsed)
+
+            else:
+                cleanURL = '{}?ids={}'.format(self.url, cleanStr)
+
+            # Lets build some objects!
+            for item in self.obj.getJson(cleanURL):
+                # This whole for loop makes me laugh.
+                try:
+                    objName = self.crossList[self.api]['obj']
+                except KeyError:
+                    # Something went wrong. Likely 'characters' fault.
+                    # Try to build it off the API name
+                    if self.api.title()[-1] == 's':
+                        objName = self.api.title()[:-1]
+                    else:
+                        objName = self.api.title()
+
+                obj = namedtuple(objName, item.keys())
+
+                # Handle dictionaries differently.
+                if dictFlag:
+                    # Add our item object to the dictionary
+                    # that references it
+                    for part in data:
+                        # getBank can return None.
+                        if part:
+                            if item['id'] == part['id']:
+                                part.update({'object': obj(**item)})
+
+                                # List of dictionaries recreated!
+                                objects.append(part)
+                else:
+                    objects.append(obj(**item))
+
+        # We need to assign the data to the object.
+        setattr(self.obj, self.api, objects)
+
+        # Return it for immediate use as interator.
+        # If that's what gets you hard.
+        return(objects)
+
+def getJson(url, header=None):
     '''
     Got tired of writing this over and over.
     What functions are for, right?
