@@ -212,8 +212,9 @@ class TestGlobalAPI(unittest.TestCase):
         self.assertEqual(item.name, 'Omnomberry Bar')
 
         # Test list()
+        gAPI.getItem([1])
         for unit in gAPI.getItem([1, 2]):
-            self.assertEqual(type(item).__name__, 'Item')
+            self.assertEqual(type(unit).__name__, 'Item')
 
     def test_getDye(self):
         # Test int()
