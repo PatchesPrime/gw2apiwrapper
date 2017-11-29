@@ -28,7 +28,7 @@ class TestGlobalAPI(unittest.TestCase):
         self.assertEqual(type(skill).__name__, 'Skill')
         self.assertEqual(skill.name, 'Arcing Slice')
 
-        # Test string()
+        # Test str()
         skill = gAPI.getSkill('5516')
         self.assertEqual(type(skill).__name__, 'Skill')
         self.assertEqual(skill.name, 'Conjure Fiery Greatsword')
@@ -36,6 +36,9 @@ class TestGlobalAPI(unittest.TestCase):
         # Test list()
         for unit in gAPI.getSkill([5516, 5517, '14375']):
             self.assertEqual(type(unit).__name__, 'Skill')
+
+        # Test unsupported type
+        self.assertRaises(NotImplementedError, gAPI.getSkill, {14375})
 
     def test_getLegend(self):
         legend = gAPI.getLegend('Legend2')
@@ -52,7 +55,7 @@ class TestGlobalAPI(unittest.TestCase):
         # self.assertTrue(isinstance(finisher, descriptions.Finisher))
         self.assertEqual(finisher.name, 'Whump the Giant Finisher')
 
-        # Test string()
+        # Test str()
         # Finisher id 1 does not have a finisher item.
         finisher = gAPI.getFinisher('1')
         self.assertEqual(type(finisher).__name__, 'Finisher')
@@ -62,6 +65,9 @@ class TestGlobalAPI(unittest.TestCase):
         for unit in gAPI.getFinisher([1, 12]):
             self.assertEqual(type(unit).__name__, 'Finisher')
 
+        # Test unsupported type
+        self.assertRaises(NotImplementedError, gAPI.getFinisher, {1})
+
     def test_getTitle(self):
         # Test int()
         title = gAPI.getTitle(8)
@@ -69,7 +75,7 @@ class TestGlobalAPI(unittest.TestCase):
         self.assertEqual(title.name, 'Flameseeker')
         self.assertEqual(title.achievement, 118)
 
-        # Test string()
+        # Test str()
         title = gAPI.getTitle('8')
         self.assertEqual(type(title).__name__, 'Title')
         self.assertEqual(title.name, 'Flameseeker')
@@ -79,6 +85,9 @@ class TestGlobalAPI(unittest.TestCase):
         for unit in gAPI.getTitle([8, 9]):
             self.assertEqual(type(unit).__name__, 'Title')
 
+        # Test unsupported type
+        self.assertRaises(NotImplementedError, gAPI.getTitle, {8})
+
     def test_getOutfit(self):
         # Test int()
         outfit = gAPI.getOutfit(8)
@@ -86,7 +95,7 @@ class TestGlobalAPI(unittest.TestCase):
         self.assertEqual(outfit.name, 'Shadow Assassin Outfit')
         self.assertEqual(outfit.unlock_items[0], 66658)
 
-        # Test string()
+        # Test str()
         outfit = gAPI.getOutfit('10')
         self.assertEqual(type(outfit).__name__, 'Outfit')
         self.assertEqual(outfit.name, 'Ceremonial Plated Outfit')
@@ -96,13 +105,16 @@ class TestGlobalAPI(unittest.TestCase):
         for unit in gAPI.getOutfit([8, 10]):
             self.assertEqual(type(outfit).__name__, 'Outfit')
 
+        # Test unsupported type
+        self.assertRaises(NotImplementedError, gAPI.getOutfit, {8})
+
     def test_getMasteries(self):
         # Test int()
         mastery = gAPI.getMasteries(1)
         self.assertEqual(type(mastery).__name__, 'Mastery')
         self.assertEqual(mastery.region, 'Maguuma')
 
-        # Test string()
+        # Test str()
         mastery = gAPI.getMasteries('2')
         self.assertEqual(type(mastery).__name__, 'Mastery')
         self.assertEqual(mastery.region, 'Maguuma')
@@ -111,13 +123,16 @@ class TestGlobalAPI(unittest.TestCase):
         for unit in gAPI.getMasteries([8, 10]):
             self.assertEqual(type(mastery).__name__, 'Mastery')
 
+        # Test unsupported type
+        self.assertRaises(NotImplementedError, gAPI.getMasteries, {1})
+
     def test_getPet(self):
         # Test int()
         pet = gAPI.getPet(33)
         self.assertEqual(type(pet).__name__, 'Pet')
         self.assertEqual(pet.name, 'Juvenile Forest Spider')
 
-        # Test string()
+        # Test str()
         pet = gAPI.getPet('42')
         self.assertEqual(type(pet).__name__, 'Pet')
         self.assertEqual(pet.name, 'Juvenile Red Jellyfish')
@@ -125,6 +140,9 @@ class TestGlobalAPI(unittest.TestCase):
         # Test list()
         for unit in gAPI.getPet([33, 42]):
             self.assertEqual(type(pet).__name__, 'Pet')
+
+        # Test unsupported type
+        self.assertRaises(NotImplementedError, gAPI.getPet, {42})
 
     def test_getRace(self):
         # This works a bit different.
@@ -157,7 +175,7 @@ class TestGlobalAPI(unittest.TestCase):
         self.assertEqual(type(achieve).__name__, 'Achievement')
         self.assertEqual(achieve.name, 'Daily Completionist')
 
-        # Test string()
+        # Test str()
         achieve = gAPI.getAchievement('910')
         self.assertEqual(type(achieve).__name__, 'Achievement')
         self.assertEqual(achieve.name, 'Tequatl the Sunless')
@@ -166,6 +184,9 @@ class TestGlobalAPI(unittest.TestCase):
         for unit in gAPI.getAchievement([1840, 910, 2258]):
             self.assertEqual(type(achieve).__name__, 'Achievement')
 
+        # Test unsupported type
+        self.assertRaises(NotImplementedError, gAPI.getAchievement, {910})
+
     def test_getAchievementGroup(self):
         # Weird IDs.
         ag = gAPI.getAchievementGroup('65B4B678-607E-4D97-B458-076C3E96A810')
@@ -173,17 +194,22 @@ class TestGlobalAPI(unittest.TestCase):
         self.assertEqual(ag.name, 'Heart of Thorns')
 
     def test_getAchievementCategory(self):
+        # Test int()
         ac = gAPI.getAchievementCategory(1)
         self.assertEqual(type(ac).__name__, 'AchievementCategory')
         self.assertEqual(ac.name, 'Slayer')
 
-        # Test string()
+        # Test str()
         ac = gAPI.getAchievementCategory('2')
         self.assertEqual(type(ac).__name__, 'AchievementCategory')
         self.assertEqual(ac.name, 'Hero')
 
+        # Test list()
         for unit in gAPI.getAchievementCategory([1, 2]):
             self.assertEqual(type(ac).__name__, 'AchievementCategory')
+
+        # Test unsupported type
+        self.assertRaises(NotImplementedError, gAPI.getAchievementCategory, {1})
 
     def test_getSkin(self):
         # Test int()
@@ -191,7 +217,7 @@ class TestGlobalAPI(unittest.TestCase):
         self.assertEqual(type(skin).__name__, 'Skin')
         self.assertEqual(skin.name, 'Seer Pants')
 
-        # Test string()
+        # Test str()
         skin = gAPI.getSkin('1')
         self.assertEqual(type(skin).__name__, 'Skin')
         self.assertEqual(skin.name, 'Chainmail Leggings')
@@ -200,13 +226,16 @@ class TestGlobalAPI(unittest.TestCase):
         for unit in gAPI.getSkin([1, 2]):
             self.assertEqual(type(skin).__name__, 'Skin')
 
+        # Test unsupported type
+        self.assertRaises(NotImplementedError, gAPI.getSkin, {10})
+
     def test_getItem(self):
         # Test int()
         item = gAPI.getItem(28445)
         self.assertEqual(type(item).__name__, 'Item')
         self.assertEqual(item.name, 'Strong Soft Wood Longbow of Fire')
 
-        # Test string()
+        # Test str()
         item = gAPI.getItem('12452')
         self.assertEqual(type(item).__name__, 'Item')
         self.assertEqual(item.name, 'Omnomberry Bar')
@@ -216,13 +245,16 @@ class TestGlobalAPI(unittest.TestCase):
         for unit in gAPI.getItem([1, 2]):
             self.assertEqual(type(unit).__name__, 'Item')
 
+        # Test unsupported type
+        self.assertRaises(NotImplementedError, gAPI.getItem, {28445})
+
     def test_getDye(self):
         # Test int()
         dye = gAPI.getDye(10)
         self.assertEqual(type(dye).__name__, 'Dye')
         self.assertEqual(dye.name, 'Sky')
 
-        # Test string()
+        # Test str()
         dye = gAPI.getDye('11')
         self.assertEqual(type(dye).__name__, 'Dye')
         self.assertEqual(dye.name, 'Starry Night')
@@ -231,13 +263,16 @@ class TestGlobalAPI(unittest.TestCase):
         for unit in gAPI.getDye([1, 2]):
             self.assertEqual(type(dye).__name__, 'Dye')
 
+        # Test unsupported type
+        self.assertRaises(NotImplementedError, gAPI.getDye, {10})
+
     def test_getRecipe(self):
         # Test int()
         recipe = gAPI.getRecipe(7319)
         self.assertEqual(type(recipe).__name__, 'Recipe')
         self.assertEqual(recipe.output_item_id, 46742)
 
-        # Test string()
+        # Test str()
         recipe = gAPI.getRecipe('7419')
         self.assertEqual(type(recipe).__name__, 'Recipe')
         self.assertEqual(recipe.output_item_id, 46944)
@@ -246,13 +281,16 @@ class TestGlobalAPI(unittest.TestCase):
         for unit in gAPI.getRecipe([1, 2]):
             self.assertEqual(type(recipe).__name__, 'Recipe')
 
+        # Test unsupported type
+        self.assertRaises(NotImplementedError, gAPI.getRecipe, {7319})
+
     def test_getMini(self):
         # Test int()
         mini = gAPI.getMini(1)
         self.assertEqual(type(mini).__name__, 'Mini')
         self.assertEqual(mini.name, 'Miniature Rytlock')
 
-        # Test string()
+        # Test str()
         mini = gAPI.getMini('2')
         self.assertEqual(type(mini).__name__, 'Mini')
         self.assertEqual(mini.name, 'Miniature Servitor Golem')
@@ -260,6 +298,9 @@ class TestGlobalAPI(unittest.TestCase):
         # Test list()
         for unit in gAPI.getMini([1, 2]):
             self.assertEqual(type(mini).__name__, 'Mini')
+
+        # Test unsupported type
+        self.assertRaises(NotImplementedError, gAPI.getMini, {2})
 
     def test_getWVWObjective(self):
         wvwobjid = gAPI.getWVWObjective('all')
