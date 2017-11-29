@@ -60,41 +60,56 @@ class typer(object):
     def __call__(self, *args):
                 # This dictionary provides an easy way for me to direct
         # what kind of data I want from endpoints.
-        crossList = {'skins': {'url': 'skins', 'obj': 'Skin'},
-                     'dyes': {'url': 'colors', 'obj': 'Dye'},
-                     'minis': {'url': 'minis', 'obj': 'Mini'},
-                     'bank': {'url': 'items', 'obj': 'Item'},
-                     'materials': {'url': 'items', 'obj': 'Material'},
-                     'professions': {'url': 'professions', 'obj': 'Profession'},
-                     'races': {'url': 'races', 'obj': 'Race'},
-                     'pets': {'url': 'pets', 'obj': 'Pet'},
-                     'masteries': {'url': 'masteries', 'obj': 'Mastery'},
-                     'inventory': {'url': 'items', 'obj': 'Item'},
-                     'outfits': {'url': 'outfits', 'obj': 'Outfit'},
-                     'titles': {'url': 'titles', 'obj': 'Title'},
-                     'recipes': {'url': 'recipes', 'obj': 'Recipe'},
-                     'finishers': {'url': 'finishers', 'obj': 'Finisher'},
-                     'legends': {'url': 'legends', 'obj': 'Legend'},
-                     'dungeons': {'url': 'dungeons', 'obj': 'Dungeon'},
-                     'raids': {'url': 'raids', 'obj': 'Raid'},
-                     'skills': {'url': 'skills', 'obj': 'Skill'},
-                     'items': {'url': 'items', 'obj': 'Item'},
+        crossList = {
+            'skins': {'url': 'skins', 'obj': 'Skin'},
+            'dyes': {'url': 'colors', 'obj': 'Dye'},
+            'minis': {'url': 'minis', 'obj': 'Mini'},
+            'bank': {'url': 'items', 'obj': 'Item'},
+            'materials': {'url': 'items', 'obj': 'Material'},
+            'professions': {'url': 'professions', 'obj': 'Profession'},
+            'races': {'url': 'races', 'obj': 'Race'},
+            'pets': {'url': 'pets', 'obj': 'Pet'},
+            'masteries': {'url': 'masteries', 'obj': 'Mastery'},
+            'inventory': {'url': 'items', 'obj': 'Item'},
+            'outfits': {'url': 'outfits', 'obj': 'Outfit'},
+            'titles': {'url': 'titles', 'obj': 'Title'},
+            'recipes': {'url': 'recipes', 'obj': 'Recipe'},
+            'finishers': {'url': 'finishers', 'obj': 'Finisher'},
+            'legends': {'url': 'legends', 'obj': 'Legend'},
+            'dungeons': {'url': 'dungeons', 'obj': 'Dungeon'},
+            'raids': {'url': 'raids', 'obj': 'Raid'},
+            'skills': {'url': 'skills', 'obj': 'Skill'},
+            'items': {'url': 'items', 'obj': 'Item'},
 
-                     # Guild endpoints.
-                     'guildupgrades': {'url': 'guild/upgrades',
-                                       'obj': 'GuildUpgrade'},
-                     'guildpermissions': {'url': 'guild/permissions',
-                                          'obj': 'GuildPermission'},
-                     'guilds': {'url': 'guild',
-                                'obj': 'Guild'},
+            # Guild endpoints.
+            'guildupgrades': {'url': 'guild/upgrades', 'obj': 'GuildUpgrade'},
 
-                     # Achievement Stuff.
-                     'achievements': {'url': 'achievements',
-                                      'obj': 'Achievement'},
-                     'achievementgroups': {'url': 'achievements/groups',
-                                           'obj': 'AchievementGroup'},
-                     'achievementcategorys': {'url': 'achievements/categories',
-                                              'obj': 'AchievementCategory'}}
+            'guildpermissions': {
+                'url': 'guild/permissions',
+                'obj': 'GuildPermission'
+            },
+
+            'guilds': {
+                'url': 'guild',
+                'obj': 'Guild'
+            },
+
+            # Achievement Stuff.
+            'achievements': {
+                'url': 'achievements',
+                'obj': 'Achievement'
+            },
+
+            'achievementgroups': {
+                'url': 'achievements/groups',
+                'obj': 'AchievementGroup'
+            },
+
+            'achievementcategorys': {
+                'url': 'achievements/categories',
+                'obj': 'AchievementCategory'
+            },
+        }
 
         # The AccountAPI get methods have an s at the end so
         # we need to remove that due to our __init__
