@@ -58,9 +58,9 @@ class typer(object):
         return self.__call__
 
     def __call__(self, *args):
-                # This dictionary provides an easy way for me to direct
+        # This dictionary provides an easy way for me to direct
         # what kind of data I want from endpoints.
-        crossList = {
+        self.crossList = {
             'skins': {'url': 'skins', 'obj': 'Skin'},
             'dyes': {'url': 'colors', 'obj': 'Dye'},
             'minis': {'url': 'minis', 'obj': 'Mini'},
@@ -116,38 +116,27 @@ class typer(object):
         # "This is begging to be fixed." -Matt.
         # "One day." -Patches
         if self.api[-2:] == 'ss':
-            api = self.api[:-1]
+            self.api = self.api[:-1]
 
         # I didn't think this one through back then.
         # Hack in place :P
         elif self.api == 'banks':
-            api = 'bank'
+            self.api = 'bank'
 
         elif self.api == 'inventorys':
-            api = 'inventory'
-
-        # Failure case? we try...
-        else:
-            api = self.api
+            self.api = 'inventory'
 
         # Easy to remember url...
-        if api in crossList.keys():
-            url = crossList[api]['url']
+        if self.api in self.crossList.keys():
+            self.url = self.crossList[self.api]['url']
         else:
-            url = api
-
-        # Make it available to the dispatch functions.
-        # Note, some of these should just be instance variables
-        # already. TODO: clean that up and make it so.
-        self.api = api
-        self.url = url
-        self.crossList = crossList
+            self.url = self.api
 
         # Dirty, but effective...?
-        if 'AccountAPI' not in str(self.obj):
-            return typer._worker(*args, self)
-        else:
+        if 'AccountAPI' in str(self.obj):
             return self._account(args)
+
+        return typer._worker(*args, self)
 
     @singledispatch
     def _worker(args, self):
