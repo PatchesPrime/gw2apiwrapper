@@ -49,7 +49,7 @@ class typer(object):
 
         Returns typer.__call__
         '''
-        self.obj       = instance
+        self.obj = instance
         self.className = className
 
         # Doesn't work unless you return where to
@@ -332,6 +332,7 @@ class typer(object):
         # If that's what gets you hard.
         return(objects)
 
+
 def getJson(url, header=None):
     '''
     Got tired of writing this over and over.
@@ -499,7 +500,7 @@ def getWorldName(worldID):
     return(getJson(cleanURL))
 
 
-def getEmblem(emblemID, layer = None):
+def getEmblem(emblemID, layer=None):
     '''
     A simple method to query the Guild Wars 2 emblem API
     to provide guild emblem assets.
