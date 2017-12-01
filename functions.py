@@ -3,7 +3,6 @@ import urllib.parse
 import urllib.request
 from functools import singledispatch
 from collections import namedtuple
-from GW2API.exceptions import BadIDError, PermissionError, FlagParameterError
 
 
 class typer(object):
@@ -344,11 +343,12 @@ def getJson(url, header=None):
         if e.code == 404:
             # 404 NOT FOUND is useful, but it helps to point them
             # in the right direction.
-            error = 'HTTPError! Likely bad ID: {} {}'.format(e.code, e.msg)
-            print("Bad URL: ", url)
+            error = 'Likely bad ID: {} {} | URL: {}'.format(
+                e.code, e.msg, url
+            )
 
             # Dangerous magic!
-            raise BadIDError(error) from None
+            raise ValueError(error) from None
 
         elif e.code == 403:
             # 403: Forbidden is invalid authentication.
@@ -448,7 +448,7 @@ def recipeSearch(in_or_out, itemID):
     # Should be good enough to verify it's one of the inputs
     # We want.
     if in_or_out not in urls.keys():
-        raise FlagParameterError('First argument must be "input" or "output"')
+        raise ValueError('First argument must be "input" or "output"')
 
     # Lets build the URL here. You know, for PEP8s sake.
     cleanURL = urls[in_or_out] + '{}'.format(itemID)
