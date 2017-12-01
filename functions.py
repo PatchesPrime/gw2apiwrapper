@@ -24,40 +24,6 @@ class typer(object):
         # The string we'll need.
         self.api = self.f.__name__[3:].lower() + 's'
 
-        # Some aren't consistent.
-        # if self.api == 'dyes':
-        #     self.api = 'colors'
-
-        # # Don't judge me...
-        # elif self.api == 'banks':
-        #     self.api = 'bank'
-
-    def _parse(self, string):
-        '''
-        Return a "safe" string for URLs.
-
-        Won't even lie: I wrote this for PEP8 character count.
-        '''
-        return urllib.parse.quote(string)
-
-    def __get__(self, instance, className):
-        '''
-        This is called immediately before __call__ internally
-        and we need the instance object of the method who called us.
-
-        This allows us to have that information.
-
-        Returns typer.__call__
-        '''
-        self.obj = instance
-        self.className = className
-
-        # Doesn't work unless you return where to
-        # go next. Naturally, you want calling it to
-        # call __call__
-        return self.__call__
-
-    def __call__(self, *args):
         # This dictionary provides an easy way for me to direct
         # what kind of data I want from endpoints.
         self.crossList = {
@@ -132,6 +98,32 @@ class typer(object):
         else:
             self.url = self.api
 
+    def _parse(self, string):
+        '''
+        Return a "safe" string for URLs.
+
+        Won't even lie: I wrote this for PEP8 character count.
+        '''
+        return urllib.parse.quote(string)
+
+    def __get__(self, instance, className):
+        '''
+        This is called immediately before __call__ internally
+        and we need the instance object of the method who called us.
+
+        This allows us to have that information.
+
+        Returns typer.__call__
+        '''
+        self.obj = instance
+        self.className = className
+
+        # Doesn't work unless you return where to
+        # go next. Naturally, you want calling it to
+        # call __call__
+        return self.__call__
+
+    def __call__(self, *args):
         # Dirty, but effective...?
         if 'AccountAPI' in str(self.obj):
             return self._account(args)
