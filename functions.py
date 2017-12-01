@@ -352,7 +352,7 @@ def getJson(url, header=None):
 
         elif e.code == 403:
             # 403: Forbidden is invalid authentication.
-            error = 'HTTPError! Likely bad APIKEY: {} {}'.format(e.code, e.msg)
+            error = 'Likely bad APIKEY: {} {}'.format(e.code, e.msg)
 
             # MORE DANGEROUS MAGIC
             raise PermissionError(error) from None
