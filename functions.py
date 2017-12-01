@@ -161,7 +161,7 @@ class typer(object):
     def _str(args, self):
         # You shouldn't do this. It can take a really
         # long time.
-        if args[0] == 'all':
+        if args == 'all':
             # Need this too.
             objects = []
 
