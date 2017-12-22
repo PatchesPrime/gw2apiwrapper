@@ -1,10 +1,11 @@
 import unittest
 from GW2API import AccountAPI
-from .secrets import APIKEY
+import os
 
 
 class TestAccountAPI(unittest.TestCase):
     def getAccount(self):
+        APIKEY = os.environ['APIKEY']
         return(AccountAPI(APIKEY))
 
     def test_getRaids(self):
