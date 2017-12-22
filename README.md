@@ -1,4 +1,4 @@
-# GW2API
+# GW2API [![Build Status](https://travis-ci.org/PatchesPrime/GW2API.svg?branch=master)](https://travis-ci.org/PatchesPrime/GW2API)
 Object Orientated GW2 API Wrapper
 
 **2017-11-13 - Decent sized refactor in progress. Majority of conversion is done, but still a few fiddly bits..**
