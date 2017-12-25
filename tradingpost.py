@@ -1,5 +1,4 @@
 from .functions import getJson
-from .exceptions import FlagParameterError
 
 
 class GW2TP:
@@ -29,7 +28,7 @@ class GW2TP:
         # Removed the need for factory.
         if type(itemID) is list:
             cleanList = ','.join(str(x) for x in itemID)
-            cleanURL  = 'listings?ids={}'.format(cleanList)
+            cleanURL = 'listings?ids={}'.format(cleanList)
         else:
             cleanURL = 'listings/{}'.format(itemID)
 
@@ -48,7 +47,7 @@ class GW2TP:
         # Removed the need for factory.
         if type(itemID) is list:
             cleanList = ','.join(str(x) for x in itemID)
-            cleanURL  = 'prices?ids={}'.format(cleanList)
+            cleanURL = 'prices?ids={}'.format(cleanList)
         else:
             cleanURL = 'prices/{}'.format(itemID)
 
@@ -84,4 +83,4 @@ class GW2TP:
             return(jsonData)
         else:
             # Tell them what they did wrong.
-            raise FlagParameterError('First arg must be "coins" or "gems"')
+            raise ValueError('First arg must be "coins" or "gems"')
