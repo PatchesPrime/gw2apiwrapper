@@ -222,6 +222,19 @@ class TestAccountAPI(unittest.TestCase):
         for match in results:
             self.assertEqual(type(match).__name__, 'PVPMatch')
 
+        # Test list
+        results = api.getMatchResults([x.id for x in results])
+        for match in results:
+            self.assertEqual(type(match).__name__, 'PVPMatch')
+
+        # Test single ID
+        result = api.getMatchResults(results[0].id)
+        self.assertEqual(type(result[0]).__name__, 'PVPMatch')
+
+        # Test failure
+        with self.assertRaises(TypeError):
+            api.getMatchResults(TypeError)
+
     def test_getPVPStats(self):
         api = self.getAccount()
 
