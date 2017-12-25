@@ -162,6 +162,14 @@ class TestAccountAPI(unittest.TestCase):
         # Double yep.
         self.assertTrue(all(k in dir(api) for k in ('buying', 'selling', 'bought')))
 
+        # I have some stupid orders active for this.
+        # If you want to break my test though, sell me a Bifrost
+        # for a single gold.
+        self.assertTrue(api.buying is not None)
+
+        # Want to buy a Pumpkin Pie Cookie for 1g?
+        self.assertTrue(api.selling is not None)
+
     def test_getCharacters(self):
         api = self.getAccount()
 
