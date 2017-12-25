@@ -781,7 +781,7 @@ class AccountAPI:
 
                 # This is ugly, but it cut run time in HALF.
                 # Get a thread pool going to speed this object up.
-                with cc.ThreadPoolExecutor(max_workers = 10) as executor:
+                with cc.ThreadPoolExecutor(max_workers=10) as executor:
                     # PEP8
                     caller = eps.Specialization
 
