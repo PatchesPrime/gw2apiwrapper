@@ -314,10 +314,14 @@ class TestGlobalAPI(unittest.TestCase):
         self.assertEqual(wvwobjid.name, 'Aldon\'s Ledge')
 
     def test_getWVWMatches(self):
-        wvwmatch = gAPI.getWVWMatches('all')
-        self.assertTrue(len(wvwmatch) > 5)
+        wvwmatches = gAPI.getWVWMatches('all')
+        self.assertTrue(len(wvwmatches) > 5)
 
-        for unit in wvwmatch:
+        # Test list functionality.
+        matchIDs = [x.id for x in wvwmatches]
+        wvwmatches = gAPI.getWVWMatches(matchIDs)
+
+        for unit in wvwmatches:
             self.assertEqual(type(unit).__name__, 'WVWMatch')
 
     def test_getDailies(self):
