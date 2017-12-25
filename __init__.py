@@ -260,7 +260,13 @@ class GlobalAPI:
 
             # Generate the objects.
             for name in data:
-                objects.append(obj(**name))
+                try:
+                    objects.append(obj(**name))
+                except TypeError:
+                    # Not all WVW Objectives are created equal..
+                    # ArenaNet, please be consistent..please.
+                    specialObj = namedtuple('WVWObjective', name.keys())
+                    objects.append(specialObj(**name))
 
             # Return said objects.
             return(objects)
