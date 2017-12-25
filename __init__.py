@@ -703,7 +703,6 @@ class AccountAPI:
         https://wiki.guildwars2.com/wiki/API:2/account/dyes#Response
         '''
         self.checkPermission('unlocks')
-
         pass
 
     @typer
@@ -716,7 +715,6 @@ class AccountAPI:
         https://wiki.guildwars2.com/wiki/API:2/account/skins#Response
         '''
         self.checkPermission('unlocks')
-
         pass
 
     @typer
@@ -729,6 +727,7 @@ class AccountAPI:
         https://wiki.guildwars2.com/wiki/API:2/account/minis#Response
         '''
         self.checkPermission('unlocks')
+        pass
 
     def getTraits(self, charName, areaFlag=None):
         '''
