@@ -331,3 +331,5 @@ class TestGlobalAPI(unittest.TestCase):
     def test_getDailies(self):
         dailies = gAPI.getDailies()
         self.assertTrue(len(dailies) > 10)
+
+        dailies = gAPI.getDailies(tomorrow=True)
