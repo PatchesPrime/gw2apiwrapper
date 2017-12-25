@@ -110,7 +110,6 @@ class TestAccountAPI(unittest.TestCase):
     def test_getAchievements(self):
         api = self.getAccount()
 
-
         self.assertTrue(len(api.getAchievements()) > 5)
         self.assertTrue(api.achievements[0]['object'].name == 'Centaur Slayer')
 
@@ -209,6 +208,11 @@ class TestAccountAPI(unittest.TestCase):
         for unit in build.values():
             for area in unit:
                 self.assertEqual(type(area['line']).__name__, 'Specialization')
+
+        # Verify area specific functionality
+        build = api.getTraits('Friendly Patches', areaFlag='pvp')
+        for unit in build:
+            self.assertEqual(type(area['line']).__name__, 'Specialization')
 
     def test_getMatchResults(self):
         api = self.getAccount()
