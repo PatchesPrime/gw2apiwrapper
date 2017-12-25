@@ -8,6 +8,15 @@ class TestAccountAPI(unittest.TestCase):
         APIKEY = os.environ['APIKEY']
         return(AccountAPI(APIKEY))
 
+    def test_brokenPermissions(self):
+        APIKEY = os.environ['BUSTEDKEY']
+        acc = AccountAPI(APIKEY)
+
+        # Just going to call getAchievements() to trigger
+        # the error.
+        with self.assertRaises(PermissionError):
+            acc.getAchievements()
+
     def test_getRaids(self):
         api = self.getAccount()
 
@@ -100,6 +109,7 @@ class TestAccountAPI(unittest.TestCase):
 
     def test_getAchievements(self):
         api = self.getAccount()
+
 
         self.assertTrue(len(api.getAchievements()) > 5)
         self.assertTrue(api.achievements[0]['object'].name == 'Centaur Slayer')
