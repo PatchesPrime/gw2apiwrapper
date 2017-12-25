@@ -310,8 +310,8 @@ class TestGlobalAPI(unittest.TestCase):
         wvwids = [x.id for x in wvwobjid]
         wvwobjid = gAPI.getWVWObjective(wvwids)
 
-        wvwobjid = gAPI.getWVWObjective('38-11')
-        self.assertEqual(wvwobjid.name, 'Aldon\'s Ledge')
+        wvwobjid = gAPI.getWVWObjective(wvwids[0])
+        self.assertEqual(type(wvwobjid).__name__, 'WVWObjective')
 
     def test_getWVWMatches(self):
         wvwmatches = gAPI.getWVWMatches('all')
@@ -320,6 +320,10 @@ class TestGlobalAPI(unittest.TestCase):
         # Test list functionality.
         matchIDs = [x.id for x in wvwmatches]
         wvwmatches = gAPI.getWVWMatches(matchIDs)
+
+        # Test specific ID
+        wvwmatch = gAPI.getWVWMatches(matchIDs[0])
+        self.assertEqual(type(wvwmatch).__name__, 'WVWMatch')
 
         for unit in wvwmatches:
             self.assertEqual(type(unit).__name__, 'WVWMatch')
