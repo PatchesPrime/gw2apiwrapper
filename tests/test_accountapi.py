@@ -181,6 +181,14 @@ class TestAccountAPI(unittest.TestCase):
 
         self.assertTrue(api.skins[0].name == 'Chainmail Leggings')
 
+    def test_getMinis(self):
+        api = self.getAccount()
+
+        self.assertTrue(len(api.getMinis()) > 3)
+
+        for unit in api.minis:
+            self.assertEqual(type(unit).__name__, 'Mini')
+
     def test_getTraits(self):
         api = self.getAccount()
 
