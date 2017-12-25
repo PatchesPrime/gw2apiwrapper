@@ -16,7 +16,7 @@ class GlobalAPI:
         return(getJson(self.url + api, header=None))
 
     @typer
-    def getRaid(self, json):
+    def getRaid(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
@@ -26,7 +26,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getGuild(self, json):
+    def getGuild(self, id_or_list):
         '''
         Query the non-authed Guild wars 2 API to build
         objects from the returned JSON.
@@ -36,7 +36,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getDungeon(self, json):
+    def getDungeon(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
@@ -46,7 +46,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getSkill(self, json):
+    def getSkill(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
@@ -56,7 +56,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getLegend(self, json):
+    def getLegend(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
@@ -66,7 +66,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getFinisher(self, json):
+    def getFinisher(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
@@ -76,7 +76,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getTitle(self, json):
+    def getTitle(self, id_or_list):
         '''
         Query the non-authed Guild wars 2 API to build
         objects from the returned JSON.
@@ -86,7 +86,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getOutfit(self, json):
+    def getOutfit(self, id_or_list):
         '''
         Query the non-authed Guild wars 2 API to build
         objects from the returned JSON.
@@ -96,7 +96,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getMasteries(self, json):
+    def getMasteries(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
@@ -106,7 +106,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getPet(self, json):
+    def getPet(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
@@ -116,7 +116,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getRace(self, json):
+    def getRace(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 API to build
         objects from the returned JSON.
@@ -126,7 +126,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getProfession(self, json):
+    def getProfession(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 API to build
         objects based off the returned JSON.
@@ -136,7 +136,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getGuildUpgrade(self, json):
+    def getGuildUpgrade(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 API to build
         objects off the returned JSON.
@@ -146,7 +146,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getGuildPermission(self, json):
+    def getGuildPermission(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 API to build
         objects off the returned JSON.
@@ -156,7 +156,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getAchievement(self, json):
+    def getAchievement(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 achievement
         API and build Achievement(s) objects based off
@@ -167,7 +167,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getAchievementGroup(self, json):
+    def getAchievementGroup(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 achievement
         groups API and build objects based off the return JSON.
@@ -177,7 +177,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getAchievementCategory(self, json):
+    def getAchievementCategory(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 achievement/categories
         API and build objects from the JSON.
@@ -187,7 +187,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getSkin(self, json):
+    def getSkin(self, id_or_list):
         '''
         Query the non-authed skin Guild Wars 2 Skin API
         and build Skin object(s) based on it.
@@ -197,7 +197,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getItem(self, json):
+    def getItem(self, id_or_list):
         '''
         Query the Guild Wars 2 item API and build
         object(s) based off the returned JSON.
@@ -207,7 +207,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getDye(self, json):
+    def getDye(self, id_or_list):
         '''
         Query the Guild Wars 2 Dye API and build
         object(s) based off the returned JSON.
@@ -217,7 +217,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getRecipe(self, json):
+    def getRecipe(self, id_or_list):
         '''
         Query the Guild Wars 2 Recipe API and build
         object(s) based off the returned JSON.
@@ -227,7 +227,7 @@ class GlobalAPI:
         pass
 
     @typer
-    def getMini(self, json):
+    def getMini(self, id_or_list):
         '''
         Query the Guild Wars 2 Mini API and build
         object(s) based off the returned JSON.
