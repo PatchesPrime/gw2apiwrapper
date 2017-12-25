@@ -12,3 +12,9 @@ jedi = "*"
 importmagic = "*"
 "flake8" = "*"
 pytest = "*"
+coveralls = "*"
+
+
+[packages]
+
+pytest-cov = "*"
