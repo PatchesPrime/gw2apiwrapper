@@ -284,8 +284,6 @@ class typer(object):
                     # Try to build it off the API name
                     if self.api.title()[-1] == 's':
                         objName = self.api.title()[:-1]
-                    else:
-                        objName = self.api.title()
 
                 obj = namedtuple(objName, item.keys())
 
