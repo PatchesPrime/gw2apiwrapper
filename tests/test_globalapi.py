@@ -46,6 +46,9 @@ class TestGlobalAPI(unittest.TestCase):
         self.assertEqual(type(legend).__name__, 'Legend')
         self.assertEqual(legend.heal, 26937)
 
+        # Test all
+        self.assertTrue(len(gAPI.getLegend('all')) > 3)
+
     def test_getFinisher(self):
         # Test int()
         # I know for a fact finisher id 12 has an unlock item.
@@ -68,6 +71,9 @@ class TestGlobalAPI(unittest.TestCase):
         # Test unsupported type
         self.assertRaises(NotImplementedError, gAPI.getFinisher, {1})
 
+        # Test all
+        self.assertTrue(len(gAPI.getFinisher('all')) > 10)
+
     def test_getTitle(self):
         # Test int()
         title = gAPI.getTitle(8)
@@ -87,6 +93,9 @@ class TestGlobalAPI(unittest.TestCase):
 
         # Test unsupported type
         self.assertRaises(NotImplementedError, gAPI.getTitle, {8})
+
+        # Test all
+        self.assertTrue(len(gAPI.getTitle('all')) > 20)
 
     def test_getOutfit(self):
         # Test int()
@@ -108,6 +117,9 @@ class TestGlobalAPI(unittest.TestCase):
         # Test unsupported type
         self.assertRaises(NotImplementedError, gAPI.getOutfit, {8})
 
+        # Test all
+        self.assertTrue(len(gAPI.getOutfit('all')) > 20)
+
     def test_getMasteries(self):
         # Test int()
         mastery = gAPI.getMasteries(1)
@@ -125,6 +137,9 @@ class TestGlobalAPI(unittest.TestCase):
 
         # Test unsupported type
         self.assertRaises(NotImplementedError, gAPI.getMasteries, {1})
+
+        # Test all
+        self.assertTrue(len(gAPI.getMasteries('all')) > 10)
 
     def test_getPet(self):
         # Test int()
@@ -144,6 +159,9 @@ class TestGlobalAPI(unittest.TestCase):
         # Test unsupported type
         self.assertRaises(NotImplementedError, gAPI.getPet, {42})
 
+        # Test all
+        self.assertTrue(len(gAPI.getPet('all')) > 20)
+
     def test_getRace(self):
         # This works a bit different.
         race = gAPI.getRace('Asura')
@@ -151,6 +169,9 @@ class TestGlobalAPI(unittest.TestCase):
 
         # Check its skills.
         self.assertTrue(len(race.skills) == 7)
+
+        # Test all
+        self.assertTrue(len(gAPI.getRace('all')) > 3)
 
     def test_getProfession(self):
         # Same thing. Different input.
@@ -164,10 +185,16 @@ class TestGlobalAPI(unittest.TestCase):
 
         self.assertTrue(58 in upgrade.prerequisites)
 
+        # Test all
+        self.assertTrue(len(gAPI.getGuildUpgrade('all')) > 20)
+
     def test_getGuildPermission(self):
         perm = gAPI.getGuildPermission('Admin')
         self.assertEqual(type(perm).__name__, 'GuildPermission')
         self.assertEqual(perm.name, 'Admin Lower Ranks.')
+
+        # Test all
+        self.assertTrue(len(gAPI.getGuildPermission('all')) > 20)
 
     def test_getAchievement(self):
         # Test int()
@@ -193,6 +220,9 @@ class TestGlobalAPI(unittest.TestCase):
         self.assertEqual(type(ag).__name__, 'AchievementGroup')
         self.assertEqual(ag.name, 'Heart of Thorns')
 
+        # Test all
+        self.assertTrue(len(gAPI.getAchievementGroup('all')) > 5)
+
     def test_getAchievementCategory(self):
         # Test int()
         ac = gAPI.getAchievementCategory(1)
@@ -210,6 +240,9 @@ class TestGlobalAPI(unittest.TestCase):
 
         # Test unsupported type
         self.assertRaises(NotImplementedError, gAPI.getAchievementCategory, {1})
+
+        # Test all
+        self.assertTrue(len(gAPI.getAchievementCategory('all')) > 20)
 
     def test_getSkin(self):
         # Test int()
