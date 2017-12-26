@@ -651,13 +651,13 @@ class AccountAPI:
         if len(buyingData) > 0:
             self.buying = buyingData
         else:
-            self.buying = None
+            self.buying = None  # pragma: no cover
 
         # Same here.
         if len(sellingData) > 0:
             self.selling = sellingData
         else:
-            self.selling = None
+            self.selling = None  # pragma: no cover
 
         # Get our transaction HISTORY. Only completed trades.
         # PEP8...please.
@@ -669,13 +669,13 @@ class AccountAPI:
         if len(boughtData) > 0:
             self.bought = boughtData
         else:
-            self.bought = None
+            self.bought = None  # pragma: no cover
 
         # And this.
         if len(soldData) > 0:
             self.sold = soldData
         else:
-            self.sold = None
+            self.sold = None  # pragma: no cover
 
         # Return the information...for use immediately?
         return({'sold': self.sold, 'bought': self.bought,
@@ -792,7 +792,7 @@ class AccountAPI:
                     for future in cc.as_completed(cmd):
                         try:
                             specObjs.append(future.result())
-                        except Exception as e:
+                        except Exception as e:  # pragma: no cover
                             print('Error: ', e)
 
                 # Trait list. [[id,id,id], [id,id,id], [id,id,id]]
@@ -834,7 +834,7 @@ class AccountAPI:
 
             # This is ugly, but it cut run time in HALF.
             # Get a thread pool going to speed this object up.
-            with cc.ThreadPoolExecutor(max_workers = 10) as executor:
+            with cc.ThreadPoolExecutor(max_workers=10) as executor:
                 # PEP8 pls
                 caller = eps.Specialization
                 # Submit our function to the pool.
@@ -844,7 +844,7 @@ class AccountAPI:
                 for future in cc.as_completed(cmd):
                     try:
                         specObjs.append(future.result())
-                    except Exception as e:
+                    except Exception as e:  # pragma: no cover
                         print('Error: ', e)
 
             # Trait list.

@@ -2,7 +2,7 @@ from GW2API.functions import getJson
 from urllib.error import HTTPError
 
 
-class Specialization:
+class Specialization:  # pragma: no cover
     '''
     Builds an object based off the JSON returned by the
     Guild Wars 2 official specialization API.
@@ -78,7 +78,7 @@ class Trait:
             self.traited_facts  = None
 
 
-class Skill:
+class Skill:  # pragma: no cover
     '''
     Builds an object based off the JSON returned by the
     Guild Wars 2 official Trait API.
@@ -129,82 +129,3 @@ class Skill:
         self.transform_skills = skillJSON.get('transform_skills')
         self.bundle_skills    = skillJSON.get('bundle_skills')
         self.toolbelt_skill   = skillJSON.get('toolbelt_skill')
-
-
-class Map:
-    '''
-    Builds an object that represents the Guild Wars 2
-    world map based off the Guild Wars 2 Official API.
-
-    This is a stand-alone object. It has the potential to
-    be beefy enough on its own.
-
-    This object handles its own fetching of JSON, and therefore
-    requires a map ID in order to function rather than the
-    maps JSON.
-
-    '''
-    def __init__(self, mapID):
-        # Build the basic Map object.
-        self.url = 'https://api.guildwars2.com/v2/maps/'
-        mapJSON = getJson(self.url + '{}'.format(mapID))
-
-        self.id             = mapJSON['id']
-        self.name           = mapJSON['name']
-        self.min_level      = mapJSON['min_level']
-        self.max_level      = mapJSON['max_level']
-        self.default_floor  = mapJSON['default_floor']
-        self.floors         = mapJSON['floors']
-        self.region_id      = mapJSON['region_id']
-        self.region_name    = mapJSON['region_name']
-        self.continent_id   = mapJSON['continent_id']
-        self.continent_name = mapJSON['continent_name']
-        self.map_rect       = mapJSON['map_rect']
-        self.continent_rect = mapJSON['continent_rect']
-
-    # This method is pure evil.
-    # It deals with the bloated 'continents' API.
-    # I can't think of a better way to deal with the
-    # 7 layers of nesting ANET decided to use.
-    def getDetails(self):
-        '''
-        getDetails() pulls all the available information on the current
-        maps waypoints, pois, vistas, skill points, and hearts from the
-        official Guild Wars 2 continent API.
-
-        It's not the cleanest of methods, but you should see what I'm
-        working with.
-        '''
-        # Build the string.
-        url = 'https://api.guildwars2.com/v2/continents/1/floors/1/'
-        cleanURL = url + 'regions/{}/maps/{}'.format(self.region_id, self.id)
-
-        # Load up the JSON to be used later.
-        JSON = getJson(cleanURL)
-
-        # We'll need this.
-        self.waypoints   = []
-        self.pois        = []
-        self.vistas      = []
-        self.skillPoints = []
-        self.hearts      = []
-
-        # Grab all the 'pois', which include waypoints, poi, and vistas.
-        poiInfo = JSON['points_of_interest']
-
-        for current in poiInfo:
-            if poiInfo[current]['type'] == 'waypoint':
-                self.waypoints.append(poiInfo[current])
-            elif poiInfo[current]['type'] == 'landmark':
-                self.pois.append(poiInfo[current])
-            elif poiInfo[current]['type'] == 'vista':
-                self.vistas.append(poiInfo[current])
-
-        # Grab all the Skill Points.
-        self.skillPoints = JSON['skill_challenges']
-
-        # Grab all the Hearts (tasks)
-        tasksInfo = JSON['tasks']
-
-        for current in tasksInfo:
-            self.hearts.append(tasksInfo[current])
