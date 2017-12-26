@@ -1,4 +1,4 @@
-from .functions import getJson
+from GW2API.functions import getJson
 
 
 class GW2TP:
