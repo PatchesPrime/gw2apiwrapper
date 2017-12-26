@@ -343,9 +343,6 @@ def getJson(url, header=None):
             # MORE DANGEROUS MAGIC
             raise PermissionError(error) from None
 
-        else:
-            raise(e)
-
 
 def getBuild():
     '''
