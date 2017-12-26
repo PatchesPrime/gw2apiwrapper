@@ -199,12 +199,8 @@ class typer(object):
         # Build clean string to append to URL.
         cleanList = ','.join(str(x) for x in args)
 
-        # Build the URL.
-        if ' ' in cleanList:
-            # If there is a space, we need to parse that.
-            cleanURL = '{}?ids={}'.format(self.url, self._parse(cleanList))
-        else:
-            cleanURL = '{}?ids={}'.format(self.url, cleanList)
+        # If there is a space, we need to parse that.
+        cleanURL = '{}?ids={}'.format(self.url, self._parse(cleanList))
 
         # Get the JSON.
         data = self.obj.getJson(cleanURL)
