@@ -237,22 +237,10 @@ class typer(object):
 
         # This feels wrong, I may address it later if
         # it begins to cause problems.
-        try:
-            # So it caused a minor problem. See Exception.
-            if any(isinstance(x, dict) for x in data):
-                dictFlag = True
-            else:
-                dictFlag = False
-        except IndexError:
-            # Basically, this caused a 'problem'. Note the quotes.
-            # I don't have shared inventory slots. data = []
-            # Obviously, the above type check breaks from this.
-            # That's the theory anyway.
-            # Anyone got one and an API key? :)
-
-            # This will silently fail and set dictFlag to False.
+        if any(isinstance(x, dict) for x in data):
+            dictFlag = True
+        else:
             dictFlag = False
-            pass
 
         # The construction of the skin attribute.
         for safe in safeList:
