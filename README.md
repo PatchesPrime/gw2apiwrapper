@@ -1,4 +1,4 @@
-# GW2API [![Build Status](https://travis-ci.org/PatchesPrime/GW2API.svg?branch=master)](https://travis-ci.org/PatchesPrime/GW2API)
+# GW2API [![Build Status](https://travis-ci.org/PatchesPrime/GW2API.svg?branch=master)](https://travis-ci.org/PatchesPrime/GW2API) [![Coverage Status](https://coveralls.io/repos/github/PatchesPrime/GW2API/badge.svg?branch=master)](https://coveralls.io/github/PatchesPrime/GW2API?branch=master)
 Object Orientated GW2 API Wrapper
 
 **2017-11-13 - Decent sized refactor in progress. Majority of conversion is done, but still a few fiddly bits..**
