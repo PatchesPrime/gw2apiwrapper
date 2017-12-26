@@ -83,4 +83,4 @@ class GW2TP:
             return(jsonData)
         else:
             # Tell them what they did wrong.
-            raise ValueError('First arg must be "coins" or "gems"')
+            raise ValueError('First arg must be "coin" or "gems"')
