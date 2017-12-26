@@ -68,13 +68,13 @@ class GW2TP:
         '''
         # Dictionary to hold URLs for the API. Which we use will depend on
         # gold_or_gems
-        urls = {'coin': self.url + 'exchange/coins?quantity=',
-                'gems': self.url + 'exchange/gems?quantity='}
+        urls = {'coin': 'exchange/coins?quantity=',
+                'gems': 'exchange/gems?quantity='}
 
         # Check if they gave proper input.
         if coin_or_gems in urls.keys():
             # Build a URL.
-            cleanURL = urls[coin_or_gems] + '{}'.format(quantity)
+            cleanURL = '{}{}'.format(urls[coin_or_gems], quantity)
 
             # Use said URL.
             jsonData = self.getJson(cleanURL)
