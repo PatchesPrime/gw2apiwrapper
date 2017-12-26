@@ -18,4 +18,3 @@ coveralls = "*"
 [packages]
 
 pytest-cov = "*"
-coveralls = "*"
