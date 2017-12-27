@@ -1,276 +1,251 @@
-import unittest
+import pytest
 from GW2API import AccountAPI
 import os
 
 
-class TestAccountAPI(unittest.TestCase):
-    def getAccount(self):
-        APIKEY = os.environ['APIKEY']
-        return(AccountAPI(APIKEY))
+APIKEY = os.environ['APIKEY']
+api = AccountAPI(APIKEY)
 
-    def test_brokenPermissions(self):
-        APIKEY = os.environ['BUSTEDKEY']
-        acc = AccountAPI(APIKEY)
 
-        # Just going to call getAchievements() to trigger
-        # the error.
-        with self.assertRaises(PermissionError):
-            acc.getAchievements()
+def test_brokenPermissions():
+    APIKEY = os.environ['BUSTEDKEY']
+    acc = AccountAPI(APIKEY)
 
-    def test_getRaids(self):
-        api = self.getAccount()
+    # Just going to call getAchievements() to trigger
+    # the error.
+    with pytest.raises(PermissionError):
+        acc.getAchievements()
 
-        encounters = ["vale_guardian", "spirit_woods", "gorseval",
-                      "sabetha", "slothasor", "bandit_trio",
-                      "matthias", "escort", "keep_construct",
-                      "xera", "cairn", "mursaat_overseer",
-                      "samarog", "deimos"]
-        raids = api.getRaids()
 
-        # I don't do raids..
-        # self.assertTrue(any(x in raids for x in encounters))
+def test_getRaids():
+    encounters = ["vale_guardian", "spirit_woods", "gorseval",
+                  "sabetha", "slothasor", "bandit_trio",
+                  "matthias", "escort", "keep_construct",
+                  "xera", "cairn", "mursaat_overseer",
+                  "samarog", "deimos"]
+    raids = api.getRaids()
 
-        # This should always be false when using my API key...
-        self.assertFalse(any(x in raids for x in encounters))
+    # I don't do raids..
+    # assert x in raids for x in encounters)
 
-    def test_getGuild(self):
-        api = self.getAccount()
+    # This should always be false when using my API key...
+    assert any(x in raids for x in encounters) is False
 
-        guild = api.getGuild('A4AF6C09-452F-44EE-BD3E-704FB5C371FB')
-        self.assertEqual(type(guild).__name__, 'Guild')
-        self.assertTrue(guild.influence > 0)
 
-    def test_getDungeon(self):
-        # I don't really do dungeons so I'm having a hard time verifying
-        # the validity of this test. If you got a key and do dungeons
-        # send me a message.
-        api = self.getAccount()
-        paths = ['cm_story', 'asura', 'seraph', 'butler', 'ac_story',
-                 'hodgins', 'detha', 'tzark', 'ta_story', 'leurent',
-                 'vevina', 'aetherpath', 'se_story', 'fergg', 'rasalov',
-                 'koptev', 'cof_story', 'ferrah', 'magg', 'rhiannon',
-                 'hotw_story', 'butcher', 'plunderer', 'zealot',
-                 'coe_story', 'submarine', 'teleport', 'front_door',
-                 'arah_story', 'jotun', 'mursaat', 'forgotten', 'seer']
-        dun = api.getDungeons()
+def test_getGuild():
+    guild = api.getGuild('A4AF6C09-452F-44EE-BD3E-704FB5C371FB')
+    assert type(guild).__name__ == 'Guild'
+    assert guild.influence > 0
 
-        # I guess this'll work for now until I get someone who does dungeons.
-        # self.assertTrue(any(x in dun for x in paths))
 
-        # This should always be false when using my API key...
-        self.assertFalse(any(x in dun for x in paths))
+def test_getDungeon():
+    # I don't really do dungeons so I'm having a hard time verifying
+    # the validity of this test. If you got a key and do dungeons
+    # send me a message.
+    paths = ['cm_story', 'asura', 'seraph', 'butler', 'ac_story',
+             'hodgins', 'detha', 'tzark', 'ta_story', 'leurent',
+             'vevina', 'aetherpath', 'se_story', 'fergg', 'rasalov',
+             'koptev', 'cof_story', 'ferrah', 'magg', 'rhiannon',
+             'hotw_story', 'butcher', 'plunderer', 'zealot',
+             'coe_story', 'submarine', 'teleport', 'front_door',
+             'arah_story', 'jotun', 'mursaat', 'forgotten', 'seer']
+    dun = api.getDungeons()
 
-    def test_getFinishers(self):
-        api = self.getAccount()
+    # I guess this'll work for now until I get someone who does dungeons.
+    # assert any(x in dun for x in paths)
 
-        self.assertTrue(len(api.getFinishers()) > 5)
+    # This should always be false when using my API key...
+    assert any(x in dun for x in paths) is False
 
-        # Test for proper keys and types.
-        for unit in api.finishers:
-            self.assertTrue('permanent' in unit.keys())
-            self.assertTrue('id' in unit.keys())
-            self.assertEqual(type(unit['object']).__name__, 'Finisher')
 
-    def test_getWallet(self):
-        api = self.getAccount()
+def test_getFinishers():
+    assert len(api.getFinishers()) > 5
 
-        # Just verify stuff is in it.
-        self.assertTrue(len(api.getWallet()) > 5)
+    # Test for proper keys and types.
+    for unit in api.finishers:
+        assert 'permanent' in unit.keys()
+        assert 'id' in unit.keys()
+        assert type(unit['object']).__name__ == 'Finisher'
 
-        # Verify data.
-        for unit in api.wallet:
-            self.assertTrue('name' in unit.keys())
-            self.assertTrue('icon' in unit.keys())
-            self.assertTrue('description' in unit.keys())
 
-    def test_getRecipes(self):
-        api = self.getAccount()
+def test_getWallet():
+    # Just verify stuff is in it.
+    assert len(api.getWallet()) > 5
 
-        # Verify populated.
-        self.assertTrue(len(api.getRecipes()) > 50)
+    # Verify data.
+    for unit in api.wallet:
+        assert 'name' in unit.keys()
+        assert 'icon' in unit.keys()
+        assert 'description' in unit.keys()
 
-        # Verify some information.
-        self.assertTrue(api.recipes[0].id == 842)
-        self.assertTrue(api.recipes[0].time_to_craft_ms == 5000)
 
-    def test_getTitles(self):
-        api = self.getAccount()
+def test_getRecipes():
+    # Verify populated.
+    assert len(api.getRecipes()) > 50
 
-        self.assertTrue(len(api.getTitles()) > 5)
-        self.assertTrue(api.titles[0].name == 'Been there. Done that.')
+    # Verify some information.
+    assert api.recipes[0].id == 842
+    assert api.recipes[0].time_to_craft_ms == 5000
 
-    def test_getBank(self):
-        api = self.getAccount()
 
-        self.assertTrue(len(api.getBank()) > 5)
+def test_getTitles():
+    assert len(api.getTitles()) > 5
+    assert api.titles[0].name == 'Been there. Done that.'
 
-        for unit in api.bank:
-            self.assertEqual(type(unit['object']).__name__, 'Item')
 
-    def test_getAchievements(self):
-        api = self.getAccount()
+def test_getBank():
+    assert len(api.getBank()) > 5
 
-        self.assertTrue(len(api.getAchievements()) > 5)
-        self.assertTrue(api.achievements[0]['object'].name == 'Centaur Slayer')
+    for unit in api.bank:
+        assert type(unit['object']).__name__ == 'Item'
 
-        for unit in api.achievements:
-            self.assertEqual(type(unit['object']).__name__, 'Achievement')
 
-    def test_getMaterials(self):
-        api = self.getAccount()
+def test_getAchievements():
+    assert len(api.getAchievements()) > 5
+    assert api.achievements[0]['object'].name == 'Centaur Slayer'
 
-        self.assertTrue(len(api.getMaterials()) > 5)
-        self.assertTrue(api.materials[0]['object'].name == 'Carrot')
+    for unit in api.achievements:
+        assert type(unit['object']).__name__ == 'Achievement'
 
-        for unit in api.materials:
-            self.assertEqual(type(unit['object']).__name__, 'Material')
 
-    def test_getOutfits(self):
-        api = self.getAccount()
+def test_getMaterials():
+    assert len(api.getMaterials()) > 5
+    assert api.materials[0]['object'].name == 'Carrot'
 
-        self.assertTrue(len(api.getOutfits()) > 2)
-        self.assertTrue(api.outfits[0].name == 'Hexed Outfit')
+    for unit in api.materials:
+        assert type(unit['object']).__name__ == 'Material'
 
-        for unit in api.outfits:
-            self.assertEqual(type(unit).__name__, 'Outfit')
 
-    def test_getMasteries(self):
-        api = self.getAccount()
+def test_getOutfits():
+    assert len(api.getOutfits()) > 2
+    assert api.outfits[0].name == 'Hexed Outfit'
 
-        self.assertTrue(len(api.getMasteries()) > 5)
-        self.assertTrue(api.masteries[0]['object'].name == 'Exalted Lore')
+    for unit in api.outfits:
+        assert type(unit).__name__ == 'Outfit'
 
-        for unit in api.masteries:
-            self.assertEqual(type(unit['object']).__name__, 'Mastery')
 
-    def test_getInventory(self):
-        api = self.getAccount()
+def test_getMasteries():
+    assert len(api.getMasteries()) > 5
+    assert api.masteries[0]['object'].name == 'Exalted Lore'
 
-        # No len because I only have one slot..Might change.
-        api.getInventory()
-        self.assertTrue(api.inventory[0]['object'].name == 'Royal Terrace Pass')
+    for unit in api.masteries:
+        assert type(unit['object']).__name__ == 'Mastery'
 
-        for unit in api.inventory:
-            self.assertEqual(type(unit['object']).__name__, 'Item')
 
-    def test_getTradeHistory(self):
-        api = self.getAccount()
+def test_getInventory():
+    # No len because I only have one slot..Might change.
+    api.getInventory()
+    assert api.inventory[0]['object'].name == 'Royal Terrace Pass'
 
-        # Yep.
-        self.assertTrue(all(k in api.getTradeHistory() for k in ('buying', 'selling', 'bought')))
+    for unit in api.inventory:
+        assert type(unit['object']).__name__ == 'Item'
 
-        # Double yep.
-        self.assertTrue(all(k in dir(api) for k in ('buying', 'selling', 'bought')))
 
-        # I have some stupid orders active for this.
-        # If you want to break my test though, sell me a Bifrost
-        # for a single gold.
-        self.assertTrue(api.buying is not None)
+def test_getTradeHistory():
+    # Yep.
+    assert all(k in api.getTradeHistory() for k in ('buying', 'selling', 'bought')) is True
 
-        # Want to buy a Pumpkin Pie Cookie for 1g?
-        self.assertTrue(api.selling is not None)
+    # Double yep.
+    assert all(k in dir(api) for k in ('buying', 'selling', 'bought')) is True
 
-    def test_getCharacters(self):
-        api = self.getAccount()
+    # I have some stupid orders active for this.
+    # If you want to break my test though, sell me a Bifrost
+    # for a single gold.
+    assert api.buying is not None
 
-        self.assertTrue(len(api.getCharacters()) > 3)
+    # Want to buy a Pumpkin Pie Cookie for 1g?
+    assert api.selling is not None
 
-        for unit in api.characters:
-            self.assertEqual(type(unit).__name__, 'Character')
 
-    def test_getDyes(self):
-        api = self.getAccount()
+def test_getCharacters():
+    assert len(api.getCharacters()) > 3
 
-        self.assertTrue(len(api.getDyes()) > 100)  # I have a lot of dyes.
+    for unit in api.characters:
+        assert type(unit).__name__ == 'Character'
 
-        for unit in api.dyes:
-            self.assertEqual(type(unit).__name__, 'Dye')
 
-        self.assertTrue(api.dyes[0].name == 'Chalk')
+def test_getDyes():
+    assert len(api.getDyes()) > 100  # I have a lot of dyes
 
-    def test_getSkins(self):
-        api = self.getAccount()
+    for unit in api.dyes:
+        assert type(unit).__name__ == 'Dye'
 
-        self.assertTrue(len(api.getSkins()) > 100)
+    assert api.dyes[0].name == 'Chalk'
 
-        for unit in api.skins:
-            self.assertEqual(type(unit).__name__, 'Skin')
 
-        self.assertTrue(api.skins[0].name == 'Chainmail Leggings')
+def test_getSkins():
+    assert len(api.getSkins()) > 100
 
-    def test_getMinis(self):
-        api = self.getAccount()
+    for unit in api.skins:
+        assert type(unit).__name__ == 'Skin'
 
-        self.assertTrue(len(api.getMinis()) > 3)
+    assert api.skins[0].name == 'Chainmail Leggings'
 
-        for unit in api.minis:
-            self.assertEqual(type(unit).__name__, 'Mini')
 
-    def test_getTraits(self):
-        api = self.getAccount()
+def test_getMinis():
+    assert len(api.getMinis()) > 3
 
-        # Call it once for speed.
-        build = api.getTraits('Necromancer Patches')
+    for unit in api.minis:
+        assert type(unit).__name__ == 'Mini'
 
-        # Today on ugly, we have this.
-        for unit in build.values():
-            for area in unit:
-                self.assertEqual(type(area['line']).__name__, 'Specialization')
 
-        # Verify area specific functionality
-        build = api.getTraits('Friendly Patches', areaFlag='pvp')
-        for unit in build:
-            self.assertEqual(type(area['line']).__name__, 'Specialization')
+def test_getTraits():
+    # Call it once for speed.
+    build = api.getTraits('Necromancer Patches')
 
-    def test_getMatchResults(self):
-        api = self.getAccount()
+    # Today on ugly, we have this.
+    for unit in build.values():
+        for area in unit:
+            assert type(area['line']).__name__ == 'Specialization'
 
-        results = api.getMatchResults('all')
+    # Verify area specific functionality
+    build = api.getTraits('Friendly Patches', areaFlag='pvp')
+    for unit in build:
+        assert type(area['line']).__name__ == 'Specialization'
 
-        for match in results:
-            self.assertEqual(type(match).__name__, 'PVPMatch')
 
-        # Test list
-        results = api.getMatchResults([x.id for x in results])
-        for match in results:
-            self.assertEqual(type(match).__name__, 'PVPMatch')
+def test_getMatchResults():
+    results = api.getMatchResults('all')
 
-        # Test single ID
-        result = api.getMatchResults(results[0].id)
-        self.assertEqual(type(result[0]).__name__, 'PVPMatch')
+    for match in results:
+        assert type(match).__name__ == 'PVPMatch'
 
-        # Test failure
-        with self.assertRaises(TypeError):
-            api.getMatchResults(TypeError)
+    # Test list
+    results = api.getMatchResults([x.id for x in results])
+    for match in results:
+        assert type(match).__name__ == 'PVPMatch'
 
-    def test_getPVPStats(self):
-        api = self.getAccount()
+    # Test single ID
+    result = api.getMatchResults(results[0].id)
+    assert type(result[0]).__name__ == 'PVPMatch'
 
-        strings = ('pvp_rank', 'pvp_wins', 'pvp_losses',
-                   'pvp_desertions', 'pvp_byes', 'pvp_forfeits',
-                   'pvp_professions', 'pvp_ranked', 'pvp_unranked')
+    # Test failure
+    with pytest.raises(TypeError):
+        api.getMatchResults(TypeError)
 
-        # This just assigns attributes.
-        api.getPVPStats()
 
-        # Dirty check.
-        self.assertTrue(
-            all(k in dir(api) for k in strings)
-        )
+def test_getPVPStats():
+    strings = ('pvp_rank', 'pvp_wins', 'pvp_losses',
+               'pvp_desertions', 'pvp_byes', 'pvp_forfeits',
+               'pvp_professions', 'pvp_ranked', 'pvp_unranked')
 
-    def test_getGuildRanks(self):
-        api = self.getAccount()
+    # This just assigns attributes.
+    api.getPVPStats()
 
-        # NULL represent?
-        guild = api.getGuildRanks('A4AF6C09-452F-44EE-BD3E-704FB5C371FB')
+    # Dirty check.
+    assert all(k in dir(api) for k in strings) is True
 
-        # If this is here, it's the right thing.
-        self.assertTrue(guild[0]['id'] == 'Grand Poobah')
 
-    def test_getGuildMembers(self):
-        api = self.getAccount()
+def test_getGuildRanks():
+    # NULL represent?
+    guild = api.getGuildRanks('A4AF6C09-452F-44EE-BD3E-704FB5C371FB')
 
-        members = api.getGuildMembers('A4AF6C09-452F-44EE-BD3E-704FB5C371FB')
+    # If this is here, it's the right thing.
+    assert guild[0]['id'] == 'Grand Poobah'
 
-        # Am I there?
-        self.assertTrue(members[0]['name'] == 'Patches.7584')
+
+def test_getGuildMembers():
+    members = api.getGuildMembers('A4AF6C09-452F-44EE-BD3E-704FB5C371FB')
+
+    # Am I there?
+    assert members[0]['name'] == 'Patches.7584'
