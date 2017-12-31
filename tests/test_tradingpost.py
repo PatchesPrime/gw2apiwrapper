@@ -1,5 +1,5 @@
 import pytest
-from GW2API.tradingpost import GW2TP
+from gw2apiwrapper.tradingpost import GW2TP
 
 # Our Object for interacting with TP
 tp = GW2TP()

@@ -1,6 +1,6 @@
 import pytest
 import os
-from GW2API import functions, AccountAPI
+from gw2apiwrapper import functions, AccountAPI
 
 
 def test_badUrl():

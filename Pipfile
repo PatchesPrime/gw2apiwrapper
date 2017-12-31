@@ -2,6 +2,12 @@
 
 url = "https://pypi.python.org/simple"
 verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+requests = "*"
 
 
 [dev-packages]
@@ -12,9 +18,5 @@ jedi = "*"
 importmagic = "*"
 "flake8" = "*"
 pytest = "*"
-coveralls = "*"
-
-
-[packages]
-
 pytest-cov = "*"
+coveralls = "*"

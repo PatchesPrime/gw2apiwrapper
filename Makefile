@@ -4,5 +4,5 @@ init:
 	pipenv install
 
 test:
-	pipenv run py.test --cov=GW2API tests
+	pipenv run py.test --cov=gw2apiwrapper
 	coveralls

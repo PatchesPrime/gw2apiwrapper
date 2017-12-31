@@ -1,11 +1,2 @@
-/#gw2api.py#
-/.#gw2api.py
-*flymake*
-*pycache*
-/#descriptions.py#
-*#*
-*.pyc
-/testsgw2api.py
-/tests/apikey.py
-*~
-tests/secrets.py
+.*
+*__pycache__*

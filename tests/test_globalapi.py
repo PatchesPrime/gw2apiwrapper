@@ -1,5 +1,5 @@
 import pytest
-from GW2API import GlobalAPI
+from gw2apiwrapper import GlobalAPI
 
 # This object retains nothing, so it's fine for it
 # to be reused.

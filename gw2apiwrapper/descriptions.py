@@ -1,5 +1,4 @@
-from GW2API.functions import getJson
-from urllib.error import HTTPError
+from gw2apiwrapper.functions import getJson
 
 
 class Specialization:  # pragma: no cover

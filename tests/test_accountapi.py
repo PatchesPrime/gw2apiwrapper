@@ -1,5 +1,5 @@
 import pytest
-from GW2API import AccountAPI
+from gw2apiwrapper import AccountAPI
 import os
 
 
