@@ -1,4 +1,4 @@
-# GW2API [![Build Status](https://travis-ci.org/PatchesPrime/GW2API.svg?branch=master)](https://travis-ci.org/PatchesPrime/GW2API) [![Coverage Status](https://coveralls.io/repos/github/PatchesPrime/GW2API/badge.svg?branch=master)](https://coveralls.io/github/PatchesPrime/GW2API?branch=master)
+# gw2apiwrapper [![Build Status](https://travis-ci.org/PatchesPrime/gw2apiwrapper.svg?branch=master)](https://travis-ci.org/PatchesPrime/gw2apiwrapper) [![Coverage Status](https://coveralls.io/repos/github/PatchesPrime/gw2apiwrapper/badge.svg?branch=master)](https://coveralls.io/github/PatchesPrime/gw2apiwrapper?branch=master)
 Object Orientated GW2 API Wrapper
 
 **2017-11-13 - Decent sized refactor in progress. Majority of conversion is done, but still a few fiddly bits..**
@@ -9,20 +9,20 @@ It will eventually (as it's released) implement all of the GW2 v2 API.
 
 To install, simply change to your projects directory and run this:
 ``` bash
-git clone https://github.com/PatchesPrime/GW2API.git
+git clone https://github.com/PatchesPrime/gw2apiwrapper.git
 ```
 Then import it.
 
 
 Example:
 ``` python
-import GW2API
+from gw2apiwrapper import AcountAPI, GlobalAPI
 
 # Get an account based object. Requires API Key.
-personal = GW2API.AccountAPI("<APIKEY>")
+personal = AccountAPI("<APIKEY>")
 
 # Get a 'Global' api object. (Non-authed)
-workHorse = GW2API.GlobalAPI()
+workHorse = GlobalAPI()
 
 # This is iterable, as not only does it fill the personal.bank
 # attribute, it also returns that information.
