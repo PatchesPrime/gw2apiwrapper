@@ -1,7 +1,7 @@
 # gw2apiwrapper [![Build Status](https://travis-ci.org/PatchesPrime/gw2apiwrapper.svg?branch=master)](https://travis-ci.org/PatchesPrime/gw2apiwrapper) [![Coverage Status](https://coveralls.io/repos/github/PatchesPrime/gw2apiwrapper/badge.svg?branch=master)](https://coveralls.io/github/PatchesPrime/gw2apiwrapper?branch=master)
 Object Orientated GW2 API Wrapper
 
-**2017-11-13 - Decent sized refactor in progress. Majority of conversion is done, but still a few fiddly bits..**
+**2017-12-31 - Most of the refactor is done..most..**
 
 Being dissatisfied with the current implementations of the Guild Wars 2 API written in python, I began this project.
 
