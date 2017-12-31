@@ -17,7 +17,7 @@ Then import it.
 
 Example:
 ``` python
-from gw2apiwrapper import AcountAPI, GlobalAPI
+from gw2apiwrapper import AccountAPI, GlobalAPI
 
 # Get an account based object. Requires API Key.
 personal = AccountAPI("<APIKEY>")
