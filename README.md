@@ -7,10 +7,11 @@ Being dissatisfied with the current implementations of the Guild Wars 2 API writ
 
 It will eventually (as it's released) implement all of the GW2 v2 API.
 
-To install, simply change to your projects directory and run this:
+To install, you can use PyPi:
 ``` bash
-git clone https://github.com/PatchesPrime/gw2apiwrapper.git
+pip install gw2apiwrapper
 ```
+
 Then import it.
 
 
