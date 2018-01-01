@@ -1,4 +1,4 @@
-# gw2apiwrapper [![Build Status](https://travis-ci.org/PatchesPrime/gw2apiwrapper.svg?branch=master)](https://travis-ci.org/PatchesPrime/gw2apiwrapper) [![Coverage Status](https://coveralls.io/repos/github/PatchesPrime/gw2apiwrapper/badge.svg?branch=master)](https://coveralls.io/github/PatchesPrime/gw2apiwrapper?branch=master)
+# gw2apiwrapper [![Build Status](https://travis-ci.org/PatchesPrime/gw2apiwrapper.svg?branch=master)](https://travis-ci.org/PatchesPrime/gw2apiwrapper) [![Coverage Status](https://coveralls.io/repos/github/PatchesPrime/gw2apiwrapper/badge.svg?branch=master)](https://coveralls.io/github/PatchesPrime/gw2apiwrapper?branch=master)[![Requirements Status](https://requires.io/github/PatchesPrime/gw2apiwrapper/requirements.svg?branch=master)](https://requires.io/github/PatchesPrime/gw2apiwrapper/requirements/?branch=master)
 Object Orientated GW2 API Wrapper
 
 **2017-12-31 - Most of the refactor is done..most..**
