@@ -1,13 +1,8 @@
 from setuptools import setup
 
-long_desc='''
-gw2apiwrapper is a Python library designed to abstract away the overhead/complexity of interacting with the official Guild Wars 2 (GW2) API.
 
-The code written with it is meant to be easy to read and develop with minimal understanding of the actual GW2 API itself.
-This is accomplished by abstracting out the standard JSON->dictionary scheme that is so commonly used and replace it with simple OOP-style notation.
-
-See the URL below for more information, or call help() on any method provided by the library.
-'''
+with open('README.rst') as f:
+    long_desc = f.read()
 
 setup(
     name='gw2apiwrapper',
