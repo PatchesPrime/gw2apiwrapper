@@ -1,24 +1,24 @@
 gw2apiwrapper |Build Status| |Coverage Status| |Requirements Status|
 =====================================================================
 
-Object Orientated GW2 API Wrapper
+gw2apiwrapper is a Python library designed to abstract away the overhead and complexity of interacting with the official Guild Wars 2 (GW2) API via Python.
 
-**2017-12-31 - Most of the refactor is done..most..**
+The library aims to make it easy to write and read Python applications and tools with only a minimal knowledge of the GW2 API itself.
 
-Being dissatisfied with the current implementations of the Guild Wars 2
-API written in python, I began this project.
+This is accomplished by abstracting away the standard JSON->dictionary mapping scheme that is so commonly used and replace it with an OOP-style (eg. item.name) notation.
 
-It will eventually (as it’s released) implement all of the GW2 v2 API.
 
-To install, you can use PyPi:
+Installation
+------------
+Simply install with pip/pipenv and you're good to go:
 
 .. code:: bash
 
     pip install gw2apiwrapper
 
-Then import it.
 
-Example:
+Example
+-------
 
 .. code:: python
 
@@ -31,9 +31,12 @@ Example:
     workHorse = GlobalAPI()
 
     # This is iterable, as not only does it fill the personal.bank
-    # attribute, it also returns that information.
+    # attribute, it also returns that information allowing it to be
+    # used in loops..even though we don't here.
     personal.getBank()
 
+    # Should be self documenting, but demonstrates that the previous
+    # getBank() call actually populated that object's 'bank' attribute.
     bankIDs = [slot['id'] for slot in personal.bank if slot is not None]
 
     # GlobalAPI's getItem can take different types, all documented.
@@ -42,6 +45,12 @@ Example:
     # Get the names of all items in bank.
     for item in itemObjects:
       print(item.name)
+
+
+NOTES
+-----
+This project is in semi-active development. The groundwork is laid, and most of the API is accounted for. If something you need is missing and you'd like it added feel free to open an issue (or a pull request!) on GitHub.
+
 
 .. |Build Status| image:: https://travis-ci.org/PatchesPrime/gw2apiwrapper.svg?branch=master
    :target: https://travis-ci.org/PatchesPrime/gw2apiwrapper
