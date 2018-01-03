@@ -161,8 +161,6 @@ class AccountAPI:
         '''
         self.checkPermission('inventories')
 
-        pass
-
     @typer
     def getAchievements(self):
         '''
@@ -180,8 +178,6 @@ class AccountAPI:
         '''
         self.checkPermission('progression')
 
-        pass
-
     @typer
     def getMaterials(self):
         '''
@@ -198,8 +194,6 @@ class AccountAPI:
         '''
         self.checkPermission('inventories')
 
-        pass
-
     @typer
     def getOutfits(self):
         '''
@@ -209,7 +203,6 @@ class AccountAPI:
         Returns a list of Outfit objects (see descriptions)
         '''
         self.checkPermission('unlocks')
-        pass
 
     @typer
     def getMasteries(self):
@@ -224,7 +217,6 @@ class AccountAPI:
         object - (Mastery) The object representing the mastery.
         '''
         self.checkPermission('progression')
-        pass
 
     @typer
     def getInventory(self):
@@ -244,7 +236,6 @@ class AccountAPI:
         or a key is shared that has one. Use at your own peril.
         '''
         self.checkPermission('inventories')
-        pass
 
     def getTradeHistory(self):
         '''
@@ -317,25 +308,21 @@ class AccountAPI:
     def getCharacters(self):
         '''
         Uses the Guild Wars 2 API to query for a given
-        character name on your account, and passes the
-        information to the 'Character()' object.
+        character name on your account.
 
         https://wiki.guildwars2.com/wiki/API:2/characters#Response
         '''
         self.checkPermission('characters')
 
-        pass
-
     @typer
     def getDyes(self):
         '''
-        Query the Guild Wars 2 account Dye api and build
-        'Dye()' objects based off the JSON.
+        Query the Guild Wars 2 account Dye API and build
+        objects based off the JSON.
 
         https://wiki.guildwars2.com/wiki/API:2/account/dyes#Response
         '''
         self.checkPermission('unlocks')
-        pass
 
     @typer
     def getSkins(self):
@@ -347,7 +334,6 @@ class AccountAPI:
         https://wiki.guildwars2.com/wiki/API:2/account/skins#Response
         '''
         self.checkPermission('unlocks')
-        pass
 
     @typer
     def getMinis(self):
@@ -359,7 +345,6 @@ class AccountAPI:
         https://wiki.guildwars2.com/wiki/API:2/account/minis#Response
         '''
         self.checkPermission('unlocks')
-        pass
 
     def getTraits(self, charName, areaFlag=None):
         '''

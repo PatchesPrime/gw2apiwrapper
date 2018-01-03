@@ -251,7 +251,7 @@ class typer(object):
                 temp = []
                 for current in safe:
                     if current is not None:
-                            temp.append(current['id'])
+                        temp.append(current['id'])
 
                 # I much prefer list comprehensions.
                 # I will remove the 4 character difference somehow..
