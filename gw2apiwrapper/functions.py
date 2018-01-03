@@ -125,7 +125,7 @@ class typer(object):
     def __call__(self, *args):
         # Dirty, but effective...?
         if 'AccountAPI' in str(self.obj):
-            return self._account(args)
+            return self._account()
 
         # HAHAHA TEST COVERAGE IS WHY THIS EXISTS. NUMBERS GAME BAYBEE
         self.f(self.obj, 'TEST COVERAGE')
@@ -216,7 +216,7 @@ class typer(object):
         # Return said objects.
         return(objects)
 
-    def _account(self, args):
+    def _account(self):
         # We do this to check for permissions!
         self.f(self.obj)
 
