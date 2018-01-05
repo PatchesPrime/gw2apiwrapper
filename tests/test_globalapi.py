@@ -6,6 +6,14 @@ from gw2apiwrapper import GlobalAPI
 gAPI = GlobalAPI()
 
 
+def test_getMaterialCategory():
+    material = gAPI.getMaterial(38)
+    assert type(material).__name__ == 'Material'
+    assert material.id == 38
+    assert material.name == 'Festive Materials'
+    assert all(x in material.items for x in [36060, 36061])
+
+
 def test_getItemStats():
     itemstat = gAPI.getItemStats(1011)
     assert type(itemstat).__name__ == 'ItemStat'
