@@ -13,6 +13,14 @@ class GlobalAPI:
         return(getJson(self.url + api, header=None))
 
     @typer
+    def getItemStats(self, id_or_list):
+        '''
+        Query the non-authed Guild Wars 2 API to build
+        objects from the returned JSON.
+        '''
+        pass
+
+    @typer
     def getRaid(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 API to build
