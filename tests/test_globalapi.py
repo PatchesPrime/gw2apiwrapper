@@ -6,6 +6,14 @@ from gw2apiwrapper import GlobalAPI
 gAPI = GlobalAPI()
 
 
+def test_getItemStats():
+    itemstats = gAPI.getItemStats(1011)
+    assert type(itemstats).__name__ == 'Itemstat'
+    assert itemstats.id == 1011
+    assert itemstats.name == 'Forsaken'
+    assert (0.35, 0.25) in itemstats.attributes.values()
+
+
 def test_getRaid():
     raid = gAPI.getRaid('forsaken_thicket')
     assert type(raid).__name__ == 'Raid'
