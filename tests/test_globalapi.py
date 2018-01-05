@@ -6,9 +6,9 @@ from gw2apiwrapper import GlobalAPI
 gAPI = GlobalAPI()
 
 
-def test_getMaterialCategory():
-    material = gAPI.getMaterial(38)
-    assert type(material).__name__ == 'Material'
+def test_getMaterialCategories():
+    material = gAPI.getMaterialCategories(38)
+    assert type(material).__name__ == 'MaterialCategory'
     assert material.id == 38
     assert material.name == 'Festive Materials'
     assert all(x in material.items for x in [36060, 36061])
