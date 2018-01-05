@@ -8,10 +8,10 @@ gAPI = GlobalAPI()
 
 def test_getItemStats():
     itemstats = gAPI.getItemStats(1011)
-    assert type(itemstats).__name__ == 'Itemstat'
+    assert type(itemstats).__name__ == 'ItemStat'
     assert itemstats.id == 1011
     assert itemstats.name == 'Forsaken'
-    assert (0.35, 0.25) in itemstats.attributes.values()
+    assert 0.35 and 0.25 in itemstats.attributes.values()
 
 
 def test_getRaid():
