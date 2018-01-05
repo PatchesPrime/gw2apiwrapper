@@ -31,6 +31,7 @@ class typer(object):
             'minis': {'url': 'minis', 'obj': 'Mini'},
             'bank': {'url': 'items', 'obj': 'Item'},
             'materials': {'url': 'items', 'obj': 'Material'},
+            'materialcategories': {'url': 'materials', 'obj': 'MaterialCategory'},
             'professions': {'url': 'professions', 'obj': 'Profession'},
             'races': {'url': 'races', 'obj': 'Race'},
             'pets': {'url': 'pets', 'obj': 'Pet'},
