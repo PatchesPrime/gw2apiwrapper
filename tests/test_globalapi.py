@@ -49,6 +49,10 @@ def test_getItemStats():
     for stat in itemstat:
         assert type(stat).__name__ == 'ItemStat'
 
+    # Failure test
+    with pytest.raises(NotImplementedError):
+        gAPI.getItemStats({1012})
+
 
 def test_getRaid():
     raid = gAPI.getRaid('forsaken_thicket')
