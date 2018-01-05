@@ -7,11 +7,23 @@ gAPI = GlobalAPI()
 
 
 def test_getItemStats():
-    itemstats = gAPI.getItemStats(1011)
-    assert type(itemstats).__name__ == 'ItemStat'
-    assert itemstats.id == 1011
-    assert itemstats.name == 'Forsaken'
-    assert 0.35 and 0.25 in itemstats.attributes.values()
+    itemstat = gAPI.getItemStats(1011)
+    assert type(itemstat).__name__ == 'ItemStat'
+    assert itemstat.id == 1011
+    assert itemstat.name == 'Forsaken'
+    assert 0.35 and 0.25 in itemstat.attributes.values()
+
+    # str test
+    itemstat = gAPI.getItemStats('1012')
+    assert type(itemstat).__name__ == 'ItemStat'
+    assert itemstat.id == 1012
+    assert itemstat.name == 'Apostate\'s'
+    assert 0.35 and 0.25 in itemstat.attributes.values()
+
+    # list test
+    itemstat = gAPI.getItemStats([1011, '1012'])
+    for stat in itemstat:
+        assert type(stat).__name__ == 'ItemStat'
 
 
 def test_getRaid():
