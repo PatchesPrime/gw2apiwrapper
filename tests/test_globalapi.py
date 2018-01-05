@@ -13,6 +13,22 @@ def test_getMaterialCategories():
     assert material.name == 'Festive Materials'
     assert all(x in material.items for x in [36060, 36061])
 
+    # str test
+    material = gAPI.getMaterialCategories('46')
+    assert type(material).__name__ == 'MaterialCategory'
+    assert material.id == 46
+    assert material.name == 'Ascended Materials'
+    assert all(x in material.items for x in [46731, 46682])
+
+    # list test
+    materials = gAPI.getMaterialCategories([49, '50'])
+    for mat in materials:
+        assert type(mat).__name__ == 'MaterialCategory'
+
+    # Test unsupported type
+    with pytest.raises(NotImplementedError):
+        gAPI.getMaterialCategories({49})
+
 
 def test_getItemStats():
     itemstat = gAPI.getItemStats(1011)
