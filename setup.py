@@ -6,7 +6,7 @@ with open('README.rst') as f:
 
 setup(
     name='gw2apiwrapper',
-    version='2.5.1b',
+    version='2.6.0b',
     description='A simple wrapper around the offical Guild Wars 2 JSON API.',
     long_description=long_desc,
     url='https://github.com/PatchesPrime/gw2apiwrapper.git',
