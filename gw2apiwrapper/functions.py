@@ -101,14 +101,6 @@ class typer(object):
         else:
             self.url = self.api
 
-    def _parse(self, string):
-        '''
-        Return a "safe" string for URLs.
-
-        Won't even lie: I wrote this for PEP8 character count.
-        '''
-        return urllib.parse.quote(string)
-
     def __get__(self, instance, className):
         '''
         This is called immediately before __call__ internally
@@ -174,7 +166,6 @@ class typer(object):
             for safe in safeList:
                 # Clean them up into a proper string.
                 cleanStr = ','.join(str(x) for x in safe)
-                cleanStr = self._parse(cleanStr)
 
                 # Build a pretty URL.
                 cleanURL = '{}?ids={}'.format(self.url, cleanStr)
@@ -189,8 +180,7 @@ class typer(object):
             # Return them all.
             return(objects)
         else:
-            safeArgs = (self.url, self._parse(args))
-            jsonData = self.obj.getJson('{}/{}'.format(*safeArgs))
+            jsonData = self.obj.getJson('{}/{}'.format(self.url, args))
 
             obj = namedtuple(self.crossList[self.api]['obj'], jsonData.keys())
             return(obj(**jsonData))
@@ -203,8 +193,8 @@ class typer(object):
         # Build clean string to append to URL.
         cleanList = ','.join(str(x) for x in args)
 
-        # If there is a space, we need to parse that.
-        cleanURL = '{}?ids={}'.format(self.url, self._parse(cleanList))
+        # Build our string.
+        cleanURL = '{}?ids={}'.format(self.url, cleanList)
 
         # Get the JSON.
         data = self.obj.getJson(cleanURL)
@@ -265,18 +255,7 @@ class typer(object):
                 cleanStr = ','.join(str(x) for x in safe)
 
             # Build a pretty URL.
-            if ' ' in cleanStr:
-                # Remove spaces.
-                parsed = self._parse(cleanStr)
-
-                # As it is now, this line works. If for some reason
-                # you begin getting strange errors, it might be this.
-                # It only works because the 'characters' endpoint is the
-                # only one with spaces.
-                cleanURL = '{}?ids={}'.format(self.url, parsed)
-
-            else:
-                cleanURL = '{}?ids={}'.format(self.url, cleanStr)
+            cleanURL = '{}?ids={}'.format(self.url, cleanStr)
 
             # Lets build some objects!
             for item in self.obj.getJson(cleanURL):
@@ -319,6 +298,9 @@ def getJson(url, header=None):
     Got tired of writing this over and over.
     What functions are for, right?
     '''
+    if ' ' in url:
+        url = urllib.parse.quote(url, safe='/:')
+
     try:
         if header is not None:
             request = urllib.request.Request(url, None, header)
