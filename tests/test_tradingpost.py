@@ -9,11 +9,11 @@ def test_getListings():
     # Test single ID
     listings = tp.getListings(19684)
 
-    assert type(listings) is dict
-    assert listings['id'] == 19684
+    assert type(listings).__name__ == 'TPListing'
+    assert listings.id == 19684
     assert 'buys', 'sells' in listings.keys()
-    assert len(listings['buys']) > 0
-    assert len(listings['sells']) > 0
+    assert len(listings.buys) > 0
+    assert len(listings.sells) > 0
 
     # Test list of IDs
     listings = tp.getListings([19684, 19709])
@@ -21,9 +21,9 @@ def test_getListings():
     assert type(listings) is list
 
     for item in listings:
-        assert type(item) is dict
-        assert len(item['buys']) > 0
-        assert len(item['sells']) > 0
+        assert type(item).__name__ == 'TPListing'
+        assert len(item.buys) > 0
+        assert len(item.sells) > 0
 
 
 def test_getPrices():
