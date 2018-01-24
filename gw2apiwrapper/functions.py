@@ -49,6 +49,7 @@ class typer(object):
             'itemstats': {'url': 'itemstats', 'obj': 'ItemStat'},
             'listings': {'url': 'listings', 'obj': 'TPListing'},
             'prices': {'url': 'prices', 'obj': 'TPPrice'},
+            'characters': {'url': 'characters', 'obj': 'Character'},
 
             # Guild endpoints.
             'guildupgrades': {'url': 'guild/upgrades', 'obj': 'GuildUpgrade'},
@@ -96,10 +97,7 @@ class typer(object):
             self.api = 'inventory'
 
         # Easy to remember url...
-        if self.api in self.crossList.keys():
-            self.url = self.crossList[self.api]['url']
-        else:
-            self.url = self.api
+        self.url = self.crossList[self.api]['url']
 
     def __get__(self, instance, className):
         '''
@@ -260,13 +258,7 @@ class typer(object):
             # Lets build some objects!
             for item in self.obj.getJson(cleanURL):
                 # This whole for loop makes me laugh.
-                try:
-                    objName = self.crossList[self.api]['obj']
-                except KeyError:
-                    # Something went wrong. Likely 'characters' fault.
-                    # Try to build it off the API name
-                    if self.api.title()[-1] == 's':
-                        objName = self.api.title()[:-1]
+                objName = self.crossList[self.api]['obj']
 
                 obj = namedtuple(objName, item.keys())
 
