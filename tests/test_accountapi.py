@@ -17,6 +17,14 @@ def test_brokenPermissions():
         acc.getAchievements()
 
 
+def test_getNodes():
+    nodes = api.getNodes()
+
+    # I do have a few of these.
+    assert len(nodes) >= 4
+    assert 'bandit_chest' in nodes
+
+
 def test_getCats():
     cats = api.getCats()
 

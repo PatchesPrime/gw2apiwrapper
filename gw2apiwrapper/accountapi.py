@@ -42,12 +42,25 @@ class AccountAPI:
             # and it must not be pink.
             raise PermissionError(apiName)
 
+    def getNodes(self):
+        '''
+        Gets the name of the resource nodes you have unlocked
+        for your home instance.
+
+        Info: https://wiki.guildwars2.com/wiki/API:2/account/home/nodes
+
+        Returns a list of names.
+        '''
+        self.checkPermission('progression')
+
+        return self.getJson('account/home/nodes')
+
     def getCats(self):
         '''
         Get the details of your...cat ownership...Why
         does this exist?
 
-        Returned a simple object represented by the data
+        Returned a simple dictoinary represented by the data
         at https://wiki.guildwars2.com/wiki/API:2/account/home/cats
         '''
         self.checkPermission('progression')
