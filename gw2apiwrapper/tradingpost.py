@@ -1,4 +1,4 @@
-from gw2apiwrapper.functions import getJson
+from gw2apiwrapper.functions import getJson, typer
 
 
 class GW2TP:
@@ -17,43 +17,28 @@ class GW2TP:
         '''
         return(getJson(self.url + api, header=None))
 
+    @typer
     def getListings(self, itemID):
         '''
-        Returns the Guild Wars 2 trading post listings
-        for given item ID(s).
-
-        Returns a dictionary if only one ID is given.
-        Returns a list of dictionaries if a list of IDs is given.
+        Get's the listings for a given ID or collection of
+        IDs from the official Guild Wars 2 API.
+        Returns a TPListing object, with attributes 'buys' and 'sells'.
+        Both attributes contain a list of dictionaries with the keys:
+          listings   - Contain the number of listings at these values.
+          unit_price - The price in coin for the item.
+          quantity   - Number of items being sold and bought for the listing.
         '''
-        # Removed the need for factory.
-        if type(itemID) is list:
-            cleanList = ','.join(str(x) for x in itemID)
-            cleanURL = 'listings?ids={}'.format(cleanList)
-        else:
-            cleanURL = 'listings/{}'.format(itemID)
+        pass
 
-        # Feels dirty, but simple json is often
-        # most effective as simple data structure.
-        return(self.getJson(cleanURL))
-
+    @typer
     def getPrices(self, itemID):
         '''
         Returns the Guild Wars 2 trading post prices
         for given item ID(s).
-
         Returns a dictionary if only one ID is given.
         Returns a list of dictionaries if a list of IDs is given.
         '''
-        # Removed the need for factory.
-        if type(itemID) is list:
-            cleanList = ','.join(str(x) for x in itemID)
-            cleanURL = 'prices?ids={}'.format(cleanList)
-        else:
-            cleanURL = 'prices/{}'.format(itemID)
-
-        # Feels dirty, but simple json is often
-        # most effective as simple data structure.
-        return(self.getJson(cleanURL))
+        pass
 
     def getExchange(self, coin_or_gems, quantity):
         '''
