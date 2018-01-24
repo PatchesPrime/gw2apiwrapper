@@ -492,6 +492,7 @@ def getEmblem(emblemID, layer=None):
 
     return endList
 
+
 def getGuildID(name):
     '''
     Search for a guild using the official Guild Wars 2 API
