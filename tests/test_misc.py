@@ -15,6 +15,12 @@ def test_badUrl():
         api = AccountAPI('NOT A REAL KEY')
 
 
+def test_getGuildID():
+    test = functions.getGuildID('Edit Conflict')
+
+    assert test == '116E0C0E-0035-44A9-BB22-4AE3E23127E5'
+
+
 def test_getBuild():
     assert type(functions.getBuild()) is int
 
