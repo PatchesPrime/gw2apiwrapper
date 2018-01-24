@@ -130,17 +130,17 @@ class typer(object):
     @singledispatch
     def _worker(args, self):
         '''
-        The workhorse of the "typer" decorator.
-
-        This section handles all the work of determining what to do
-        with the input you passed the decorated method.
-
-        Returns an object or list of objects depending on input.
+        The default response if you pass the typer decorator class a function
+        which tries to use a paramter it doesn't support.
         '''
         raise NotImplementedError('@typer does not support {}'.format(type(args)))
 
     @_worker.register(int)
     def _int(args, self):
+        '''
+        This method runs if the function wrapped by typer receives an
+        integer as its requested ID.
+        '''
         jsonData = self.obj.getJson('{}/{}'.format(self.url, args))
 
         obj = namedtuple(self.crossList[self.api]['obj'], jsonData.keys())
@@ -148,6 +148,9 @@ class typer(object):
 
     @_worker.register(str)
     def _str(args, self):
+        '''
+        This method runs if you pass a typer wrapped function a string.
+        '''
         # You shouldn't do this. It can take a really
         # long time.
         if args == 'all':
@@ -185,6 +188,9 @@ class typer(object):
 
     @_worker.register(list)
     def _list(args, self):
+        '''
+        This runs if you pass a typer wrapped function a list.
+        '''
         # Going to need this.
         objects = []
 
@@ -209,6 +215,11 @@ class typer(object):
         return(objects)
 
     def _account(self):
+        '''
+        We do pretty specific processing for AccountAPI objects, so we
+        separate that here. This method handles all authentication
+        required typer wrapped functions.
+        '''
         # We do this to check for permissions!
         self.f(self.obj)
 
