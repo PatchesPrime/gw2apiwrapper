@@ -17,6 +17,13 @@ def test_brokenPermissions():
         acc.getAchievements()
 
 
+def test_getCats():
+    cats = api.getCats()
+
+    # I don't own any cats in that game...
+    assert len(cats) == 0
+
+
 def test_getRaids():
     encounters = ["vale_guardian", "spirit_woods", "gorseval",
                   "sabetha", "slothasor", "bandit_trio",

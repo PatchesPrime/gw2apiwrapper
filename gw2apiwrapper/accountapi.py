@@ -42,6 +42,19 @@ class AccountAPI:
             # and it must not be pink.
             raise PermissionError(apiName)
 
+    def getCats(self):
+        '''
+        Get the details of your...cat ownership...Why
+        does this exist?
+
+        Returned a simple object represented by the data
+        at https://wiki.guildwars2.com/wiki/API:2/account/home/cats
+        '''
+        self.checkPermission('progression')
+
+        # I won't dignify this with more of a response.
+        return self.getJson('account/home/cats')
+
     @typer
     def getRaids(self):
         '''
