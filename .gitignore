@@ -3,3 +3,4 @@
 *.egg-info
 dist/
 \\_flymake\\.py
+*flymake*
