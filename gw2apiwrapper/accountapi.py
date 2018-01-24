@@ -290,13 +290,13 @@ class AccountAPI:
 
         # As before, sanitize this.
         if len(boughtData) > 0:
-            self.bought = boughtData
+            self.bought = boughtData  # pragma: no cover
         else:
             self.bought = None  # pragma: no cover
 
         # And this.
         if len(soldData) > 0:
-            self.sold = soldData
+            self.sold = soldData  # pragma: no cover
         else:
             self.sold = None  # pragma: no cover
 
