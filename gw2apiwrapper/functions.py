@@ -491,3 +491,14 @@ def getEmblem(emblemID, layer=None):
             endList.append(getJson(cleanURL)[0])
 
     return endList
+
+def getGuildID(name):
+    '''
+    Search for a guild using the official Guild Wars 2 API
+    and return their 'ID'.
+
+    Returns a string.
+    '''
+    url = 'https://api.guildwars2.com/v2/guild/search?name='
+
+    return getJson(url + name)[0]
