@@ -29,20 +29,19 @@ def test_getListings():
 def test_getPrices():
     prices = tp.getPrices(19684)
 
-    assert type(prices) is dict
-    assert prices['id'] == 19684
-    assert prices['whitelisted'] is False
+    assert type(prices).__name__ == 'TPPrice'
+    assert prices.id == 19684
+    assert prices.whitelisted is False
 
-    assert 'buys', 'sells' in prices.keys()
-    assert len(prices['buys']) > 0
-    assert len(prices['sells']) > 0
+    assert len(prices.buys) > 0
+    assert len(prices.sells) > 0
 
     prices = tp.getPrices([19684, 19709])
 
     for item in prices:
-        assert type(item) is dict
-        assert len(item['buys']) > 0
-        assert len(item['sells']) > 0
+        assert type(item).__name__ == 'TPPrice'
+        assert len(item.buys) > 0
+        assert len(item.sells) > 0
 
 
 def test_getExchange():
