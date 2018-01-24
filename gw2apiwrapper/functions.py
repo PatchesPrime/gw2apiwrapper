@@ -47,6 +47,8 @@ class typer(object):
             'skills': {'url': 'skills', 'obj': 'Skill'},
             'items': {'url': 'items', 'obj': 'Item'},
             'itemstats': {'url': 'itemstats', 'obj': 'ItemStat'},
+            'listings': {'url': 'listings', 'obj': 'TPListing'},
+            'prices': {'url': 'prices', 'obj': 'TPPrice'},
 
             # Guild endpoints.
             'guildupgrades': {'url': 'guild/upgrades', 'obj': 'GuildUpgrade'},
