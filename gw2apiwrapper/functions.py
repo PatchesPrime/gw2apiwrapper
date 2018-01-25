@@ -245,22 +245,18 @@ class typer(object):
         else:
             dictFlag = False
 
-        # The construction of the skin attribute.
+        # The processing of the IDs.
         for safe in safeList:
-            # Clean them up into a proper string.
+            # Could probably use dictFlag for this. Will test.
             try:
-                # I could do this in a list comprehension but
-                # then it is against PEP8 at 84 charactes.
-                temp = []
-                for current in safe:
-                    if current is not None:
-                        temp.append(current['id'])
+                # Try to turn the dictionary IDs to a string
+                temp = [current['id'] for current in safe if current]
 
-                # I much prefer list comprehensions.
-                # I will remove the 4 character difference somehow..
+                # Self documenting?
                 cleanStr = ','.join(str(x) for x in temp)
 
             except (KeyError, TypeError):
+                # If it's not a dictionary, do this
                 cleanStr = ','.join(str(x) for x in safe)
 
             # Build a pretty URL.
