@@ -247,15 +247,14 @@ class typer(object):
 
         # The processing of the IDs.
         for safe in safeList:
-            # Could probably use dictFlag for this. Will test.
-            try:
+            if dictFlag:
                 # Try to turn the dictionary IDs to a string
                 temp = [current['id'] for current in safe if current]
 
                 # Self documenting?
                 cleanStr = ','.join(str(x) for x in temp)
 
-            except (KeyError, TypeError):
+            else:
                 # If it's not a dictionary, do this
                 cleanStr = ','.join(str(x) for x in safe)
 
@@ -272,15 +271,13 @@ class typer(object):
                 # Handle dictionaries differently.
                 if dictFlag:
                     # Add our item object to the dictionary
-                    # that references it
                     for part in data:
                         # getBank can return None.
-                        if part:
-                            if item['id'] == part['id']:
-                                part.update({'object': obj(**item)})
+                        if part and item['id'] == part['id']:
+                            part.update({'object': obj(**item)})
 
-                                # List of dictionaries recreated!
-                                objects.append(part)
+                            # List of dictionaries recreated!
+                            objects.append(part)
                 else:
                     objects.append(obj(**item))
 
