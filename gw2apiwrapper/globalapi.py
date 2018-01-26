@@ -373,18 +373,13 @@ class GlobalAPI:
         Simple method to grab the dailies from GW2 official
         API and returns achievement objects for them.
         '''
-        # Temporary list to reduce requests.
-        idList = []
-
-        # The data.
+        # Determine if we want the dailies from today or tomorrow.
         if tomorrow:
             jsonData = self.getJson('achievements/daily/tomorrow')
         else:
             jsonData = self.getJson('achievements/daily')
 
-        # Get the achievements for each area.
-        for key in jsonData.keys():
-            for achievement in jsonData[key]:
-                idList.append(achievement['id'])
+        # Pull all the IDs from the JSON data.
+        idList = [data['id'] for value in jsonData.values() for data in value]
 
         return(self.getAchievement(idList))
