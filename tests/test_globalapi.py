@@ -6,6 +6,20 @@ from gw2apiwrapper import GlobalAPI
 gAPI = GlobalAPI()
 
 
+def test_getPVPAmulets():
+    pvpamulet = gAPI.getPVPAmulets(7)
+    assert pvpamulet.id == 7
+    assert pvpamulet.name == 'Barbarian Amulet'
+
+    pvpamulet = gAPI.getPVPAmulets('14')
+    assert pvpamulet.id == 14
+    assert pvpamulet.name == 'Rampager Amulet'
+
+    pvpamulet = gAPI.getPVPAmulets([22, '35'])
+    for ammy in pvpamulet:
+        assert type(ammy).__name__ == 'PVPAmulet'
+
+
 def test_getMaterialCategories():
     material = gAPI.getMaterialCategories(38)
     assert type(material).__name__ == 'MaterialCategory'
