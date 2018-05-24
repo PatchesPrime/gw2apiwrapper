@@ -35,14 +35,14 @@ def test_getItemStats():
     assert type(itemstat).__name__ == 'ItemStat'
     assert itemstat.id == 1011
     assert itemstat.name == 'Forsaken'
-    assert 0.35 and 0.25 in itemstat.attributes.values()
+    assert 0.35 and 0.25 in [x['multiplier'] for x in itemstat.attributes]
 
     # str test
     itemstat = gAPI.getItemStats('1012')
     assert type(itemstat).__name__ == 'ItemStat'
     assert itemstat.id == 1012
     assert itemstat.name == 'Apostate\'s'
-    assert 0.35 and 0.25 in itemstat.attributes.values()
+    assert 0.35 and 0.25 in [x['multiplier'] for x in itemstat.attributes]
 
     # list test
     itemstat = gAPI.getItemStats([1011, '1012'])
