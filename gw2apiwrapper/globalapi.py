@@ -13,6 +13,10 @@ class GlobalAPI:
         return(getJson(self.url + api, header=None))
 
     @typer
+    def getPVPAmulets(self, id_or_list):
+        pass
+
+    @typer
     def getMaterialCategories(self, id_or_list):
         '''
         Query the non-authed Guild Wars 2 API to build
