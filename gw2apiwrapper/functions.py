@@ -50,6 +50,7 @@ class typer(object):
             'listings': {'url': 'listings', 'obj': 'TPListing'},
             'prices': {'url': 'prices', 'obj': 'TPPrice'},
             'characters': {'url': 'characters', 'obj': 'Character'},
+            'pvpamulets': {'url': 'pvp/amulets', 'obj': 'PVPAmulet'},
 
             # Guild endpoints.
             'guildupgrades': {'url': 'guild/upgrades', 'obj': 'GuildUpgrade'},
