@@ -14,6 +14,12 @@ class GlobalAPI:
 
     @typer
     def getPVPAmulets(self, id_or_list):
+        '''
+        Query the non-authed Guild Wars 2 API to build
+        objects from the returned JSON.
+
+        https://wiki.guildwars2.com/wiki/API:2/pvp/amulets
+        '''
         pass
 
     @typer
