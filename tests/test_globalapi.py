@@ -414,12 +414,12 @@ def test_getMini():
     # Test int()
     mini = gAPI.getMini(1)
     assert type(mini).__name__ == 'Mini'
-    assert mini.name == 'Miniature Rytlock'
+    assert mini.name == 'Mini Rytlock'
 
     # Test str()
     mini = gAPI.getMini('2')
     assert type(mini).__name__ == 'Mini'
-    assert mini.name == 'Miniature Servitor Golem'
+    assert mini.name == 'Mini Servitor Golem'
 
     # Test list()
     for unit in gAPI.getMini([1, 2]):
