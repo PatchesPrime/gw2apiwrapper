@@ -14,7 +14,7 @@ setup(
     author_email='patches@nullcorp.org',
     license='MIT',
     packages=['gw2apiwrapper'],
-    install_requires=['requests'],
+    #install_requires=['requests'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
