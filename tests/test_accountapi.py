@@ -133,7 +133,7 @@ def test_getMaterials():
 
 def test_getOutfits():
     assert len(api.getOutfits()) > 2
-    assert api.outfits[0].name == 'Hexed Outfit'
+    assert 'Wedding Attire' in [x.name for x in api.outfits]
 
     for unit in api.outfits:
         assert type(unit).__name__ == 'Outfit'
