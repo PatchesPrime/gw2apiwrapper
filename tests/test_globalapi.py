@@ -361,8 +361,8 @@ def test_getItem():
     assert item.name == 'Omnomberry Bar'
 
     # Test list()
-    gAPI.getItem([1])
-    for unit in gAPI.getItem([1, 2]):
+    gAPI.getItem([28445])
+    for unit in gAPI.getItem([28445, 12452]):
         assert type(unit).__name__ == 'Item'
 
     # Test unsupported type
