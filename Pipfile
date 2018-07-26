@@ -7,7 +7,6 @@ name = "pypi"
 twine = "*"
 
 [dev-packages]
-rope = "*"
 jedi = "*"
 "autopep8" = "*"
 importmagic = "*"
