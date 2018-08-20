@@ -112,6 +112,10 @@ class typer(object):
         self.obj = instance
         self.className = className
 
+        # "not writable", eh? I bed to differ!
+        # It feels naughty to do this..
+        self.__call__.__func__.__doc__ = self.f.__doc__
+
         # Doesn't work unless you return where to
         # go next. Naturally, you want calling it to
         # call __call__
