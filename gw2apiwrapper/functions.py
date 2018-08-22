@@ -3,6 +3,7 @@ import urllib.parse
 import urllib.request
 from functools import singledispatch
 from collections import namedtuple
+import concurrent.futures as cc
 
 
 class typer(object):
@@ -113,7 +114,7 @@ class typer(object):
         self.className = className
 
         # "not writable", eh? I bed to differ!
-        # It feels naughty to do this..
+        # It feels naughty to do this.
         self.__call__.__func__.__doc__ = self.f.__doc__
 
         # Doesn't work unless you return where to
@@ -168,23 +169,28 @@ class typer(object):
             # Useful line is useful.
             safeList = [ids[x:x + 200] for x in range(0, len(ids), 200)]
 
-            # Generate objects.
-            for safe in safeList:
-                # Clean them up into a proper string.
-                cleanStr = ','.join(str(x) for x in safe)
+            with cc.ThreadPoolExecutor(max_workers=len(safeList)) as executor:
+                caller = self.obj.getJson
+                tasks = {}
 
-                # Build a pretty URL.
-                cleanURL = '{}?ids={}'.format(self.url, cleanStr)
+                # for each item of the safeList spawn a thread to grab the IDs
+                # and bulid the objects, then combine
+                for safe in safeList:
+                    cleanStr = ','.join(str(x) for x in safe)
+                    cleanURL = '{}?ids={}'.format(self.url, cleanStr)
+                    tasks.update({executor.submit(caller, cleanURL): safe})
 
-                data = self.obj.getJson(cleanURL)
+                for future in cc.as_completed(tasks):
+                    for thing in future.result():
+                        # PEP8
+                        name = self.crossList[self.api]['obj']
 
-                # Build objects.
-                for item in data:
-                    obj = namedtuple(self.crossList[self.api]['obj'], item.keys())
-                    objects.append(obj(**item))
+                        # Build the definition of the data and add to list.
+                        obj = namedtuple(name, thing.keys())
+                        objects.append(obj(**thing))
 
-            # Return them all.
-            return(objects)
+            return objects
+
         else:
             jsonData = self.obj.getJson('{}/{}'.format(self.url, args))
 
