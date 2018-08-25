@@ -157,39 +157,13 @@ class typer(object):
         '''
         This method runs if you pass a typer wrapped function a string.
         '''
-        # You shouldn't do this. It can take a really
-        # long time.
+        # This is now much faster. Safe to use, though still can be ~30s
         if args == 'all':
-            # Need this too.
-            objects = []
-
             # Default case: get all of them.
             ids = self.obj.getJson(self.url)
 
-            # Useful line is useful.
-            safeList = [ids[x:x + 200] for x in range(0, len(ids), 200)]
-
-            with cc.ThreadPoolExecutor(max_workers=len(safeList)) as executor:
-                caller = self.obj.getJson
-                tasks = {}
-
-                # for each item of the safeList spawn a thread to grab the IDs
-                # and bulid the objects, then combine
-                for safe in safeList:
-                    cleanStr = ','.join(str(x) for x in safe)
-                    cleanURL = '{}?ids={}'.format(self.url, cleanStr)
-                    tasks.update({executor.submit(caller, cleanURL): safe})
-
-                for future in cc.as_completed(tasks):
-                    for thing in future.result():
-                        # PEP8
-                        name = self.crossList[self.api]['obj']
-
-                        # Build the definition of the data and add to list.
-                        obj = namedtuple(name, thing.keys())
-                        objects.append(obj(**thing))
-
-            return objects
+            # Reusable function.
+            return self._chunk_and_thread(ids)
 
         else:
             jsonData = self.obj.getJson('{}/{}'.format(self.url, args))
@@ -256,6 +230,7 @@ class typer(object):
         else:
             dictFlag = False
 
+        # NOTE: I should somehow make this use _chunk_and_thread
         # The processing of the IDs.
         for safe in safeList:
             if dictFlag:
@@ -298,6 +273,35 @@ class typer(object):
         # Return it for immediate use as interator.
         # If that's what gets you hard.
         return(objects)
+
+    def _chunk_and_thread(self, biglist, dictFlag=False):
+        objects = []
+
+        # Useful line is useful.
+        safeList = [biglist[x:x + 200] for x in range(0, len(biglist), 200)]
+
+        with cc.ThreadPoolExecutor(max_workers=len(safeList)) as executor:
+            caller = self.obj.getJson
+            tasks = {}
+
+            # for each item of the safeList spawn a thread to grab the IDs
+            # and bulid the objects, then combine
+            for safe in safeList:
+                cleanStr = ','.join(str(x) for x in safe)
+                cleanURL = '{}?ids={}'.format(self.url, cleanStr)
+                tasks.update({executor.submit(caller, cleanURL): safe})
+
+            for future in cc.as_completed(tasks):
+                for thing in future.result():
+                    # PEP8
+                    name = self.crossList[self.api]['obj']
+
+                    # Build the definition of the data and add to list.
+                    obj = namedtuple(name, thing.keys())
+                    objects.append(obj(**thing))
+
+        return objects
+
 
 
 def getJson(url, header=None):
