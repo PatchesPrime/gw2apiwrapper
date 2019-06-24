@@ -11,7 +11,7 @@ def test_badUrl():
         api.getGuild('ERROR')
 
     # Test for invalid permission exception
-    with pytest.raises(PermissionError):
+    with pytest.raises(TypeError):
         api = AccountAPI('NOT A REAL KEY')
 
 
