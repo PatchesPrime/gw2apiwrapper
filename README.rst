@@ -1,4 +1,4 @@
-gw2apiwrapper |Build Status| |Coverage Status| |Requirements Status|
+gw2apiwrapper |Build Status| |Coverage Status|
 =====================================================================
 
 gw2apiwrapper is a Python library designed to abstract away the overhead and complexity of interacting with the official Guild Wars 2 (GW2) API via Python.
