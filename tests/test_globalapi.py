@@ -8,7 +8,7 @@ gAPI = GlobalAPI()
 
 def test_getPVPAmulets():
     pvpamulet = gAPI.getPVPAmulets(14)
-    assert pvpamulet.id == 7
+    assert pvpamulet.id == 14
     assert pvpamulet.name == 'Barbarian Amulet'
 
     pvpamulet = gAPI.getPVPAmulets('14')
