@@ -7,9 +7,10 @@ gAPI = GlobalAPI()
 
 
 def test_getPVPAmulets():
+    # originally was testing int 7 here, but ARENANET keeps changing their API.
     pvpamulet = gAPI.getPVPAmulets(14)
     assert pvpamulet.id == 14
-    assert pvpamulet.name == 'Barbarian Amulet'
+    assert pvpamulet.name == 'Rampager Amulet'
 
     pvpamulet = gAPI.getPVPAmulets('14')
     assert pvpamulet.id == 14
