@@ -262,8 +262,6 @@ def test_getGuildUpgrade():
     assert type(upgrade).__name__ == 'GuildUpgrade'
     assert upgrade.name == 'Guild Treasure Trove'
 
-    assert 58 in upgrade.prerequisites
-
     # Test all
     assert len(gAPI.getGuildUpgrade('all')) > 20
 
