@@ -29,7 +29,7 @@ jobs:
       - name: Run Unit Tests
         env:
           APIKEY: ${{ secrets.APIKEY }}
-          BUSTEDKEY: ${{ secrets.BUSTEDKEY }}
+          BUSTEDKEY: ${{ secrets.LIMITED_API_KEY }}
         run: |
           pipenv run py.test --cov=gw2apiwrapper
           #coveralls
