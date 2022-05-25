@@ -117,7 +117,7 @@ def test_getBank():
 
 def test_getAchievements():
     assert len(api.getAchievements()) > 5
-    assert api.achievements[0]['object'].name == 'Centaur Slayer'
+    assert api.achievements[0]['object'].name == 'Citadel of Flame Foe'
 
     for unit in api.achievements:
         assert type(unit['object']).__name__ == 'Achievement'
