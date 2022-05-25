@@ -5,4 +5,3 @@ init:
 
 test:
 	pipenv run py.test --cov=gw2apiwrapper
-	coveralls
