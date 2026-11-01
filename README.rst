@@ -1,3 +1,8 @@
+!!! Archived, no further updates !!!
+Repo is kept for historical purposes and that's about it. This project is no longer developed, hasn't been touched in years, and I haven't played the game for more than 10 years myself.
+If you would like to take over the project, please contact me through the available channels on github, otherwise, WYSIWYG with no warranty.
+-----
+
 gw2apiwrapper |Build Status| |Coverage Status|
 =====================================================================
 
